@@ -1,0 +1,2 @@
+# DraftCoreDataModel
+Draft of CoreDataModel 
