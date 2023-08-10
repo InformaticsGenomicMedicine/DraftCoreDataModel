@@ -22,22 +22,22 @@ class translate_api:
             'Content-Type': 'application/json; charset=utf-8'
         }
 
-    # TODO: I think i should implement this in the code. if the hgvs expression does work then use this. 
     def variation_to_vrs(self,q, untranslatable_returns_text='true'):
-        
-        """ Convert HGVS, gnomAD VCF or free text variation on GRCh37 or GRCh 38 assembly
+        """ Convert HGVS, gnomAD VCF or free text variation on GRCh37 or GRCh38 assembly
         to VRS variation. Performs fully-justified allele normalization.
 
         Args:
-            q (string): HGVS, gnomAD VCF or free text expression
-            untranslatable_returns_text (str, optional): True returns VRS Text object when unable
+            q (_type_): _description_
+            untranslatable_returns_text (str, optional): Defaults to 'true'. True returns VRS Text object when unable
             to translate or normalize query. False returns an empty list when unable to translate
-            or normalize query.
+            or normalize query. 
+
+        Raises:
+            requests.HTTPError: If the request fails with a non-200 status code.
 
         Returns:
             dict: The VRS representation of the variation.
         """
-        
         endpoint = '/variation/to_vrs'
 
         url = f'{self.base_varnorm_url_api}{endpoint}'
@@ -55,7 +55,7 @@ class translate_api:
             raise requests.HTTPError(f'Request failed with status code: {response.status_code}')
         
     def spdi_attribute_concat(self,r):
-        """Extract SPDI attributes, and concatenating the attributes to create a SPDI expressions.
+        """ Extract SPDI attributes, and concatenating the attributes to create a SPDI expressions.
 
         Args:
             r (request.Response): The response containing SPDI data
@@ -66,6 +66,7 @@ class translate_api:
         reqjson = json.loads(r.text)
         spdiobjs = reqjson['data']['spdis'] #[0] Index at first position for the first spdi object. 
         expr_list = []
+
         for spdiobj in spdiobjs:
             spdi = ':'.join([
                 spdiobj['seq_id'],
@@ -76,8 +77,8 @@ class translate_api:
         return expr_list
 
     def spdi_to_hgvs(self,spdi_id):
-        """ Translate SPDI expression to right-shift hgvs notation.
-         End point used from variation service api: /spdi/{spdi}/hgvs
+        """ Translate SPDI expression to right-shift hgvs notation. 
+        End point used from variation service api: /spdi/{spdi}/hgvs
 
         Args:
             spdi_id (str): SPDI expression 
@@ -92,7 +93,6 @@ class translate_api:
         
         url = f'{self.base_ncbi_url_api}{endpoint}'
 
-        
         response = requests.get(url,headers=self.headers)
 
         if response.status_code == 200:
@@ -101,11 +101,12 @@ class translate_api:
             raise requests.HTTPError(f'Request failed with status code: {response.status_code}')
     
     def hgvs_to_spdi(self,hgvs_id, assembly ='GCF_000001405.38'):
-        """Translate HGVS expression to SPDI expression. 
+        """Translate HGVS expression to SPDI expression.
+        End point used from variation service api: /hgvs/{hgvs}/contextuals
 
         Args:
             hgvs_id (str): HGVS expression
-            assembly (str, optional): Default assembly version. Defaults to 'GCF_000001405.38'.
+            assembly (str, optional): Assembly version. Defaults assemlby version to 'GCF_000001405.38'.
 
         Raises:
             requests.HTTPError: If the request fails with a non-200 status code.

@@ -2,7 +2,7 @@ import re
 
 class CoreVariantClass:
     
-    """This Class is used to create a CoreVariantClass object. It contains methods (initParams and normalizedData) and validation methods for every parameter."""
+    """ The CoreVariantClass is draft schema."""
 
     def __init__(self,origCoordSystem,seqType:str,refAllele:str,
                   altAllele:str, start:int, end:int, allelicState:str,
@@ -50,7 +50,7 @@ class CoreVariantClass:
         """A dictionary of the normalized data. This method checks to see if the initial parameters can be normalized and validated. 
 
         Raises:
-            ValueError: If the origCoordSystem is not "0-based interbase"
+            ValueError: If the origCoordSystem is not "0-based interbase".
 
         Returns:
             dict: A dictionary of the normalized data with validate attribute values. 
@@ -92,12 +92,11 @@ class CoreVariantClass:
         value = origCoordSystem.strip()
         allowedOrigCoordSystem = ('0-based interbase','0-based counting','1-based counting')
         if not value in allowedOrigCoordSystem:
-            raise ValueError('Invalid origCoordSystem input: "{}". Allowed types: 0-based interbase, 0-based counting, or 1-based counting.'.format(coordSystem))
+            raise ValueError('Invalid origCoordSystem input: "{}". Allowed types: 0-based interbase, 0-based counting, or 1-based counting.'.format(origCoordSystem))
         return value
     
     def _validate_seqType(self,seqType):
-        """ Validate seqType input. Method checks if the provided seqType is 
-        one of the allowed types: ('DNA','RNA','PROTEIN'). 
+        """ Validate seqType input. Method checks if the provided seqType is one of the allowed types: ('DNA','RNA','PROTEIN'). 
 
         Args:
             seqType (str): The seqType to be validated. 
@@ -108,10 +107,10 @@ class CoreVariantClass:
         Returns:
             str: One of the allowed types in uppercase. 
         """
-        value = seqType.strip().upper()
+        value = seqType.upper().strip()
         allowedSeqType = ('DNA','RNA','PROTEIN')
         if not value in allowedSeqType:
-            raise ValueError('Invalid seqType input: "{}". Allowed types: DNA, RNA, or PROTEIN (Case Insensitive).'.format( seqType)) 
+            raise ValueError('Invalid seqType input: "{}". Allowed types: DNA, RNA, or PROTEIN (Case Insensitive).'.format(seqType)) 
         return value
 
     def _validate_coordinates(self, value, attributeName):
@@ -154,7 +153,7 @@ class CoreVariantClass:
             ValueError: If the provided value does not match regular expression pattern. 
 
         Returns:
-            str: The validated reference and alternative allele input.
+            str: The validated reference or alternative allele input.
         """
 
         #NOTE: the regular expression that was originally: r'^[a-zA-Z\s]*$'.
@@ -166,7 +165,7 @@ class CoreVariantClass:
         return value
     
     def _validate_chrom(self,chrom):
-        """ Validate chrom input. Method checks if the provided chrom is one of the allowed types: ('1-22', X, Y, MT) or None.
+        """ Validate chrom input. Method checks if the provided chromosome is one of the allowed inputs: (1-22, X, Y, MT) or None.
 
         Args:
             chrom (str or None): The chrom to be validated.
@@ -181,9 +180,9 @@ class CoreVariantClass:
                          '14', '15', '16', '17', '18', '19', '20', '21', '22', 'X', 'Y', 'MT')
         if chrom is None:
             return chrom
-        value = chrom.strip().upper()
+        value = chrom.upper().strip()
         if not value in allowedChrom:
-            raise ValueError('Invalid chrom input: "{}". Allowed types: integer value of 1-22,X,Y or MT'.format(value))
+            raise ValueError('Invalid chrom input: "{}". Allowed types: integer value of 1-22,X,Y or MT'.format(chrom))
         return value
     
     def _validate_genomeBuild(self,genomeBuild):
@@ -203,7 +202,7 @@ class CoreVariantClass:
             return genomeBuild
         value = genomeBuild.strip()
         if not re.match(pat,value):
-            raise ValueError('Invalid genomeBuild input: "{}". ALlowed types: alphanumeric characters only.'.format(value))
+            raise ValueError('Invalid genomeBuild input: "{}". ALlowed types: alphanumeric characters only.'.format(genomeBuild))
         return genomeBuild.strip()
     
     def _validate_sequenceId(self,sequenceId):
@@ -224,7 +223,7 @@ class CoreVariantClass:
             return sequenceId
         value = sequenceId.strip()
         if not re.match(pat,value):
-            raise ValueError('Invalid sequenceId input: "{}".ALlowed types: alphanumeric characters only.'.format(value))
+            raise ValueError('Invalid sequenceId input: "{}".ALlowed types: alphanumeric characters only.'.format(sequenceId))
         return value
 
     def _is_valid_allelicState(self,allelicState):
@@ -239,10 +238,10 @@ class CoreVariantClass:
         Returns:
             str: One of the allowed types in lowercase.
         """
-        value = allelicState.strip().lower()
+        value = allelicState.lower().strip()
         allowed_allelicState = ('heterozygous','homozygous')
         if not value in allowed_allelicState:
-            raise ValueError('Invalid allelicState input: "{}". Allowed types: Heterozygous, Homozygous (Case Insensitive).'.format(allelicState))
+            raise ValueError('Invalid allelicState input: "{}". Allowed types: heterozygous, homozygous (Case Insensitive).'.format(allelicState))
         return value
 
     def _is_valid_geneSymbol(self,geneSymbol):
@@ -260,7 +259,7 @@ class CoreVariantClass:
         pat = r'^[a-zA-Z0-9]*$'
         value = geneSymbol.strip()
         if not re.match(pat,value):
-            raise ValueError('Invalid geneSymbol input: "{}". Allowed type: alphanumeric characters only.'.format(value))
+            raise ValueError('Invalid geneSymbol input: "{}". Allowed type: alphanumeric characters only.'.format(geneSymbol))
         return value
 
     def _is_valid_hgncId(self,hgncId):

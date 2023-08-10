@@ -7,7 +7,7 @@ class cvc_translate:
         self.translate = translate_var_from_api()
 
     def unnorm_cvc_to_spdi(self,unnorm_cvc,format_type=True):
-        """Translate unnormalized CoreVariantClass dictionary into a SPDI Expression string or dictionary.
+        """Translate unnormalized CoreVariantClass dictionary into a SPDI expression string or dictionary.
 
         Args:
             unnorm_cvc (dict): CoreVariantClass dictionary to be translated
@@ -17,10 +17,10 @@ class cvc_translate:
             ValueError: If the format_type is not a boolean value.
 
         Returns:
-            str or dict: if format_type is True a string SPDI expression is returned, else a dictionary SPDI expression is returned.
+            str or dict: If format_type is True a string SPDI expression is returned, else a dictionary SPDI expression is returned.
         """
         if not isinstance(format_type, bool):
-            raise ValueError('The format_type must be boolean (True or False).')
+            raise ValueError('The format_type must be boolean: True or False.')
 
         sequence = unnorm_cvc['sequenceId']
         position = unnorm_cvc['start']
@@ -48,10 +48,10 @@ class cvc_translate:
             ValueError: If the format_type is not a boolean value.
 
         Returns:
-            str or dict: if format_type is True a string SPDI expression is returned, else a dictionary SPDI expression is returned.
+            str or dict: If format_type is True a string SPDI expression is returned, else a dictionary SPDI expression is returned.
         """
         if not isinstance(format_type, bool):
-            raise ValueError('The format_type must be boolean (True or False).')
+            raise ValueError('The format_type must be boolean: True or False.')
         
         sequence = norm_cvc['position']['sequenceID']
         position = norm_cvc['position']['start']

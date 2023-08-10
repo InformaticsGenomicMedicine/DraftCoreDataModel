@@ -5,13 +5,13 @@ from src.core_variant import CoreVariantClass
 class request_local_api:
 
     def __init__(self,hostname='localhost',database='DemoCoreLiteDB',username='sal_test',pwd='admin',portId='5432'):
-        """Initialize the database connection attributes.
+        """Initialize the local database connection attributes.
 
         Args:
             hostname (str, optional): The hostname of the database server. Defaults to 'localhost'.
             database (str, optional): The name of the database. Defaults to 'DemoCoreLiteDB'.
             username (str, optional): The username of the database. Defaults to 'sal_test'.
-            pwd (str, optional): The passward of the database. Defaults to 'admin'.
+            pwd (str, optional): The password of the database. Defaults to 'admin'.
             portId (str, optional): The port number. Defaults to '5432'.
         """
 
@@ -25,7 +25,7 @@ class request_local_api:
         """Retrieve a specific row in the database. 
 
         Args:
-            rowId (int): The row number. 
+            rowId (int): The rowId number. 
 
         Returns:
             dict: A dictionary of the selected rowID from the database. 
@@ -52,7 +52,7 @@ class request_local_api:
             self.connect.close()
 
     def getAllExamples(self):
-        """Retrieve all examples from he database. 
+        """Retrieve all examples from the database. 
 
         Returns:
             list: A list containing all examples from the database.
@@ -74,7 +74,7 @@ class request_local_api:
         """Converting a specific row from the database to a CoreVariantClass object.
 
         Args:
-            rowId (int): The row number. 
+            rowId (int): The rowId number. 
 
         Returns:
             dict: A dictionary of the database result as a CoreVariantClass object. 

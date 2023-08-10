@@ -19,7 +19,7 @@ class translate_var_from_api:
         self.api = translate_api()
 
     def from_spdi_to_rightshift_hgvs(self,expression):
-        """ Translate SPDI expression to right-shift hgvs notation. (Using NCBI API)
+        """ Translate SPDI expression to right-shift HGVS expression. (Using NCBI API)
 
         Args:
             expression (string): SPDI expression 
@@ -33,7 +33,7 @@ class translate_var_from_api:
             return '{}. Expression Error: {}'.format(e,expression)
 
     def from_hgvs_to_spdi(self,expression):
-        """ Translate HGVS expression to SPDI expression.(Using NCBI API)
+        """ Translate HGVS expression to SPDI expression. (Using NCBI API)
 
         Args:
             expression (str): HGVS expression
@@ -54,7 +54,7 @@ class translate_var_from_api:
             expression (str): HGVS, gnomAD VCF or free text expression
 
         Returns:
-            dict: The VRS representation of the variation.
+            dict: The VRS object of the inputted variation.
         """
 
         try:
@@ -63,7 +63,7 @@ class translate_var_from_api:
             return '{}. Expression Error: {}'.format(e,expression)  
 
     def from_vrs_to_normalize_hgvs(self,vrs_object):
-        """ Convert a VRS object into a normalized HGVS expression. (Using the vrs translate module)
+        """ Convert a VRS object into a normalized HGVS expression. (Using the vrs translate.py module)
 
         Args:
             vrs_object (dict): VRS object
