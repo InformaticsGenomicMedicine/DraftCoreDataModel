@@ -1,0 +1,22 @@
+oringal_hgvs_expression_example,edited_hgvs_expression_expample,mutalyzer_original_hgvs_checker,mutalyzer_edited_hgvs_checker,biocommons_hgvs_original_hgvs_error_messages,biocommons_hgvs_edited_hgvs_error_messages
+NM_001267550.2:c.80006G>A (p.Ser26669Asn),NM_001267550.2:c.80006G>A,FALSE,TRUE,NM_001267550.2:c.80006G>A (p.Ser26669Asn): char 25: expected EOF,Passed
+c.80006G>A (p.Ser26669Asn),c.80006G>A,FALSE,FALSE,c.80006G>A (p.Ser26669Asn): char 1: expected a letter or digit,c.80006G>A: char 1: expected a letter or digit
+variant in the TTN(NM_001267550.2) gene,TTN(NM_001267550.2),FALSE,FALSE,"variant in the TTN(NM_001267550.2) gene: char 7: expected one of '(', '.', ':', '_', or a letter or digit","TTN(NM_001267550.2): char 6: expected one of ')', or a letter or digit"
+NM_001267550.2(TTN):c.80006G>A (p.Ser26669Asn),NM_001267550.2(TTN):c.80006G>A,FALSE,TRUE,NM_001267550.2(TTN):c.80006G>A (p.Ser26669Asn): char 30: expected EOF,Passed
+NM_001267550.2:c.80006G>A p.Ser26669Asn,NM_001267550.2:c.80006G>A,FALSE,TRUE,NM_001267550.2:c.80006G>A p.Ser26669Asn: char 25: expected EOF,Passed
+NM_001267550.2 p.Ser26669Asn,NM_001267550.2:p.Ser26669Asn,FALSE,TRUE,"NM_001267550.2 p.Ser26669Asn: char 14: expected one of '(', ':', or a digit",Accession (NM_001267550.2) is not compatible with variant type p
+NM_000059.4:c.5737T>C (p.Cys1913Arg),NM_000059.4:c.5737T>C,FALSE,TRUE,NM_000059.4:c.5737T>C (p.Cys1913Arg): char 21: expected EOF,No transcript definition for (tx_ac=NM_000059.4)
+c.5737T>C (p.C1913R) in BRCA2,c.5737T>C,FALSE,FALSE,c.5737T>C (p.C1913R) in BRCA2: char 1: expected a letter or digit,c.5737T>C: char 1: expected a letter or digit
+BRCA2:c.5737T>C p.C1913R,BRCA2:p.C1913R,FALSE,FALSE,BRCA2:c.5737T>C p.C1913R: char 15: expected EOF,Accession (BRCA2) is not known to be compatible with variant type p
+BRCA2 c.5737T>C,BRCA2:c.5737T>C,FALSE,FALSE,"BRCA2 c.5737T>C: char 5: expected one of '(', '.', ':', '_', or a letter or digit",Accession (BRCA2) is not known to be compatible with variant type c
+BRCA2:C1913R,BRCA2:C1913R,FALSE,FALSE,"BRCA2:C1913R: char 6: expected one of 'c', 'g', 'm', 'n', 'p', or 'r'","BRCA2:C1913R: char 6: expected one of 'c', 'g', 'm', 'n', 'p', or 'r'"
+NM_000371.4:c.220G>C (p.Glu74Lys),NM_000371.4:c.220G>C,FALSE,TRUE,NM_000371.4:c.220G>C (p.Glu74Lys): char 20: expected EOF,No transcript definition for (tx_ac=NM_000371.4)
+p.E74K (Glu74Lys) c.220G>C (g.29175102),c.220G>C,FALSE,FALSE,p.E74K (Glu74Lys) c.220G>C (g.29175102): char 1: expected a letter or digit,c.220G>C: char 1: expected a letter or digit
+Chr18:g.29175102,NC_000008.11:g.29175102,FALSE,TRUE,Chr18:g.29175102: char 17: end of input,NC_000008.11:g.29175102: char 24: end of input
+TTR E74K,TTR:E74K,FALSE,FALSE,"TTR E74K: char 3: expected one of '(', '.', ':', '_', or a letter or digit","TTR:E74K: char 4: expected one of 'c', 'g', 'm', 'n', 'p', or 'r'"
+TTR c.220G>C,TTR:c.220G>C,FALSE,FALSE,"TTR c.220G>C: char 3: expected one of '(', '.', ':', '_', or a letter or digit",Accession (TTR) is not known to be compatible with variant type c
+NM_000371.4:c.424G>A (p.Val142Ile),NM_000371.4:c.424G>A,FALSE,TRUE,NM_000371.4:c.424G>A (p.Val142Ile): char 20: expected EOF,No transcript definition for (tx_ac=NM_000371.4)
+p.V142I g.29178618,p.V142I,FALSE,FALSE,p.V142I g.29178618: char 1: expected a letter or digit,p.V142I: char 1: expected a letter or digit
+c.424G>A p.Val142Ile,c.424G>A,FALSE,FALSE,c.424G>A p.Val142Ile: char 1: expected a letter or digit,c.424G>A: char 1: expected a letter or digit
+TTR g.29178618,TTR:g.29178618,FALSE,FALSE,"TTR g.29178618: char 3: expected one of '(', '.', ':', '_', or a letter or digit",TTR:g.29178618: char 15: end of input
+GRCh37 Chr18:g.29178618,NC_000018.9:g.29178618,TRUE,TRUE,"GRCh37 Chr18:g.29178618: char 6: expected one of '(', '.', ':', '_', or a letter or digit",NC_000018.9:g.29178618: char 23: end of input
