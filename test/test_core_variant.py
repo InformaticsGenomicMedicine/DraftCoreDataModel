@@ -42,7 +42,7 @@ def test_cvc_initParams(origCoordSystem,seqType,refAllele,
         ('0-based interbase', 'DNA', 'A', 'C', 1, 100, 'Homozygous', 'BRCA1', 1234,'MT', 'GRCh37','NC_000004.11'),
         ('0-based interbase', 'RNA', 'A', 'C', 200, 600,'Heterozygous', 'ABCA1', 1234, '1', 'GRCh38','NC_000004.11'),
         ('0-based interbase','protein','ATC','TCG',500,2324,'homozygous','HOXB13',1123,'Y','GRCh28','NC_000004.11'),
-        # These two below should fail because these are not normalized dueo to the origCoordSystem
+        # These two below should fail because these are not normalized due to the origCoordSystem
         ('0-based counting', 'RNA', 'A', 'C', 200, 600,'heterozygous', 'ABCA1', 1234, '1', 'GRCh38','NC_000004.11'),
         ('1-based counting','protein','ATC','TCG',500,2324,'homozygous','HOXB13',1123,'Y','GRCh28','NC_000004.11')
     ]
