@@ -1,7 +1,7 @@
 from ga4gh.vrs.extras.variation_normalizer_rest_dp import VariationNormalizerRESTDataProxy
 from ga4gh.vrs.dataproxy import SeqRepoRESTDataProxy
 from ga4gh.vrs.extras.translator import Translator
-from src.api_class import translate_api
+from src.old_scripts.api_class import translate_api
 
 
 class translate_var_from_api:

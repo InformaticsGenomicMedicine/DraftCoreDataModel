@@ -1,5 +1,5 @@
 import pytest
-from src.database_extract import request_local_api
+from src.old_scripts.database_extract import request_local_api
 
 
 row_example_1 = [

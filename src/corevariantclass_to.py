@@ -1,4 +1,4 @@
-from src.translate_class import translate_var_from_api
+from src.old_scripts.translate_class import translate_var_from_api
 
 class cvc_translate:
 

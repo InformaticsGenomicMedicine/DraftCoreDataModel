@@ -1,5 +1,5 @@
 import pytest
-from src.api_class import translate_api
+from src.old_scripts.api_class import translate_api
 
 # Citation Link: 
     # Unchanged: https://www.ncbi.nlm.nih.gov/clinvar/variation/242687/?new_evidence=true
