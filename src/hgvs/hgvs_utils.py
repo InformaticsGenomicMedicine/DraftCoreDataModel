@@ -1,4 +1,3 @@
-from ga4gh.vrs.extras.variation_normalizer_rest_dp import VariationNormalizerRESTDataProxy
 from ga4gh.vrs.dataproxy import SeqRepoRESTDataProxy
 from ga4gh.vrs.extras.translator import Translator
 
@@ -23,7 +22,6 @@ class HGVSTranslate:
                  translate_sequence_identifiers=True,  # default
                  normalize=True,                       # default
                  identify=True)                        # default
-        self.vnorm = VariationNormalizerRESTDataProxy()
         self.var_norm_api = VarNormAPI()
         self.var_serv_api = VarServAPI()
 
