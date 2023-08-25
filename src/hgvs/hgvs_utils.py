@@ -8,11 +8,11 @@ import hgvs.validator
 import hgvs.normalizer
 from hgvs.exceptions import HGVSError
 
-from src.api.vicc_api import var_norm_api
-from src.api.ncbi_variation_services_api import var_serv_api
+from src.api.vicc_api import VarNormAPI
+from src.api.ncbi_variation_services_api import VarServAPI
 
 
-class hgvs_translate:
+class HGVSTranslate:
 
     def __init__(self):
         """ Initialize class with the API URL """
@@ -24,8 +24,8 @@ class hgvs_translate:
                  normalize=True,                       # default
                  identify=True)                        # default
         self.vnorm = VariationNormalizerRESTDataProxy()
-        self.var_norm_api = var_norm_api()
-        self.var_serv_api = var_serv_api()
+        self.var_norm_api = VarNormAPI()
+        self.var_serv_api = VarServAPI()
 
         self.hp = hgvs.parser.Parser()
         self.hdp = hgvs.dataproviders.uta.connect()

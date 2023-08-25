@@ -1,4 +1,4 @@
-from src.api.ncbi_variation_services_api import var_serv_api
+from src.api.ncbi_variation_services_api import VarServAPI
 
 class SPDI:
     def __init__(self,sequence,position,deletion,insertion):
@@ -6,20 +6,28 @@ class SPDI:
         self.position = position
         self.deletion = deletion
         self.insertion = insertion
-        self.val = var_serv_api()
-    
+        self.api = VarServAPI()
+
+        spdi = f"{sequence}:{position}:{deletion}:{insertion}"
+        try:
+            self.api.validate_spdi(spdi)
+        except Exception as e:
+            raise e
+
     def to_string(self):
         spdi_expression = f"{self.sequence}:{self.position}:{self.deletion}:{self.insertion}"
-        return self.val.validate_spdi(spdi_expression)
+        return spdi_expression 
 
     def to_dict(self):
-        
-        spdi_expression = f"{self.sequence}:{self.position}:{self.deletion}:{self.insertion}"
-        val_spdi_expression = self.val.validate_spdi(spdi_expression)
-        S,P,D,I = val_spdi_expression.split(':')
         return {
-            'sequence': S,
-            'position':P,
-            'deletion': D,
-            'insertion': I
+            'sequence': self.sequence,
+            'position':self.position,
+            'deletion': self.deletion,
+            'insertion': self.insertion
         }
+    
+        # self.val.validate_spdi(spdi_expression)
+
+        # spdi_expression = f"{self.sequence}:{self.position}:{self.deletion}:{self.insertion}"
+        # val_spdi_expression = self.val.validate_spdi(spdi_expression)
+        # S,P,D,I = val_spdi_expression.split(':')

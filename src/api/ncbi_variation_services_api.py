@@ -2,7 +2,7 @@
 import requests
 import json
 
-class var_serv_api:
+class VarServAPI:
 
     def __init__(self):
         """ Initialize class with the API URL """
@@ -54,7 +54,7 @@ class var_serv_api:
             try:
                 error_json = response.json()
                 error_message = error_json['error']['message']
-                raise requests.HTTPError(f'Failed to validate SPDI expression: {spdi_id}. Error Message: {error_message}')
+                raise requests.HTTPError(f'Failed to validate SPDI expression: {spdi_id}.') # Error Message: {error_message}
             except json.JSONDecodeError:
                 raise requests.HTTPError(f'Failed to parse error response as JSON: {response.text}')
 
@@ -80,7 +80,14 @@ class var_serv_api:
         if response.status_code == 200:
             return json.loads(response.text)['data']['hgvs']
         else:
-            raise requests.HTTPError(f'Request failed with status code: {response.status_code}')
+            try:
+                error_json = response.json()
+                error_message = error_json['error']['message']
+                raise requests.HTTPError(f'Failed to validate SPDI expression: {spdi_id}.') #Error Message: {error_message}
+            except json.JSONDecodeError:
+                raise requests.HTTPError(f'Failed to parse error response as JSON: {response.text}')
+        # else:
+        #     raise requests.HTTPError(f'Request failed with status code: {response.status_code}')
             
     def hgvs_to_spdi(self,hgvs_id, assembly ='GCF_000001405.38'):
         """Translate HGVS expression to SPDI expression.
@@ -106,4 +113,11 @@ class var_serv_api:
         if response.status_code == 200:
             return self.spdi_attribute_concat(response)
         else:
-            raise requests.HTTPError(f'Request failed with status code: {response.status_code}')
+            try:
+                error_json = response.json()
+                error_message = error_json['error']['message']
+                raise requests.HTTPError(f'Failed to validate SPDI expression: {hgvs_id}.') # Error Message: {error_message}
+            except json.JSONDecodeError:
+                raise requests.HTTPError(f'Failed to parse error response as JSON: {response.text}')
+        # else:
+        #     raise requests.HTTPError(f'Request failed with status code: {response.status_code}')

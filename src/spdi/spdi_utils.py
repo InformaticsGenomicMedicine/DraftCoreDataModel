@@ -1,11 +1,11 @@
-from src.api.ncbi_variation_services_api import var_serv_api
+from src.api.ncbi_variation_services_api import VarServAPI
 from ga4gh.vrs.extras.translator import Translator
 from ga4gh.vrs.dataproxy import SeqRepoRESTDataProxy
 
 import hgvs.parser
 
 #TODO: Class names should follow a camelCase 
-class spdi_translate:
+class SPDITranslate:
 
     def __init__(self):
 
@@ -15,7 +15,7 @@ class spdi_translate:
                  translate_sequence_identifiers=True,  # default
                  normalize=True,                       # default
                  identify=True)                        # default
-        self.var_serv_api = var_serv_api()
+        self.var_serv_api = VarServAPI()
         self.hp = hgvs.parser.Parser()
 
 #TODO: reWrite documentation 

@@ -3,7 +3,7 @@ import requests
 import json
 
 
-class var_norm_api:
+class VarNormAPI:
 
     def __init__(self):
         """ Initialize class with the API URL """

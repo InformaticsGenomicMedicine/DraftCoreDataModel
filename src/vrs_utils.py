@@ -1,3 +1,5 @@
+#TODO: I dont know if we really need this class im trying to think on how we can make it work.
+
 from ga4gh.vrs.extras.variation_normalizer_rest_dp import VariationNormalizerRESTDataProxy
 from ga4gh.vrs.dataproxy import SeqRepoRESTDataProxy
 from ga4gh.vrs.extras.translator import Translator

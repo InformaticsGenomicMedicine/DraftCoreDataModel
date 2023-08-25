@@ -11,37 +11,22 @@ A few things to note:
 * File: notebooks/databse_examples.ipynb is currently not working because it is configured to my local database.
 
 
+#### NOTE: This is the current structure
 
 src/
 ├── spdi/
 │   ├── __init__.py
-│   ├── spdi.py
-│   ├── spdi_utils.py
-│   ├── spdi_constants.py
-│   ├── spdi_exceptions.py
-│   ├── spdi_data.py
-│   └── spdi_tests.py
-├── vrs/
-│   ├── __init__.py
-│   ├── vrs.py
-│   ├── vrs_utils.py
-│   ├── vrs_constants.py
-│   ├── vrs_exceptions.py
-│   ├── vrs_data.py
-│   └── vrs_tests.py
+│   ├── spdi_class.py
+│   └── spdi_utils.py
+|
 ├── hgvs/
 │   ├── __init__.py
-│   ├── hgvs.py
 │   ├── hgvs_utils.py
-│   ├── hgvs_constants.py
-│   ├── hgvs_exceptions.py
-│   ├── hgvs_data.py
-│   └── hgvs_tests.py
+│   └── hgvs_validation.py
 ├── api/
 │   ├── __init__.py
-│   ├── api_client.py
-│   ├── vrs_api.py
-│   ├── hgvs_api.py
-│   ├── spdi_api.py
-│   └── api_tests.py
+│   ├── ncbi_variation_services_api.py.py
+│   └── vicc_api.py
+├── vrs---?????
+|
 └── main.py
