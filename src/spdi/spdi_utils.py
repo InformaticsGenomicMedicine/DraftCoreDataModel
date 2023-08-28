@@ -38,7 +38,7 @@ class SPDITranslate:
                 return self.var_serv_api.spdi_to_hgvs(spdi_expression)
             else:
                 hgvs_expression = self.var_serv_api.spdi_to_hgvs(spdi_expression)
-                return self.hp(hgvs_expression)
+                return self.hp.parse_hgvs_variant(hgvs_expression)
         except Exception as e: 
             return '{}. Expression Error: {}'.format(e,spdi_expression)
 
