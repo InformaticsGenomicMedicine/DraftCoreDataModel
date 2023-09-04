@@ -5,17 +5,20 @@ import hgvs.dataproviders.uta
 import hgvs.validator
 from hgvs.exceptions import HGVSError
 
-def validate_hgvs_variants(hp,vr,hgvs_list):
+def validate_hgvs_variants(hp, vr, hgvs_list):
     val_output = []
 
     for hgvs in hgvs_list:
         try:
-            parsed_variant = hp.parse_hgvs_variant(hgvs)
-            vr.validate(parsed_variant)
-            val_output.append(True)
+            if isinstance(hgvs, str):
+                parsed_variant = hp.parse_hgvs_variant(hgvs)
+                vr.validate(parsed_variant)
+                val_output.append(True)
+            else:
+                val_output.append(False)  
         except HGVSError as e:
-            val_output.append(e) 
-    
+            val_output.append(e)
+            
     return val_output
 
 def main():
@@ -35,7 +38,7 @@ def main():
         input_data = pd.read_excel(args.input_file)
     except Exception:
         try:
-            input_data = pd.read_csv(args.input_file, sep=None, engine="python")
+            input_data = pd.read_csv(args.input_file, sep=",")
         except Exception:
             try:
                 input_data = pd.read_csv(args.input_file, sep="\t")

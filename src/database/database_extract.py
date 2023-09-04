@@ -4,16 +4,7 @@ from src.core_variant import CoreVariantClass
 
 class request_local_api:
 
-    def __init__(self,hostname='localhost',database='DemoCoreLiteDB',username='sal_test',pwd='admin',portId='5432'):
-        """Initialize the local database connection attributes.
-
-        Args:
-            hostname (str, optional): The hostname of the database server. Defaults to 'localhost'.
-            database (str, optional): The name of the database. Defaults to 'DemoCoreLiteDB'.
-            username (str, optional): The username of the database. Defaults to 'sal_test'.
-            pwd (str, optional): The password of the database. Defaults to 'admin'.
-            portId (str, optional): The port number. Defaults to '5432'.
-        """
+    def __init__(self,hostname='',database='',username='',pwd='',portId=''):
 
         self.hostname = hostname
         self.database = database

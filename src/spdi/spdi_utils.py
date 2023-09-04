@@ -4,7 +4,6 @@ from ga4gh.vrs.dataproxy import SeqRepoRESTDataProxy
 
 import hgvs.parser
 
-#TODO: Class names should follow a camelCase 
 class SPDITranslate:
 
     def __init__(self):
