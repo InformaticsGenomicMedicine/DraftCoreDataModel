@@ -22,45 +22,62 @@ class CoreVariantClass:
                                 'sequenceId':sequenceId,
                                 'extra':kwargs }
         
-        self.origCoordSystem = self._validate_origCoordSystem()
-        self.seqType = self._validate_seqType()
+        self._validate_input()
+        self.origCoordSystem = self._validate_orig_coord_system()
+        self.seqType = self._validate_seq_type()
         self.refAllele = self._validate_ref_alt_allele(refAllele,'refAllele')
         self.altAllele = self._validate_ref_alt_allele(altAllele,'altAllele')
         self.start = self._validate_coordinates(start,'start')
         self.end =  self._validate_coordinates(end,'end')
-        self._validate_startCoord_endCoord()
-        self.allelicState = self._is_valid_allelicState()
-        self.geneSymbol = geneSymbol
-        self.hgncId = self._is_valid_hgncId()
+        self._validate_start_coord_end_coord()
+        self.allelicState = self._is_valid_allelic_state()
+        self.geneSymbol = self._is_valid_gene_symbol()
+        self.hgncId = self._is_valid_hgnc_id()
         self.chrom = self._validate_chrom()
-        self.genomeBuild = self._validate_genomeBuild()
-        self.sequenceId = self._validate_sequenceId()
+        self.genomeBuild = self._validate_genome_build()
+        self.sequenceId = self._validate_sequence_id()
         self.extra = kwargs
 
-        if not ((self.chrom and self.genomeBuild) or self.sequenceId):
-            raise ValueError("Required to have both (chrom AND genomeBuild) or sequenceId") 
-        
+        # if not ((self.chrom and self.genomeBuild) or self.sequenceId):
+        #     raise ValueError("Required to have both (chrom AND genomeBuild) or sequenceId") 
+
     def __repr__(self):
+        """_summary_
+
+        Returns:
+            _type_: _description_
+        """
         return f"CoreVariantClass({self.origCoordSystem},{self.seqType},{self.refAllele},{self.altAllele},{self.start},{self.end},{self.allelicState},{self.geneSymbol},{self.hgncId},{self.chrom},{self.genomeBuild},{self.sequenceId})"
-    
+
     def as_dict(self):
+        """_summary_
+
+        Returns:
+            _type_: _description_
+        """
         return {'origCoordSystem':self.origCoordSystem,'seqType':self.seqType,
                 'refAllele':self.refAllele,'altAllele':self.altAllele,
                 'start':self.start,'end':self.end,'allelicState':self.allelicState,
                 'geneSymbol':self.geneSymbol,'hgncId':self.hgncId,'chrom':self.chrom,
                 'genomeBuild':self.genomeBuild,'sequenceId':self.sequenceId,'extra':self.extra}
+
     def as_json(self):
-        return json.dumps(self.as_dict,indent = 4)
+        """_summary_
+
+        Returns:
+            _type_: _description_
+        """
+        return json.dumps(self.as_dict(), indent=4) 
     
-    def initParams(self):
+    def init_params(self):
         """ A dictionary of the initial parameters. 
 
         Returns:
             dict: A dictionary (Key: Initial parameters, Values: parameters values). 
         """
         return self.initParamValues
-    
-    def normalizedData(self):
+
+    def normalized_data(self):
         """A dictionary of the normalized data. This method checks to see if the initial parameters can be normalized and validated. 
 
         Raises:
@@ -86,8 +103,13 @@ class CoreVariantClass:
                 }
         else:
             raise ValueError('Invalid origCoordSystem. Data can not be normalized')
-    
-    def _validate_origCoordSystem(self):
+        
+    #TODO: think of a better name
+    def _validate_input(self):
+        if not ((self.chrom and self.genomeBuild) or self.sequenceId):
+            raise ValueError("Required to have both (chrom AND genomeBuild) or sequenceId")   
+              
+    def _validate_orig_coord_system(self):
         """ Validate origCoordSystem input. Method checks if the provided origCoordSystem
         is one of the allowed types: ('0-based interbase','0-based counting','1-based counting').
 
@@ -105,8 +127,8 @@ class CoreVariantClass:
         if value not in allowedOrigCoordSystem:
             raise ValueError(f'Invalid origCoordSystem input: "{self.origCoordSystem}". Allowed types: {allowedOrigCoordSystem}.')
         self.origCoordSystem = value
-    
-    def _validate_seqType(self):
+
+    def _validate_seq_type(self):
         """ Validate seqType input. Method checks if the provided seqType is one of the allowed types: ('DNA','RNA','PROTEIN'). 
 
         Args:
@@ -152,7 +174,7 @@ class CoreVariantClass:
             if re.match(val,value):
                 return value.upper()
         raise ValueError(f'Invalid {attributeName} input: "{value}". Allowed types: string or empty string.')
-        
+
     def _validate_coordinates(self, value, attributeName):
         """ Validate the coordinate input. Method checks if the value is an integer and is greater than or equal to 0.
 
@@ -171,7 +193,7 @@ class CoreVariantClass:
         if value < 0:
             raise ValueError(f'Invalid {attributeName} input: "{value}": is not greater then or equal to 0.')
 
-    def _validate_startCoord_endCoord(self):
+    def _validate_start_coord_end_coord(self):
         """ Validate the start and end coordinate input. Method checks if the start coordinate is grater than or equal to the 
         end coordinate. 
 
@@ -181,7 +203,7 @@ class CoreVariantClass:
         if self.start >= self.end:
             raise ValueError(f"The start coordinate value: {self.start} can not be greater than or equal to the end coordinate value {self.end}.")
 
-    def _is_valid_allelicState(self,allelicState):
+    def _is_valid_allelic_state(self,allelicState):
         """Validate allelicState input. Method checks if the provided allelicState is one of the allowed types: ('heterozygous','homozygous').
 
         Args:
@@ -199,7 +221,7 @@ class CoreVariantClass:
             raise ValueError(f'Invalid allelicState input: "{allelicState}". Allowed types: {allowed_allelicState} (Case Insensitive).')
         self.allelicState = value
 
-    def _is_valid_geneSymbol(self,geneSymbol):
+    def _is_valid_gene_symbol(self,geneSymbol):
         """Validate geneSymbol input. Method checks if input value matches regular expression pattern ^[a-zA-Z0-9]*$ .
 
         Args:
@@ -217,7 +239,7 @@ class CoreVariantClass:
             raise ValueError(f'Invalid geneSymbol input: "{geneSymbol}". Allowed type: alphanumeric characters only.')
         self.geneSymbol = value
 
-    def _is_valid_hgncId(self):
+    def _is_valid_hgnc_id(self):
         """ Validate the hgncId input. Method checks if the value is an integer and is greater than 1.
 
         Args:
@@ -250,7 +272,7 @@ class CoreVariantClass:
         if self.chrom is None:
             return self.chrom
         
-        value = chrom.upper().strip()
+        value = self.chrom.upper().strip()
 
         allowedChrom = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', 
                      '14', '15', '16', '17', '18', '19', '20', '21', '22', 'X', 'Y', 'MT')
@@ -267,7 +289,7 @@ class CoreVariantClass:
             raise ValueError(f'Invalid chrom input:"{self.chrom}". Allowed types: {allowedChrom}')
         self.chrom = chromValue
     
-    def _validate_genomeBuild(self):
+    def _validate_genome_build(self):
         """ Validate genomeBuild input. Method checks if input value matches regular expression pattern ^[a-zA-Z0-9]*$ or None.
 
         Args:
@@ -288,7 +310,7 @@ class CoreVariantClass:
             raise ValueError(f'Invalid genomeBuild input: "{self.genomeBuild}". ALlowed types: None or string')
         self.genomeBuild = value
     
-    def _validate_sequenceId(self):
+    def _validate_sequence_id(self):
         """ Validate sequenceId input. Method checks if input value matches regular expression pattern ^[a-zA-Z0-9_.]+$ or None.
 
         Args:
