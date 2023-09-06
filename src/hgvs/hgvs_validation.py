@@ -6,30 +6,34 @@ import hgvs.validator
 from hgvs.exceptions import HGVSError
 
 class HGVSValidator:
-    def __init__(self,input_file,output_file,example_column):
+    def __init__(self,input_file,output_file,example_column,human_curated):
         self.input_file = input_file
         self.output_file = output_file
         self.example_column = example_column
+        self.human_curated = human_curated
 
         self.hp = hgvs.parser.Parser()
         self.hdp = hgvs.dataproviders.uta.connect()
         self.vr = hgvs.validator.Validator(hdp=self.hdp)
 
     def _validate_hgvs_variants(self,hgvsExpressions):
-        validated_results = []
+        validate_results = []
+        error_messages = []
 
         for hgvs in hgvsExpressions:
             try:
                 if isinstance(hgvs, str):
                     parsed_variant = self.hp.parse_hgvs_variant(hgvs)
                     self.vr.validate(parsed_variant)
-                    validated_results.append(True)
+                    validate_results.append('pass')
+                    error_messages.append('')
                 else:
-                    validated_results.append(False)
+                    validate_results.append('fail')
+                    error_messages.append('')
             except HGVSError as e:
-                validated_results.append(e)
-                
-        return validated_results
+                validate_results.append('fail')
+                error_messages.append(e)
+        return validate_results,error_messages
     
     def load_data(self):
         try:
@@ -46,11 +50,13 @@ class HGVSValidator:
         
         input_data[self.example_column] = input_data[self.example_column].str.strip()
         hgvsExamples = input_data[self.example_column]
-        validation_results = self._validate_hgvs_variants(hgvsExamples)
+        validate_results, error_messages = self._validate_hgvs_variants(hgvsExamples)
 
         hgvs_results = {
             'HGVS': hgvsExamples,
-            'Validator': validation_results
+            'human_curated_expecated_pass_fail': input_data[self.human_curated],
+            'hgvs_validation_pass_fail': validate_results,
+            'error_message': error_messages
         }
 
         result_df = pd.DataFrame(hgvs_results)
@@ -63,9 +69,10 @@ if __name__ == "__main__":
     parser.add_argument("input_file", help="Path to the input file")
     parser.add_argument("output_file", help="Path to the output CSV file")
     parser.add_argument("example_column", help="Name of the column containing HGVS examples")
+    parser.add_argument('human_curated',help = 'Name of the column containing human curated results')
 
     args = parser.parse_args()
 
-    hgvs_validator = HGVSValidator(args.input_file,args.output_file,args.example_column)
+    hgvs_validator = HGVSValidator(args.input_file,args.output_file,args.example_column,args.human_curated)
     data = hgvs_validator.load_data()
     hgvs_validator.validation_results(data)
