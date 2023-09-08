@@ -40,23 +40,19 @@ class CoreVariantClass:
         self.sequenceId = self._validate_sequence_id(sequenceId)
         self.extra = kwargs
 
-
-        # if not ((self.chrom and self.genomeBuild) or self.sequenceId):
-        #     raise ValueError("Required to have both (chrom AND genomeBuild) or sequenceId") 
-
     def __repr__(self):
-        """_summary_
+        """Returns a string representation of the CoreVariantClass object.
 
         Returns:
-            _type_: _description_
+            str: A string representation of the CoreVariantClass object.
         """
         return f"CoreVariantClass({self.origCoordSystem},{self.seqType},{self.refAllele},{self.altAllele},{self.start},{self.end},{self.allelicState},{self.geneSymbol},{self.hgncId},{self.chrom},{self.genomeBuild},{self.sequenceId},{self.extra})"
 
     def as_dict(self):
-        """_summary_
+        """Converts CoreVariantClass object to a dictionary representation.
 
         Returns:
-            _type_: _description_
+            dict: A dictionary representation of the object 
         """
         return {'origCoordSystem':self.origCoordSystem,'seqType':self.seqType,
                 'refAllele':self.refAllele,'altAllele':self.altAllele,
@@ -65,10 +61,10 @@ class CoreVariantClass:
                 'genomeBuild':self.genomeBuild,'sequenceId':self.sequenceId,'extra':self.extra}
 
     def as_json(self):
-        """_summary_
+        """Converts CoreVariantClass object to a JSON string representation. 
 
         Returns:
-            _type_: _description_
+            str: A JSON formatted string of the CoreVariantClass object.
         """
         return json.dumps(self.as_dict()) 
     
@@ -109,6 +105,16 @@ class CoreVariantClass:
         
     #TODO: think of a better method name
     def _validate_input(self,chrom,genomeBuild,sequenceId):
+        """_summary_
+
+        Args:
+            chrom (str): _description_
+            genomeBuild (str): _description_
+            sequenceId (str): _description_
+
+        Raises:
+            ValueError: _description_
+        """
         if not ((chrom and genomeBuild) or sequenceId):
             raise ValueError("Required to have both (chrom AND genomeBuild) or sequenceId")   
               
@@ -148,7 +154,8 @@ class CoreVariantClass:
         if value not in allowedSeqType:
             raise ValueError(f'Invalid seqType input: "{seqType}". Allowed types: {allowedSeqType} (Case Insensitive).') 
         return value
-    
+
+    # TODO: Edit doc strings 
     def _validate_reference_allele(self,value,attributeName):
         """ Validate the refAllele input. Method checks if input value matches regular expression pattern (^[a-zA-Z0-9\s]*$).
         
@@ -170,8 +177,7 @@ class CoreVariantClass:
             'RNA':r'^[ACGU]*$)',
             'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]*$'
         }
-
-
+        
         if re.match(emp_pat,value,re.IGNORECASE):
             return '' 
         
@@ -179,7 +185,8 @@ class CoreVariantClass:
             if not re.match(val,value):
                 raise ValueError(f'Invalid {attributeName} input: "{value}". Allowed types: string or empty string.')
             return value.upper()
-        
+
+    # TODO: Edit doc strings 
     def _validate_alternative_allele(self,value,attributeName):
         """ Validate the altAllele input. Method checks if input value matches regular expression pattern (^[a-zA-Z0-9\s]*$).
         
@@ -335,6 +342,7 @@ class CoreVariantClass:
             raise ValueError(f'Invalid chrom input:"{chrom}". Allowed types: {allowedChrom}')
         return chromValue
     
+    # TODO: Edit doc strings 
     def _validate_genome_build(self,genomeBuild):
         """ Validate genomeBuild input. Method checks if input value matches regular expression pattern ^[a-zA-Z0-9]*$ or None.
 
