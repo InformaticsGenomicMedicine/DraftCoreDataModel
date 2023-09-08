@@ -22,12 +22,13 @@ class CoreVariantClass:
                                 'genomeBuild':genomeBuild, 
                                 'sequenceId':sequenceId,
                                 'extra':kwargs }
-        # validating parameters
+
+        # saving validating parameters
         self._validate_input(chrom,genomeBuild,sequenceId)
         self.origCoordSystem = self._validate_orig_coord_system(origCoordSystem)
         self.seqType = self._validate_seq_type(seqType)
-        self.refAllele = self._validate_ref_alt_allele(refAllele,'refAllele')
-        self.altAllele = self._validate_ref_alt_allele(altAllele,'altAllele')
+        self.refAllele = self._validate_reference_allele(refAllele,'refAllele')
+        self.altAllele = self._validate_alternative_allele(altAllele,'altAllele')
         self.start = self._validate_coordinates(start,'start')
         self.end =  self._validate_coordinates(end,'end')
         self._validate_start_coord_end_coord()
@@ -104,7 +105,7 @@ class CoreVariantClass:
                 'sequenceId':self.sequenceId}
                 }
         else:
-            raise ValueError('Invalid origCoordSystem. Data can not be normalized')
+            raise ValueError('Data can not be normalized, origCoordSystem is not "0-based interbase".')
         
     #TODO: think of a better method name
     def _validate_input(self,chrom,genomeBuild,sequenceId):
@@ -147,9 +148,40 @@ class CoreVariantClass:
         if value not in allowedSeqType:
             raise ValueError(f'Invalid seqType input: "{seqType}". Allowed types: {allowedSeqType} (Case Insensitive).') 
         return value
-    #TODO: This needs to be able to support spdi 
-    def _validate_ref_alt_allele(self,value,attributeName):
-        """ Validate the refAllele and the altAllele input. Method checks if input value matches regular expression pattern (^[a-zA-Z0-9\s]*$).
+    
+    def _validate_reference_allele(self,value,attributeName):
+        """ Validate the refAllele input. Method checks if input value matches regular expression pattern (^[a-zA-Z0-9\s]*$).
+        
+        Args:
+            value (str): The reference or alternative allele to be validated.
+            attributeName (str): The name of the attribute that is being validated. Used for the error message.
+
+        Raises:
+            ValueError: If the provided value does not match regular expression pattern. 
+
+        Returns:
+            str: The validated reference or alternative allele input.
+        """
+        emp_pat = '^$'
+
+        pat = {
+            'digit':r'^\d+$',
+            'DNA':r'^[ACGT]*$',
+            'RNA':r'^[ACGU]*$)',
+            'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]*$'
+        }
+
+
+        if re.match(emp_pat,value,re.IGNORECASE):
+            return '' 
+        
+        for val in pat.values():
+            if not re.match(val,value):
+                raise ValueError(f'Invalid {attributeName} input: "{value}". Allowed types: string or empty string.')
+            return value.upper()
+        
+    def _validate_alternative_allele(self,value,attributeName):
+        """ Validate the altAllele input. Method checks if input value matches regular expression pattern (^[a-zA-Z0-9\s]*$).
         
         Args:
             value (str): The reference or alternative allele to be validated.
@@ -219,6 +251,9 @@ class CoreVariantClass:
         Returns:
             str: One of the allowed types in lowercase.
         """
+        if allelicState is None:
+            return allelicState
+        
         value = allelicState.lower().strip()
         allowed_allelicState = ('heterozygous','homozygous')
         if value not in allowed_allelicState:
@@ -237,6 +272,9 @@ class CoreVariantClass:
         Returns:
             str: The validated geneSymbol value input. 
         """
+        if geneSymbol is None:
+            return geneSymbol
+        
         pat = r'^[a-zA-Z0-9]*$'
         value = geneSymbol.strip()
         if not re.match(pat,value):
@@ -255,6 +293,9 @@ class CoreVariantClass:
         Returns:
             int:  The validated hgncId value input. 
         """
+        if hgncId is None:
+            return hgncId
+
         if not isinstance(hgncId,int):
             raise ValueError(f'Invalid hgncId input: "{hgncId}": is not an integer.')
         if hgncId < 1:
