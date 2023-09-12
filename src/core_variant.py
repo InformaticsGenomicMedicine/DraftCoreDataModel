@@ -1,7 +1,7 @@
 import re 
 import json
 class CoreVariantClass:
-    
+
     """ The CoreVariantClass is draft schema."""
 
     def __init__(self, origCoordSystem, seqType: str, refAllele: str,
@@ -155,7 +155,7 @@ class CoreVariantClass:
             raise ValueError(f'Invalid seqType input: "{seqType}". Allowed types: {allowedSeqType} (Case Insensitive).') 
         return value
 
-    # TODO: Edit doc strings 
+    # TODO: Edit doc strings
     def _validate_reference_allele(self,value,attributeName):
         """ Validate the refAllele input. Method checks if input value matches regular expression pattern (^[a-zA-Z0-9\s]*$).
         
@@ -169,22 +169,27 @@ class CoreVariantClass:
         Returns:
             str: The validated reference or alternative allele input.
         """
-        emp_pat = '^$'
+        val = value.upper().strip()
 
         pat = {
+            'emp_pat':'^$',
             'digit':r'^\d+$',
             'DNA':r'^[ACGT]*$',
-            'RNA':r'^[ACGU]*$)',
+            'RNA':r'^[ACGU]*$',
             'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]*$'
         }
         
-        if re.match(emp_pat,value,re.IGNORECASE):
+        if re.match(pat['emp_pat'],val,re.IGNORECASE):
             return '' 
         
-        for val in pat.values():
-            if not re.match(val,value):
-                raise ValueError(f'Invalid {attributeName} input: "{value}". Allowed types: string or empty string.')
-            return value.upper()
+        if self.seqType in ('DNA', 'RNA'):
+            if not (re.match(pat[self.seqType], val) or re.match(pat['digit'], val)):
+                raise ValueError(f'Invalid {attributeName} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]} or {pat["digit"]}).')
+            return val
+        elif self.seqType == 'PROTEIN':
+            if not re.match(pat['PROTEIN'],val):
+                raise ValueError(f'Invalid {attributeName} input: "{val}". Value need to match regular expression patter: ({pat["PROTEIN"]}).')
+            return val
 
     # TODO: Edit doc strings 
     def _validate_alternative_allele(self,value,attributeName):
@@ -200,22 +205,23 @@ class CoreVariantClass:
         Returns:
             str: The validated reference or alternative allele input.
         """
-        emp_pat = '^$'
+        val = value.upper().strip()
 
         pat = {
+            'emp_pat': '^$',
             'DNA':r'^[ACGT]*$',
             'RNA':r'^[ACGU]*$)',
             'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]*$'
         }
 
-        #TODO: double check
-        if re.match(emp_pat,value,re.IGNORECASE):
-            return '' # raise ValueError(f'{attributeName} not a proper empty string.')
-        
-        for val in pat.values():
-            if not re.match(val,value):
-                raise ValueError(f'Invalid {attributeName} input: "{value}". Allowed types: string or empty string.')
-            return value.upper()
+        if re.match(pat['emp_pat'],value,re.IGNORECASE):
+            return '' 
+        if self.seqType in ('DNA','RNA'):
+            if not re.match(pat[self.seqType]):
+                raise ValueError(f'Invalid {attributeName} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]}).')
+        elif self.seqType == 'PROTEIN':
+            if not re.match(pat['PROTEIN']):
+                raise ValueError(f'Invalid {attributeName} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]}).')
         
     def _validate_coordinates(self, value, attributeName):
         """ Validate the coordinate input. Method checks if the value is an integer and is greater than or equal to 0.
