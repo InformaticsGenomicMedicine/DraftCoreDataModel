@@ -180,8 +180,7 @@ class CoreVariantClass:
         }
         
         if re.match(pat['emp_pat'],val,re.IGNORECASE):
-            return '' 
-        
+            return ''        
         if self.seqType in ('DNA', 'RNA'):
             if not (re.match(pat[self.seqType], val) or re.match(pat['digit'], val)):
                 raise ValueError(f'Invalid {attributeName} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]} or {pat["digit"]}).')
@@ -210,18 +209,21 @@ class CoreVariantClass:
         pat = {
             'emp_pat': '^$',
             'DNA':r'^[ACGT]*$',
-            'RNA':r'^[ACGU]*$)',
+            'RNA':r'^[ACGU]*$',
             'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]*$'
         }
 
         if re.match(pat['emp_pat'],value,re.IGNORECASE):
             return '' 
+    
         if self.seqType in ('DNA','RNA'):
-            if not re.match(pat[self.seqType]):
+            if not re.match(pat[self.seqType],val):
                 raise ValueError(f'Invalid {attributeName} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]}).')
+            return val
         elif self.seqType == 'PROTEIN':
-            if not re.match(pat['PROTEIN']):
+            if not re.match(pat['PROTEIN'],val):
                 raise ValueError(f'Invalid {attributeName} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]}).')
+            return val
         
     def _validate_coordinates(self, value, attributeName):
         """ Validate the coordinate input. Method checks if the value is an integer and is greater than or equal to 0.
