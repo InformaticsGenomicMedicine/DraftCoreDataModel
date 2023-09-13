@@ -23,12 +23,11 @@ class CoreVariantClass:
                                 'sequenceId':sequenceId,
                                 'extra':kwargs }
 
-        # saving validating parameters
-        self._validate_input(chrom,genomeBuild,sequenceId)
+        self._validate_input_conditions(chrom,genomeBuild,sequenceId)
         self.origCoordSystem = self._validate_orig_coord_system(origCoordSystem)
         self.seqType = self._validate_seq_type(seqType)
-        self.refAllele = self._validate_reference_allele(refAllele,'refAllele')
-        self.altAllele = self._validate_alternative_allele(altAllele,'altAllele')
+        self.refAllele = self._validate_reference_allele(refAllele)
+        self.altAllele = self._validate_alternative_allele(altAllele)
         self.start = self._validate_coordinates(start,'start')
         self.end =  self._validate_coordinates(end,'end')
         self._validate_start_coord_end_coord()
@@ -52,7 +51,7 @@ class CoreVariantClass:
         """Converts CoreVariantClass object to a dictionary representation.
 
         Returns:
-            dict: A dictionary representation of the object 
+            dict: A dictionary representation of the object. 
         """
         return {'origCoordSystem':self.origCoordSystem,'seqType':self.seqType,
                 'refAllele':self.refAllele,'altAllele':self.altAllele,
@@ -66,7 +65,7 @@ class CoreVariantClass:
         Returns:
             str: A JSON formatted string of the CoreVariantClass object.
         """
-        return json.dumps(self.as_dict()) 
+        return json.dumps(self.as_dict(),indent=2) 
     
     def init_params(self):
         """ A dictionary of the initial parameters. 
@@ -77,7 +76,7 @@ class CoreVariantClass:
         return self.initParamValues
 
     def normalized_data(self):
-        """A dictionary of the normalized data. This method checks to see if the initial parameters can be normalized and validated. 
+        """A dictionary of the normalized data. This method checks to see if the initial parameters can be normalized. 
 
         Raises:
             ValueError: If the origCoordSystem is not "0-based interbase".
@@ -101,19 +100,19 @@ class CoreVariantClass:
                 'sequenceId':self.sequenceId}
                 }
         else:
-            raise ValueError('Data can not be normalized, origCoordSystem is not "0-based interbase".')
-        
-    #TODO: think of a better method name
-    def _validate_input(self,chrom,genomeBuild,sequenceId):
-        """_summary_
+            raise ValueError('Data can not be normalized, origCoordSystem is not set to "0-based interbase".')
+
+    def _validate_input_conditions(self,chrom,genomeBuild,sequenceId):
+        """ Validate the required conditions for chrom, genomeBuild, and sequenceId. Requirements include
+        that the user inputs either both "chrom" and "genomeBuild" or just "sequenceId.
 
         Args:
-            chrom (str): _description_
-            genomeBuild (str): _description_
-            sequenceId (str): _description_
+            chrom (str): Chromosome input.
+            genomeBuild (str): Genomic Build input.
+            sequenceId (str): Sequence ID input.
 
         Raises:
-            ValueError: _description_
+            ValueError: If the input arguments do not meet the required conditions.
         """
         if not ((chrom and genomeBuild) or sequenceId):
             raise ValueError("Required to have both (chrom AND genomeBuild) or sequenceId")   
@@ -155,74 +154,79 @@ class CoreVariantClass:
             raise ValueError(f'Invalid seqType input: "{seqType}". Allowed types: {allowedSeqType} (Case Insensitive).') 
         return value
 
-    # TODO: Edit doc strings
-    def _validate_reference_allele(self,value,attributeName):
-        """ Validate the refAllele input. Method checks if input value matches regular expression pattern (^[a-zA-Z0-9\s]*$).
-        
+    def _validate_reference_allele(self,refAllele):
+        """ Validate the refAllele input. Method checks the input against defined regular expression patterns based on the sequence type. 
+        The allowed sequence types and corresponding patterns are as follows:
+            - DNA: Only contains characters ('A', 'C', 'G', and 'T') or digits. 
+            - RNA: Only contains characters ('A', 'C', 'G', and 'U') or digits.
+            - PROTEIN: Only contains characters representing amino acids.
+            
         Args:
-            value (str): The reference or alternative allele to be validated.
-            attributeName (str): The name of the attribute that is being validated. Used for the error message.
+            refAllele (str): The reference allele to be validated.
 
         Raises:
-            ValueError: If the provided value does not match regular expression pattern. 
+            ValueError: If the provided value does not match the expected pattern for the given sequence type. 
 
         Returns:
-            str: The validated reference or alternative allele input.
+            str: The validated reference allele input. 
         """
-        val = value.upper().strip()
+
+        val = refAllele.upper().strip()
 
         pat = {
             'emp_pat':'^$',
             'digit':r'^\d+$',
             'DNA':r'^[ACGT]*$',
             'RNA':r'^[ACGU]*$',
-            'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]*$'
+            'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]$'
         }
         
         if re.match(pat['emp_pat'],val,re.IGNORECASE):
-            return ''        
+            return ''
         if self.seqType in ('DNA', 'RNA'):
             if not (re.match(pat[self.seqType], val) or re.match(pat['digit'], val)):
-                raise ValueError(f'Invalid {attributeName} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]} or {pat["digit"]}).')
+                raise ValueError(f'Invalid {refAllele} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]} or {pat["digit"]}).')
             return val
         elif self.seqType == 'PROTEIN':
             if not re.match(pat['PROTEIN'],val):
-                raise ValueError(f'Invalid {attributeName} input: "{val}". Value need to match regular expression patter: ({pat["PROTEIN"]}).')
+                raise ValueError(f'Invalid {refAllele} input: "{val}". Value need to match regular expression patter: ({pat["PROTEIN"]}).')
             return val
 
-    # TODO: Edit doc strings 
-    def _validate_alternative_allele(self,value,attributeName):
-        """ Validate the altAllele input. Method checks if input value matches regular expression pattern (^[a-zA-Z0-9\s]*$).
-        
+    def _validate_alternative_allele(self,altAllele):
+        """ Validate the altAllele input. Method checks the input against defined regular expression patterns based on the sequence type. 
+        The allowed sequence types and corresponding patterns are as follows:
+            - DNA: Only contains characters 'A', 'C', 'G', and 'T'. 
+            - RNA: Only contains characters 'A', 'C', 'G', and 'U'.
+            - PROTEIN: Only contains characters representing amino acids (ACDEFGHIKLMNPQRSTVWY).
+
         Args:
-            value (str): The reference or alternative allele to be validated.
-            attributeName (str): The name of the attribute that is being validated. Used for the error message.
+            altAllele (str): The reference or alternative allele to be validated.
 
         Raises:
-            ValueError: If the provided value does not match regular expression pattern. 
+            ValueError: If the provided value does not match the expected pattern for the given sequence type. 
 
         Returns:
-            str: The validated reference or alternative allele input.
+            str: The validated alternative allele input. 
         """
-        val = value.upper().strip()
+
+        val = altAllele.upper().strip()
 
         pat = {
             'emp_pat': '^$',
             'DNA':r'^[ACGT]*$',
             'RNA':r'^[ACGU]*$',
-            'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]*$'
+            'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]$'
         }
 
-        if re.match(pat['emp_pat'],value,re.IGNORECASE):
+        if re.match(pat['emp_pat'],val,re.IGNORECASE):
             return '' 
-    
         if self.seqType in ('DNA','RNA'):
             if not re.match(pat[self.seqType],val):
-                raise ValueError(f'Invalid {attributeName} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]}).')
+                raise ValueError(f'Invalid {altAllele} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]}).')
             return val
         elif self.seqType == 'PROTEIN':
             if not re.match(pat['PROTEIN'],val):
-                raise ValueError(f'Invalid {attributeName} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]}).')
+                raise ValueError(f'Invalid {altAllele} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]}).')
             return val
         
     def _validate_coordinates(self, value, attributeName):
@@ -306,7 +310,7 @@ class CoreVariantClass:
             ValueError: If the provided input is not an integer or less than 1. 
 
         Returns:
-            int:  The validated hgncId value input. 
+            int: The validated hgncId value input. 
         """
         if hgncId is None:
             return hgncId
@@ -350,15 +354,14 @@ class CoreVariantClass:
             raise ValueError(f'Invalid chrom input:"{chrom}". Allowed types: {allowedChrom}')
         return chromValue
     
-    # TODO: Edit doc strings 
     def _validate_genome_build(self,genomeBuild):
-        """ Validate genomeBuild input. Method checks if input value matches regular expression pattern ^[a-zA-Z0-9]*$ or None.
+        """ Validate genomeBuild input. Method checks if input value is string or None.
 
         Args:
             genomeBuild (str or None): The genomeBuild to be validated.
 
         Raises:
-            ValueError: If the provided input does not match regular expression pattern. 
+            ValueError: If the provided input is not a valid string or None.  
 
         Returns:
             str or None: The validated genomeBuild value input. 
