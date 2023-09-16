@@ -1,0 +1,102 @@
+﻿hgvs_expression,human_curated,Failure Reason
+"NM_001267550.2:c.80006G>A, p.(Ser26669Asn)",pass,
+"NM_000059.4:c.5737T>C, p.(Cys1913Arg)",pass,
+"NM_000371.4:c.220G>C, p.(Glu74Lys)",pass,
+"NM_000371.4:c.424G>A, p.(Val142Ile)",pass,
+"NM_000371.4:c.148G>A, p.(Val50Met)",pass,
+"NM_000097.7:c.814A>C, p.(Asn272His)",pass,
+"NM_007194.4:c.470T>C, p.(Ile157Thr)",pass,
+"NM_001122764.3:c.767C>G, p.(Pro256Arg)",pass,
+"NM_004333.6:c.1799T>A, p.(Val600Glu)",pass,
+"NM_000077.5:c.335G>C, p.(Arg112Pro)",pass,
+"NM_000546.6:c.[856G>A];[833C>T];(46delC), NP_000537.3:p.[Glu286Lys];[Pro278Leu];(Gln16fs)",pass,
+"NM_000039.3:c.296T>C, p.(Leu99Pro)",pass,
+"NM_000041.4:c.388T>C, p.(Cys130Arg)",pass,
+"NM_001256850.1:c.1141G>A, p.(Gly381Ser)",pass,
+"NM_015338.6:c.1934=/dupG, p.(Gly646=/Trpfs*12)",pass,
+"NM_001127208.3:c.(3940=/delG);[4589_4618del30],
+NP_001120680.1:p.((Asp1314=/Metfs*49));[(Pro1530_Gln1539del)]",pass,
+"NM_004343.4:c.1154_1155=/insTTGTC , NP_004334.1:p.(Lys385=/Asnfs*47)",pass,
+NM_004456.5:c.[2196-2A>G];[2196-2A>G],pass,
+NC_012920.1:m.1555A>G,pass,
+NC_000023.11:g.147912051CGG[33],pass,
+c.80006G>A (p.Ser26669Asn) variant in the TTN(NM_001267550.2) gene,fail,"terms out of order, extraneous wording"
+c.5737T>C (p.C1913R) in BRCA2,fail,"No refseq, extraneous wording"
+p.E74K (Glu74Lys) c.220G>C (g.29175102),fail,"No refseq, repeating terms"
+p.V142I g.29178618,fail,"no refseq, no chromosome reference for genomic position"
+p.V50M (p.Val50Met),fail,No refseq
+c.814A>C (p.N272H) alteration is a polymorphism of the coproporphyrinogen oxidase gene,fail,"No refseq, extraneous wording"
+p.Ile157Thr,fail,no refseq
+PPOX c.767C>G p.P256R,fail,no refseq
+BRAF DNA change: c.1799T>A Amino Acid change: p.V600E,fail,"No refseq, extraneous wording"
+CDKN2A c.335G>C p.R112P,fail,no refseq
+NM_000546.6:c.[856G>A];[833C>T];(46delC),pass,
+NM_000039.3:c.296T/C,fail,incorrect nucleotide formatting
+APOE e4,fail,"named allele, not HGVS"
+TTN c.1141G>A p.Gly381Ser,fail,no refseq
+NM_015338.6:c.1934dupG (25%),fail,incorrect format for mosaic
+NM_001127208.3:c.(3940=/delG);[4589_4618del30],pass,
+NM_004343.4:c.1154_1155=/insTTGTC,pass,
+NM_004456.5:c.2196-2A>G (homozygous),fail,incorrect allelic formating; must show both alleles to represent homozygosity
+MT:A1555AG,fail,"No refseq, incorrect format for substitution"
+FMR1:-129CGG(10>33),fail,"No refseq, no position prefix"
+NM_001267550.2(TTN):c.80006G>A (p.Ser26669Asn),fail,extraneous information
+BRCA2:c.5737T>C p.C1913R,fail,no refseq
+Chr18:g.29175102,fail,"no refseq, missing variant alteration"
+c.424G>A p.Val142Ile,fail,no refseq
+c.148G>A (g.29172937),fail,no refseq
+c.814A>C (p.N272H),fail,no refseq
+CHEK2 p.Ile157Thr,fail,no refseq
+PPOX (Pro256Arg) c.767C>G,fail,no refseq
+BRAF:c.1799T>A (Val600Glu),fail,no refseq
+CDKN2A G335C (R112P),fail,"no refseq, missing punctuation"
+"NM_000546.6:c.856G>A, c.833C>T, c.46delC",fail,incorrect allelic formating
+NM_000039.3 T296C (L99P),fail,incorrect nucleotide formatting
+APOE p.Cys112Arg,fail,no refseq
+NM_001256850 c1141G>A,fail,missing punctuation
+NM_015338.6 c.1934/dupG,fail,incorrect nucleotide formatting
+"NM_001127208.3:c.4589_4618del30, c.3940delG",fail,incorrect allelic formating
+NM_004343.4:c.1154_1155ins5,fail,missing insertion sequence (unknown insertion should be 'NM_004343.4:c.1154_1155insN[5]' )
+NM_004456.6 c.2196-2A>G/G,fail,incorrect nucleotide formatting
+MTRNR1:c.1555A>G,fail,no refseq
+NM_002024.6:c.-129CGG[33],pass,
+NM_001267550.2:c.80006G>A p.Ser26669Asn,pass,
+BRCA2 c.5737T>C,fail,no refseq
+TTR E74K,fail,"no refseq, missing punctuation"
+TTR g.29178618,fail,"no refseq, missing variant alteration"
+c.148G>A (p.Val50Met),fail,no refseq
+c.814A>C (p.Asn272His) coproporphyrinogen oxidase,fail,no refseq
+CHEKZ p.Ile157Thr,fail,no refseq
+PPOX (Pro256Arg) (g.161138933),fail,"no refseq, missing punctuation (protein) and/or variant alteration (genomic)"
+BRAF c.1799T>A p.V600E,fail,no refseq
+CDKN2A 335G/C,fail,"no refseq, incorrect nucleotide formatting"
+NM_000546.6:c.856G>A + 833C>T + 46delC,fail,incorrect allelic formating
+APO1A:296T>C (Leu99Pro),fail,"no refseq, missing punctuation"
+APOE c.388T>C (p.Cys130Arg),fail,no refseq
+NM_001256850.1:1141G>A,fail,missing postion prefix
+NM_015338.6:1934=/dupG,fail,missing postion prefix
+TET2:3940delG;4589_4618del30,fail,"no refseq, missing position prefix"
+NM_004343.4:c.1154_1155ins5 p.(Lys385fs),fail,missing insertion sequence (unknown insertion should be 'NM_004343.4:c.1154_1155insN[5]' )
+EZH2 IVS19-2A>G,fail,no refseq
+NC_012920:m1555A>G,fail,missing punctuation
+NM_002024.6:c.[-158_-129dup30; -129insCGGCGGCGG],pass,
+NM_001267550.2 p.Ser26669Asn,fail,mismatch between refseq and variant type
+BRCA2:C1913R,fail,"no refseq, incorrect nucleotide formatting"
+TTR c.220G>C,fail,no refseq
+GRCh37 Chr18:g.29178618,fail,"no refseq, missing variant alteration"
+TTR (p.Val50Met),fail,no refseq
+c.814A>C (p.N272H) CPOX,fail,no refseq
+I157T,fail,"no refseq, missing punctuation, missing position prefix"
+PPOX c.767C>C/G,fail,"no refseq, incorrect nucleotide formatting"
+BRAF c.1799A V600E,fail,"no refseq, incorrect nucleotide formatting, missing punctuation (protein)"
+CDKN2A p.Arg112Pro,fail,no refseq
+NM_000546.6:c.[856G>A][833C>T](46delC),fail,missing punctuation
+NM_000039.3:c.296C,fail,incorrect nucleotide formatting
+NM_000041.4:c.388T>C,pass,
+TTN p.381G/S,fail,"no refseq, incorrect protein formatting"
+NM_015338.6:c.WT(0.75)/1934dupG(0.25),fail,incorrect format for mosaic
+NP_001120680.1:p.Asp1314Metfs*49;[Pro1530_Gln1539del],fail,missing parentheses; incorrect formatting for mosaic allele
+CALR c.1154insTTGTC (mosaic),fail,"no refseq, incorrect format for mosaic"
+EZH2: c.2196A>G (homozygous),fail,"no refseq, incorrect allelic formatting"
+NC_012920.1:c.1555A>G,fail,mismatch between refseq and variant type (mitochondrial uses 'm.' prefix)
+NC_000023:g.147912051CGG(33),fail,incorrect punctuation (should use brackets for repeat count)

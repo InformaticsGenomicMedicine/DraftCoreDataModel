@@ -1,0 +1,103 @@
+HGVS,human_curated_expecated_pass_fail,hgvs_validation_pass_fail,error_message
+"NM_001267550.2:c.80006G>A, p.(Ser26669Asn)",pass,fail,"NM_001267550.2:c.80006G>A, p.(Ser26669Asn): char 25: expected EOF"
+"NM_000059.4:c.5737T>C, p.(Cys1913Arg)",pass,fail,"NM_000059.4:c.5737T>C, p.(Cys1913Arg): char 21: expected EOF"
+"NM_000371.4:c.220G>C, p.(Glu74Lys)",pass,fail,"NM_000371.4:c.220G>C, p.(Glu74Lys): char 20: expected EOF"
+"NM_000371.4:c.424G>A, p.(Val142Ile)",pass,fail,"NM_000371.4:c.424G>A, p.(Val142Ile): char 20: expected EOF"
+"NM_000371.4:c.148G>A, p.(Val50Met)",pass,fail,"NM_000371.4:c.148G>A, p.(Val50Met): char 20: expected EOF"
+"NM_000097.7:c.814A>C, p.(Asn272His)",pass,fail,"NM_000097.7:c.814A>C, p.(Asn272His): char 20: expected EOF"
+"NM_007194.4:c.470T>C, p.(Ile157Thr)",pass,fail,"NM_007194.4:c.470T>C, p.(Ile157Thr): char 20: expected EOF"
+"NM_001122764.3:c.767C>G, p.(Pro256Arg)",pass,fail,"NM_001122764.3:c.767C>G, p.(Pro256Arg): char 23: expected EOF"
+"NM_004333.6:c.1799T>A, p.(Val600Glu)",pass,fail,"NM_004333.6:c.1799T>A, p.(Val600Glu): char 21: expected EOF"
+"NM_000077.5:c.335G>C, p.(Arg112Pro)",pass,fail,"NM_000077.5:c.335G>C, p.(Arg112Pro): char 20: expected EOF"
+"NM_000546.6:c.[856G>A];[833C>T];(46delC), NP_000537.3:p.[Glu286Lys];[Pro278Leu];(Gln16fs)",pass,fail,"NM_000546.6:c.[856G>A];[833C>T];(46delC), NP_000537.3:p.[Glu286Lys];[Pro278Leu];(Gln16fs): char 14: expected one of '(', '*', or a digit"
+"NM_000039.3:c.296T>C, p.(Leu99Pro)",pass,fail,"NM_000039.3:c.296T>C, p.(Leu99Pro): char 20: expected EOF"
+"NM_000041.4:c.388T>C, p.(Cys130Arg)",pass,fail,"NM_000041.4:c.388T>C, p.(Cys130Arg): char 20: expected EOF"
+"NM_001256850.1:c.1141G>A, p.(Gly381Ser)",pass,fail,"NM_001256850.1:c.1141G>A, p.(Gly381Ser): char 24: expected EOF"
+"NM_015338.6:c.1934=/dupG, p.(Gly646=/Trpfs*12)",pass,fail,"NM_015338.6:c.1934=/dupG, p.(Gly646=/Trpfs*12): char 19: expected EOF"
+"NM_001127208.3:c.(3940=/delG);[4589_4618del30],
+NP_001120680.1:p.((Asp1314=/Metfs*49));[(Pro1530_Gln1539del)]",pass,fail,"NM_001127208.3:c.(3940=/delG);[4589_4618del30],
+NP_001120680.1:p.((Asp1314=/Metfs*49));[(Pro1530_Gln1539del)]: char 22: expected one of ')', '_', or a digit"
+"NM_004343.4:c.1154_1155=/insTTGTC , NP_004334.1:p.(Lys385=/Asnfs*47)",pass,fail,"NM_004343.4:c.1154_1155=/insTTGTC , NP_004334.1:p.(Lys385=/Asnfs*47): char 24: expected EOF"
+NM_004456.5:c.[2196-2A>G];[2196-2A>G],pass,fail,"NM_004456.5:c.[2196-2A>G];[2196-2A>G]: char 14: expected one of '(', '*', or a digit"
+NC_012920.1:m.1555A>G,pass,pass,
+NC_000023.11:g.147912051CGG[33],pass,fail,NC_000023.11:g.147912051CGG[33]: char 27: expected the character '='
+c.80006G>A (p.Ser26669Asn) variant in the TTN(NM_001267550.2) gene,fail,fail,c.80006G>A (p.Ser26669Asn) variant in the TTN(NM_001267550.2) gene: char 1: expected a letter or digit
+c.5737T>C (p.C1913R) in BRCA2,fail,fail,c.5737T>C (p.C1913R) in BRCA2: char 1: expected a letter or digit
+p.E74K (Glu74Lys) c.220G>C (g.29175102),fail,fail,p.E74K (Glu74Lys) c.220G>C (g.29175102): char 1: expected a letter or digit
+p.V142I g.29178618,fail,fail,p.V142I g.29178618: char 1: expected a letter or digit
+p.V50M (p.Val50Met),fail,fail,p.V50M (p.Val50Met): char 1: expected a letter or digit
+c.814A>C (p.N272H) alteration is a polymorphism of the coproporphyrinogen oxidase gene,fail,fail,c.814A>C (p.N272H) alteration is a polymorphism of the coproporphyrinogen oxidase gene: char 1: expected a letter or digit
+p.Ile157Thr,fail,fail,p.Ile157Thr: char 1: expected a letter or digit
+PPOX c.767C>G p.P256R,fail,fail,"PPOX c.767C>G p.P256R: char 4: expected one of '(', '.', ':', '_', or a letter or digit"
+BRAF DNA change: c.1799T>A Amino Acid change: p.V600E,fail,fail,"BRAF DNA change: c.1799T>A Amino Acid change: p.V600E: char 4: expected one of '(', '.', ':', '_', or a letter or digit"
+CDKN2A c.335G>C p.R112P,fail,fail,"CDKN2A c.335G>C p.R112P: char 6: expected one of '(', '.', ':', '_', or a letter or digit"
+NM_000546.6:c.[856G>A];[833C>T];(46delC),pass,fail,"NM_000546.6:c.[856G>A];[833C>T];(46delC): char 14: expected one of '(', '*', or a digit"
+NM_000039.3:c.296T/C,fail,fail,"NM_000039.3:c.296T/C: char 18: expected one of '=', or '>'"
+APOE e4,fail,fail,"APOE e4: char 4: expected one of '(', '.', ':', '_', or a letter or digit"
+TTN c.1141G>A p.Gly381Ser,fail,fail,"TTN c.1141G>A p.Gly381Ser: char 3: expected one of '(', '.', ':', '_', or a letter or digit"
+NM_015338.6:c.1934dupG (25%),fail,fail,NM_015338.6:c.1934dupG (25%): char 23: expected EOF
+NM_001127208.3:c.(3940=/delG);[4589_4618del30],pass,fail,"NM_001127208.3:c.(3940=/delG);[4589_4618del30]: char 22: expected one of ')', '_', or a digit"
+NM_004343.4:c.1154_1155=/insTTGTC,pass,fail,NM_004343.4:c.1154_1155=/insTTGTC: char 24: expected EOF
+NM_004456.5:c.2196-2A>G (homozygous),fail,fail,NM_004456.5:c.2196-2A>G (homozygous): char 23: expected EOF
+MT:A1555AG,fail,fail,"MT:A1555AG: char 3: expected one of 'c', 'g', 'm', 'n', 'p', or 'r'"
+FMR1:-129CGG(10>33),fail,fail,"FMR1:-129CGG(10>33): char 5: expected one of 'c', 'g', 'm', 'n', 'p', or 'r'"
+NM_001267550.2(TTN):c.80006G>A (p.Ser26669Asn),fail,fail,NM_001267550.2(TTN):c.80006G>A (p.Ser26669Asn): char 30: expected EOF
+BRCA2:c.5737T>C p.C1913R,fail,fail,BRCA2:c.5737T>C p.C1913R: char 15: expected EOF
+Chr18:g.29175102,fail,fail,Chr18:g.29175102: char 17: end of input
+c.424G>A p.Val142Ile,fail,fail,c.424G>A p.Val142Ile: char 1: expected a letter or digit
+c.148G>A (g.29172937),fail,fail,c.148G>A (g.29172937): char 1: expected a letter or digit
+c.814A>C (p.N272H),fail,fail,c.814A>C (p.N272H): char 1: expected a letter or digit
+CHEK2 p.Ile157Thr,fail,fail,"CHEK2 p.Ile157Thr: char 5: expected one of '(', '.', ':', '_', or a letter or digit"
+PPOX (Pro256Arg) c.767C>G,fail,fail,"PPOX (Pro256Arg) c.767C>G: char 4: expected one of '(', '.', ':', '_', or a letter or digit"
+BRAF:c.1799T>A (Val600Glu),fail,fail,BRAF:c.1799T>A (Val600Glu): char 14: expected EOF
+CDKN2A G335C (R112P),fail,fail,"CDKN2A G335C (R112P): char 6: expected one of '(', '.', ':', '_', or a letter or digit"
+"NM_000546.6:c.856G>A, c.833C>T, c.46delC",fail,fail,"NM_000546.6:c.856G>A, c.833C>T, c.46delC: char 20: expected EOF"
+NM_000039.3 T296C (L99P),fail,fail,"NM_000039.3 T296C (L99P): char 11: expected one of '(', ':', or a digit"
+APOE p.Cys112Arg,fail,fail,"APOE p.Cys112Arg: char 4: expected one of '(', '.', ':', '_', or a letter or digit"
+NM_001256850 c1141G>A,fail,fail,"NM_001256850 c1141G>A: char 12: expected one of '(', '.', ':', or a letter or digit"
+NM_015338.6 c.1934/dupG,fail,fail,"NM_015338.6 c.1934/dupG: char 11: expected one of '(', ':', or a digit"
+"NM_001127208.3:c.4589_4618del30, c.3940delG",fail,fail,"NM_001127208.3:c.4589_4618del30, c.3940delG: char 32: expected EOF"
+NM_004343.4:c.1154_1155ins5,fail,fail,NM_004343.4:c.1154_1155ins5: char 26: Syntax error
+NM_004456.6 c.2196-2A>G/G,fail,fail,"NM_004456.6 c.2196-2A>G/G: char 11: expected one of '(', ':', or a digit"
+MTRNR1:c.1555A>G,fail,fail,Accession (MTRNR1) is not known to be compatible with variant type c
+NM_002024.6:c.-129CGG[33],pass,fail,NM_002024.6:c.-129CGG[33]: char 21: expected the character '='
+NM_001267550.2:c.80006G>A p.Ser26669Asn,pass,fail,NM_001267550.2:c.80006G>A p.Ser26669Asn: char 25: expected EOF
+BRCA2 c.5737T>C,fail,fail,"BRCA2 c.5737T>C: char 5: expected one of '(', '.', ':', '_', or a letter or digit"
+TTR E74K,fail,fail,"TTR E74K: char 3: expected one of '(', '.', ':', '_', or a letter or digit"
+TTR g.29178618,fail,fail,"TTR g.29178618: char 3: expected one of '(', '.', ':', '_', or a letter or digit"
+c.148G>A (p.Val50Met),fail,fail,c.148G>A (p.Val50Met): char 1: expected a letter or digit
+c.814A>C (p.Asn272His) coproporphyrinogen oxidase,fail,fail,c.814A>C (p.Asn272His) coproporphyrinogen oxidase: char 1: expected a letter or digit
+CHEKZ p.Ile157Thr,fail,fail,"CHEKZ p.Ile157Thr: char 5: expected one of '(', '.', ':', '_', or a letter or digit"
+PPOX (Pro256Arg) (g.161138933),fail,fail,"PPOX (Pro256Arg) (g.161138933): char 4: expected one of '(', '.', ':', '_', or a letter or digit"
+BRAF c.1799T>A p.V600E,fail,fail,"BRAF c.1799T>A p.V600E: char 4: expected one of '(', '.', ':', '_', or a letter or digit"
+CDKN2A 335G/C,fail,fail,"CDKN2A 335G/C: char 6: expected one of '(', '.', ':', '_', or a letter or digit"
+NM_000546.6:c.856G>A + 833C>T + 46delC,fail,fail,NM_000546.6:c.856G>A + 833C>T + 46delC: char 20: expected EOF
+APO1A:296T>C (Leu99Pro),fail,fail,"APO1A:296T>C (Leu99Pro): char 6: expected one of 'c', 'g', 'm', 'n', 'p', or 'r'"
+APOE c.388T>C (p.Cys130Arg),fail,fail,"APOE c.388T>C (p.Cys130Arg): char 4: expected one of '(', '.', ':', '_', or a letter or digit"
+NM_001256850.1:1141G>A,fail,fail,"NM_001256850.1:1141G>A: char 15: expected one of 'c', 'g', 'm', 'n', 'p', or 'r'"
+NM_015338.6:1934=/dupG,fail,fail,"NM_015338.6:1934=/dupG: char 12: expected one of 'c', 'g', 'm', 'n', 'p', or 'r'"
+TET2:3940delG;4589_4618del30,fail,fail,"TET2:3940delG;4589_4618del30: char 5: expected one of 'c', 'g', 'm', 'n', 'p', or 'r'"
+NM_004343.4:c.1154_1155ins5 p.(Lys385fs),fail,fail,NM_004343.4:c.1154_1155ins5 p.(Lys385fs): char 26: Syntax error
+EZH2 IVS19-2A>G,fail,fail,"EZH2 IVS19-2A>G: char 4: expected one of '(', '.', ':', '_', or a letter or digit"
+NC_012920:m1555A>G,fail,fail,NC_012920:m1555A>G: char 11: expected the character '.'
+NM_002024.6:c.[-158_-129dup30; -129insCGGCGGCGG],pass,fail,"NM_002024.6:c.[-158_-129dup30; -129insCGGCGGCGG]: char 14: expected one of '(', '*', or a digit"
+NM_001267550.2 p.Ser26669Asn,fail,fail,"NM_001267550.2 p.Ser26669Asn: char 14: expected one of '(', ':', or a digit"
+BRCA2:C1913R,fail,fail,"BRCA2:C1913R: char 6: expected one of 'c', 'g', 'm', 'n', 'p', or 'r'"
+TTR c.220G>C,fail,fail,"TTR c.220G>C: char 3: expected one of '(', '.', ':', '_', or a letter or digit"
+GRCh37 Chr18:g.29178618,fail,fail,"GRCh37 Chr18:g.29178618: char 6: expected one of '(', '.', ':', '_', or a letter or digit"
+TTR (p.Val50Met),fail,fail,"TTR (p.Val50Met): char 3: expected one of '(', '.', ':', '_', or a letter or digit"
+c.814A>C (p.N272H) CPOX,fail,fail,c.814A>C (p.N272H) CPOX: char 1: expected a letter or digit
+I157T,fail,fail,I157T: char 6: end of input
+PPOX c.767C>C/G,fail,fail,"PPOX c.767C>C/G: char 4: expected one of '(', '.', ':', '_', or a letter or digit"
+BRAF c.1799A V600E,fail,fail,"BRAF c.1799A V600E: char 4: expected one of '(', '.', ':', '_', or a letter or digit"
+CDKN2A p.Arg112Pro,fail,fail,"CDKN2A p.Arg112Pro: char 6: expected one of '(', '.', ':', '_', or a letter or digit"
+NM_000546.6:c.[856G>A][833C>T](46delC),fail,fail,"NM_000546.6:c.[856G>A][833C>T](46delC): char 14: expected one of '(', '*', or a digit"
+NM_000039.3:c.296C,fail,fail,NM_000039.3:c.296C: char 19: end of input
+NM_000041.4:c.388T>C,pass,fail,No transcript definition for (tx_ac=NM_000041.4)
+TTN p.381G/S,fail,fail,"TTN p.381G/S: char 3: expected one of '(', '.', ':', '_', or a letter or digit"
+NM_015338.6:c.WT(0.75)/1934dupG(0.25),fail,fail,"NM_015338.6:c.WT(0.75)/1934dupG(0.25): char 14: expected one of '(', '*', or a digit"
+NP_001120680.1:p.Asp1314Metfs*49;[Pro1530_Gln1539del],fail,fail,NP_001120680.1:p.Asp1314Metfs*49;[Pro1530_Gln1539del]: char 33: expected EOF
+CALR c.1154insTTGTC (mosaic),fail,fail,"CALR c.1154insTTGTC (mosaic): char 4: expected one of '(', '.', ':', '_', or a letter or digit"
+EZH2: c.2196A>G (homozygous),fail,fail,"EZH2: c.2196A>G (homozygous): char 5: expected one of 'c', 'g', 'm', 'n', 'p', or 'r'"
+NC_012920.1:c.1555A>G,fail,fail,Accession (NC_012920.1) is not compatible with variant type c
+NC_000023:g.147912051CGG(33),fail,fail,NC_000023:g.147912051CGG(33): char 24: expected the character '='

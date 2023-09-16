@@ -178,7 +178,9 @@ class CoreVariantClass:
             'digit':r'^\d+$',
             'DNA':r'^[ACGT]*$',
             'RNA':r'^[ACGU]*$',
-            'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]$'
+            #NOTE: three is typically written with a capital letter first followed by two lower letters. 
+            # change the regular expression checker to only allow a single string upper case 1 letter iupac syntax 
+            'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]*$'
         }
         
         if re.match(pat['emp_pat'],val,re.IGNORECASE):
@@ -374,7 +376,7 @@ class CoreVariantClass:
         if not isinstance(value,str):
             raise ValueError(f'Invalid genomeBuild input: "{genomeBuild}". ALlowed types: None or string')
         return value
-    
+    #NOTE: NCBI and ensembl: maybe check for both 
     def _validate_sequence_id(self,sequenceId):
         """ Validate sequenceId input. Method checks if input value matches regular expression pattern ^[a-zA-Z0-9_.]+$ or None.
 
