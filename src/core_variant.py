@@ -66,7 +66,11 @@ class CoreVariantClass:
             str: A JSON formatted string of the CoreVariantClass object.
         """
         return json.dumps(self.as_dict(),indent=2) 
-    
+
+    # NOTE: """The validation step occurs within the constructor (__init__) method. If an error occurs during validation, 
+    # a ValueError is raised, and the object is not fully instantiated. This means that the values are captured in the __init__ method,
+    # but if an error occurs, the object won't be created."""
+
     def init_params(self):
         """ A dictionary of the initial parameters. 
 
@@ -159,7 +163,7 @@ class CoreVariantClass:
         The allowed sequence types and corresponding patterns are as follows:
             - DNA: Only contains characters ('A', 'C', 'G', and 'T') or digits. 
             - RNA: Only contains characters ('A', 'C', 'G', and 'U') or digits.
-            - PROTEIN: Only contains characters representing amino acids.
+            - PROTEIN: Only contains 1-letter IUPAC codes (ACDEFGHIKLMNPQRSTVWY)
             
         Args:
             refAllele (str): The reference allele to be validated.
@@ -178,9 +182,9 @@ class CoreVariantClass:
             'digit':r'^\d+$',
             'DNA':r'^[ACGT]*$',
             'RNA':r'^[ACGU]*$',
-            #NOTE: three is typically written with a capital letter first followed by two lower letters. 
-            # change the regular expression checker to only allow a single string upper case 1 letter iupac syntax 
-            'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]*$'
+            #NOTE: Typically written with a capital letter first followed by two lower letters. 
+            # Changed the regular expression checker to only allow a single string upper case 1 letter iupac syntax 
+            'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]{1}$'
         }
         
         if re.match(pat['emp_pat'],val,re.IGNORECASE):
@@ -199,7 +203,7 @@ class CoreVariantClass:
         The allowed sequence types and corresponding patterns are as follows:
             - DNA: Only contains characters 'A', 'C', 'G', and 'T'. 
             - RNA: Only contains characters 'A', 'C', 'G', and 'U'.
-            - PROTEIN: Only contains characters representing amino acids (ACDEFGHIKLMNPQRSTVWY).
+            - PROTEIN: Only contains 1-letter IUPAC codes (ACDEFGHIKLMNPQRSTVWY).
 
         Args:
             altAllele (str): The reference or alternative allele to be validated.
@@ -217,7 +221,7 @@ class CoreVariantClass:
             'emp_pat': '^$',
             'DNA':r'^[ACGT]*$',
             'RNA':r'^[ACGU]*$',
-            'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]$'
+            'PROTEIN':r'^[ACDEFGHIKLMNPQRSTVWY]{1}$'
         }
 
         if re.match(pat['emp_pat'],val,re.IGNORECASE):
@@ -376,6 +380,7 @@ class CoreVariantClass:
         if not isinstance(value,str):
             raise ValueError(f'Invalid genomeBuild input: "{genomeBuild}". ALlowed types: None or string')
         return value
+    
     #NOTE: NCBI and ensembl: maybe check for both 
     def _validate_sequence_id(self,sequenceId):
         """ Validate sequenceId input. Method checks if input value matches regular expression pattern ^[a-zA-Z0-9_.]+$ or None.

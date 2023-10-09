@@ -38,9 +38,3 @@ class SPDI:
             'deletion': self.deletion,
             'insertion': self.insertion
         }
-    
-        # self.val.validate_spdi(spdi_expression)
-
-        # spdi_expression = f"{self.sequence}:{self.position}:{self.deletion}:{self.insertion}"
-        # val_spdi_expression = self.val.validate_spdi(spdi_expression)
-        # S,P,D,I = val_spdi_expression.split(':')

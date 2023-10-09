@@ -1,6 +1,13 @@
 // Literal Expression of FHIR
-// HGVS expression: NC_000001.11:g.943043C>T
+// HGVS expression: 
+
+
+NC_000001.11:g.943043C>T
+
+
+
 // VRS
+
 {
 	"_id": "ga4gh:VA.s8vzlmFv83fcoJnNovFkp4pnE48weUh4",
 	"type": "Allele",
@@ -26,13 +33,15 @@
 	}
 }
 
+
+
 # FHIR
 
 {
 	"resourceType": "MolecularSequence",
 	"id": "VRS_example_literal_1",
 	"identifier": {
-		"value": "ga4gh:VA.s8vzlmFv83fcoJnNovFkp4pnE48weUh4" //VRS ID
+		"value": no value because we dont have an id for the T//"ga4gh:VA.s8vzlmFv83fcoJnNovFkp4pnE48weUh4" //VRS ID
 	},
 	"type": "dna", //VRS does not convey the Type (loss in translation): This was pulled from the reference sequence of hgvs.
 	"literal": [
@@ -152,12 +161,7 @@ HGVS -- Unknown
 		}
 	],
 }
-
-
-
 //VRS ComposedSequenceExpression
-
-
 // should we taking the full allele or just the mapping of ComposedSequenceExpression
 {
 	"type": "Allele",
@@ -254,7 +258,6 @@ HGVS -- Unknown
 		}
 	]
 }
-
 //FHIR ComposedSequenceExpression
 {
 	"resourceType": "MolecularSequence",

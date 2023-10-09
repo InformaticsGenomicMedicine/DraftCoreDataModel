@@ -3,6 +3,7 @@ from ga4gh.vrs.extras.translator import Translator
 from ga4gh.vrs.dataproxy import SeqRepoRESTDataProxy
 
 import hgvs.parser
+import json 
 
 class SPDITranslate:
 
@@ -42,7 +43,7 @@ class SPDITranslate:
             return '{}. Expression Error: {}'.format(e,spdi_expression)
 
 #TODO: reWrite documentation
-    def from_spdi_to_vrs(self,expression,validate= True):
+    def from_spdi_to_vrs(self,expression,validate= True,format_output='obj'):
         """SPDI --> VRS
 
         Args:
@@ -59,6 +60,15 @@ class SPDITranslate:
 
         try:
             vrs_expression = self.tlr.translate_from(spdi_expression,"spdi")
-            return vrs_expression.as_dict()
-        except Exception as e:
-            return '{}. Expression Error: {}'.format(e,expression) 
+
+            if format_output =='obj':
+                return vrs_expression 
+            if format_output == 'dict':
+                return vrs_expression.as_dict()
+            if format_output == 'json':
+                return json.dumps(vrs_expression.as_dict())
+        except Exception as e: 
+            return '{}. Expression Error: {}'.format(e,vrs_expression)
+        #NOTE: maybe think of using this instead of Exception as e.
+        # except (ValueError, TypeError) as e:
+        #     return f'Error: {e}. Expression: {expression}' 

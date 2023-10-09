@@ -1,0 +1,242 @@
+//	Literal Expression
+
+
+// VRS Literal Expression
+{
+	"type": "LiteralSequenceExpression",
+	"sequence": "T"
+}
+
+// FHIR Literal Expression
+
+{
+	"resourceType": "MolecularSequence",
+	"id": "VRS_example_literal_1",
+	"literal": [
+		{
+			"sequenceValue": "T"
+		}
+	]
+}
+// DerivedsequenceExpression
+
+
+// VRS DerivedsequenceExpression
+{
+	"type": "DerivedSequenceExpression",
+	"location": {
+		"type": "SequenceLocation",
+		"sequence_id": "refseq:NC_000003.11",
+		"interval": {
+			"type": "SequenceInterval",
+			"start": {
+				"type": "Number",
+				"value": 154886500
+			},
+			"end": {
+				"type": "Number",
+				"value": 41209172
+			}
+		}
+	},
+	"reverse_complement": false
+}
+// FHIR DerivedsequenceExpression
+{
+	"resourceType": "MolecularSequence",
+	"id": "VRS_example_derived_1",
+	"identifier": {
+		"value": "refseq:NC_000003.11"
+	},
+	"extracted": [
+		{
+			"startingSequence": {
+				"reference": "MolecularSequence/VRS_example_nested_derived_1",
+				"type": "MolecularSequence",
+				"display": "Starting Sequence Resource"
+			},
+			"start": 154886500,
+			"end": 41209172,
+			"coordinateSystem": {
+				"coding": [
+					{
+						"system": "http://loinc.org",
+						"code": "LA30100-4",
+						"display": "0-based interval counting"
+					}
+				],
+				"text": "0-based interval counting"
+			},
+			"reverseComplement": false
+		}
+	]
+}
+
+{
+	"resourceType": "MolecularSequence",
+	"id": "VRS_example_nested_derived_1",
+	"identifier": {
+		"value": "refseq:NC_000003.11"
+	}
+}
+//RepeatedSequence Expression
+// VRS RepeatedSequence
+{
+	"type": "RepeatedSequenceExpression",
+	"seq_expr": {
+		"type": "DerivedSequenceExpression",
+		"location": {
+			"type": "SequenceLocation",
+			"sequence_id": "refseq:NC_000003.11",
+			"interval": {
+				"type": "SequenceInterval",
+				"start": {
+					"type": "Number",
+					"value": 154886500
+				},
+				"end": {
+					"type": "Number",
+					"value": 41209172
+				}
+			}
+		},
+		"reverse_complement": false
+	},
+	"count": {
+		"type": "IndefiniteRange",
+		"value": 4,
+		"comparator": ">="
+	}
+}
+//FHIR RepeatedSequenceExpression
+{
+	"resourceType": "MolecularSequence",
+	"id": "VRS_example_repeated_1",
+	"repeated": [
+		{
+			"sequenceMotif": {
+				"reference": "MolecularSequence/motif_example",
+				"type": "MolecularSequence",
+				"display": "Sequence-of motif example"
+			},
+			"copyCount": "4"
+		}
+	],
+}
+//VRS ComposedSequenceExpression
+{
+	"type": "ComposedSequenceExpression",
+	"components": [
+		{
+			"type": "RepeatedSequenceExpression",
+			"seq_expr": {
+				"type": "LiteralSequenceExpression",
+				"sequence": "GCG"
+			},
+			"count": {
+				"type": "Number",
+				"value": 11
+			}
+		},
+		{
+			"type": "RepeatedSequenceExpression",
+			"seq_expr": {
+				"type": "LiteralSequenceExpression",
+				"sequence": "GCA"
+			},
+			"count": {
+				"type": "Number",
+				"value": 3
+			}
+		},
+		{
+			"type": "RepeatedSequenceExpression",
+			"seq_expr": {
+				"type": "LiteralSequenceExpression",
+				"sequence": "GCG"
+			},
+			"count": {
+				"type": "Number",
+				"value": 1
+			}
+		}
+	]
+}
+//FHIR ComposedSequenceExpression
+{
+	"resourceType": "MolecularSequence",
+	"id": "VRS_example_composed_sequence_expression_1",
+	"concatenated": {
+		"sequenceElement": [
+			{
+				"sequence": {
+					"reference": "MolecularSequence/VRS_example_repeated_0",
+					"type": "MolecularSequence",
+					"display": "Sequence-of index 0-Resource for concatenated sequence example"
+				},
+				"ordinalIndex": 0
+			},
+			{
+				"sequence": {
+					"reference": "MolecularSequence/VRS_example_repeated_1",
+					"type": "MolecularSequence",
+					"display": "Sequence-of index 1-Resource for concatenated sequence example"
+				},
+				"ordinalIndex": 1
+			},
+			{
+				"sequence": {
+					"reference": "MolecularSequence/VRS_example_repeated_2",
+					"type": "MolecularSequence",
+					"display": "Sequence-of index 2-Resource for concatenated sequence example"
+				},
+				"ordinalIndex": 2
+			}
+		]
+	}
+}
+
+{
+	"resourceType": "MolecularSequence",
+	"id": "VRS_example_repeated_0",
+	"repeated": [
+		{
+			"sequenceMotif": {
+				"reference": "MolecularSequence/motif_example",
+				"type": "MolecularSequence",
+				"display": "Sequence-of motif example"
+			},
+			"copyCount": "11"
+		}
+	],
+}
+
+{
+	"resourceType": "MolecularSequence",
+	"id": "VRS_example_repeated_1",
+	"repeated": [
+		{
+			"sequenceMotif": {
+				"reference": "MolecularSequence/motif_example",
+				"type": "MolecularSequence",
+				"display": "Sequence-of motif example"
+			},
+			"copyCount": "3"
+		}
+	],
+}
+
+{
+	"resourceType": "MolecularSequence",
+	"id": "VRS_example_repeated_2",
+	"repeated": [
+		{
+			"sequenceMotif": {
+				"reference": "MolecularSequence/motif_example",
+				"type": "MolecularSequence",
+				"display": "Sequence-of motif example"
+			},
+			"copyCount": "1"
+		}
+	],
+}
