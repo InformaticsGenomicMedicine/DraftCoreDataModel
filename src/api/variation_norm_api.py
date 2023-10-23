@@ -1,23 +1,12 @@
-#Citation: Variant Interpretation for Cancer Consortium (VICC) - https://normalize.cancervariants.org/
-#Citation: Variant Interpretation for Cancer Consortium (VICC)- https://normalize.cancervariants.org/variation
-
-# Packages imported
+from ga4gh.vrs.extras.variation_normalizer_rest_dp import VariationNormalizerRESTDataProxy
 import requests
 import json
 
-
-class VarNormAPI:
-    """A class for interacting with the Variant Interpretation for Cancer Consortium (VICC) API. """
-
-    def __init__(self):       
-        """ Initialize class with the API URL"""
-        self.base_varnorm_url_api = 'https://normalize.cancervariants.org'
-
-        self.headers = {
-            'Content-Type': 'application/json; charset=utf-8'
-        }
-
-    def variation_to_vrs(self,q, untranslatable_returns_text='true'):
+class VariationNormalizerWithVRS(VariationNormalizerRESTDataProxy):
+    """
+    Extended Rest data proxy for Variation Normalizer API with additional method
+    """
+    def variation_to_vrs(self, q, untranslatable_returns_text='true'):
         """Convert HGVS, gnomAD VCF or free text variation on GRCh37 or GRCh38 assembly 
         to VRS Variation. 
             * Fully-justified allele normalization: (https://github.com/ga4gh/vrs-python/blob/main/src/ga4gh/vrs/normalize.py). 
@@ -33,18 +22,25 @@ class VarNormAPI:
         Returns:
             dict: The VRS representation of the variation.
         """
-        endpoint = '/variation/to_vrs'
+        endpoint = '/to_vrs'
+        url = f'{self.api}{endpoint}'
 
-        url = f'{self.base_varnorm_url_api}{endpoint}'
-        
         params = {
             'q': q,
             'untranslatable_returns_text': untranslatable_returns_text
         }
-        
-        response = requests.get(url, params=params, headers=self.headers)
-        
+
+        response = requests.get(url, params=params)
+
         if response.status_code == 200:
             return json.loads(response.text)['variations'][0]
         else:
             raise requests.HTTPError(f'Request failed with status code: {response.status_code}')
+
+if __name__ == "__main__":
+    # Create an instance of VariationNormalizerWithVRS
+    proxy_with_vrs = VariationNormalizerWithVRS()
+    # Query the API
+    variation_query = "NM_000059.3:c.274G>A"
+    vrs_result = proxy_with_vrs.variation_to_vrs(variation_query)
+    print("Result from variation_to_vrs method:", vrs_result)

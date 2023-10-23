@@ -1,6 +1,7 @@
 import psycopg2
 from src.core_variant import CoreVariantClass
 
+#TODO: look into SQLAlchemy python package for database connection
 
 class request_local_api:
 
@@ -77,4 +78,4 @@ class request_local_api:
                                     end=dbResult['endcoord'], allelicState = dbResult['allelicstate'],
                                     geneSymbol = dbResult['genesymbol'], hgncId = dbResult['hgncid'], 
                                     chrom=dbResult['chrom'],genomeBuild=dbResult['genomebuild'],sequenceId=dbResult['sequenceid'])
-        return cvcValue.initParams()
+        return cvcValue.init_params()

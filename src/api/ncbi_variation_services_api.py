@@ -1,3 +1,5 @@
+# Citation: NHI Variation Services: https://api.ncbi.nlm.nih.gov/variation/v0/
+
 # Packages imported
 import requests
 import json
@@ -52,8 +54,9 @@ class VarServAPI:
             return ':'.join( (spdi_dict['seq_id'],str(spdi_dict['position']), spdi_dict['deleted_sequence'],spdi_dict['inserted_sequence']) )
         else:
             try:
-                error_json = response.json()
-                error_message = error_json['error']['message']
+                # TODO: delete once tested/ check message 
+                # error_json = response.json()
+                # error_message = error_json['error']['message']
                 raise requests.HTTPError(f'Failed to validate SPDI expression: {spdi_id}.') # Error Message: {error_message}
             except json.JSONDecodeError:
                 raise requests.HTTPError(f'Failed to parse error response as JSON: {response.text}')
@@ -81,8 +84,9 @@ class VarServAPI:
             return json.loads(response.text)['data']['hgvs']
         else:
             try:
-                error_json = response.json()
-                error_message = error_json['error']['message']
+                # TODO: delete once tested/ check message 
+                # error_json = response.json()
+                # error_message = error_json['error']['message']
                 raise requests.HTTPError(f'Failed to validate SPDI expression: {spdi_id}.') #Error Message: {error_message}
             except json.JSONDecodeError:
                 raise requests.HTTPError(f'Failed to parse error response as JSON: {response.text}')
@@ -114,8 +118,9 @@ class VarServAPI:
             return self.spdi_attribute_concat(response)
         else:
             try:
-                error_json = response.json()
-                error_message = error_json['error']['message']
+                #TODO: delete once tested/ check message 
+                # error_json = response.json()
+                # error_message = error_json['error']['message']
                 raise requests.HTTPError(f'Failed to validate SPDI expression: {hgvs_id}.') # Error Message: {error_message}
             except json.JSONDecodeError:
                 raise requests.HTTPError(f'Failed to parse error response as JSON: {response.text}')

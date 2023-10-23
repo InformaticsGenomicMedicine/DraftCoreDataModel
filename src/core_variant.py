@@ -4,7 +4,7 @@ class CoreVariantClass:
 
     """ The CoreVariantClass is draft schema."""
 
-    def __init__(self, origCoordSystem, seqType: str, refAllele: str,
+    def __init__(self, origCoordSystem: str, seqType: str, refAllele: str,
                  altAllele: str, start: int, end: int, allelicState: str = None,
                  geneSymbol: str = None, hgncId: int = None, chrom: str = None,
                  genomeBuild: str = None, sequenceId: str = None, **kwargs):
@@ -47,7 +47,7 @@ class CoreVariantClass:
         """
         return f"CoreVariantClass({self.origCoordSystem},{self.seqType},{self.refAllele},{self.altAllele},{self.start},{self.end},{self.allelicState},{self.geneSymbol},{self.hgncId},{self.chrom},{self.genomeBuild},{self.sequenceId},{self.extra})"
 
-    def as_dict(self):
+    def as_dict(self) -> dict:
         """Converts CoreVariantClass object to a dictionary representation.
 
         Returns:
@@ -378,10 +378,9 @@ class CoreVariantClass:
             return genomeBuild
         value = genomeBuild.strip()
         if not isinstance(value,str):
-            raise ValueError(f'Invalid genomeBuild input: "{genomeBuild}". ALlowed types: None or string')
+            raise ValueError(f'Invalid genomeBuild input: "{genomeBuild}". Allowed types: None or string')
         return value
     
-    #NOTE: NCBI and ensembl: maybe check for both 
     def _validate_sequence_id(self,sequenceId):
         """ Validate sequenceId input. Method checks if input value matches regular expression pattern ^[a-zA-Z0-9_.]+$ or None.
 
@@ -394,11 +393,15 @@ class CoreVariantClass:
         Returns:
             str or None: The validated sequenceId value input. 
         """
-        # need to modify this regular expression to allow . and _: Example: NC_000004.11
-        pat = r'^[a-zA-Z0-9_.]+$'
         if sequenceId is None:
             return sequenceId
-        value = sequenceId.strip()
-        if not re.match(pat,value):
-            raise ValueError(f'Invalid sequenceId input: "{sequenceId}".ALlowed types: alphanumeric characters only.')
-        return value
+        if not isinstance(sequenceId,str):
+            raise ValueError(f'Invalid sequenceId input: "{sequenceId}". Allowed types: None or string')
+        return sequenceId
+
+        # need to modify this regular expression to allow . and _: Example: NC_000004.11
+        # pat = r'^[a-zA-Z0-9_.]+$'
+        # value = sequenceId.strip()
+        # if not re.match(pat,value):
+        #     raise ValueError(f'Invalid sequenceId input: "{sequenceId}".Allowed types: alphanumeric characters only.')
+        # return value

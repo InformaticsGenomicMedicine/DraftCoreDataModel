@@ -1,10 +1,19 @@
-from src.api.ncbi_variation_services_api import VarServAPI
 
-#TODO: Write doc strings
+from src.api.ncbi_variation_services_api import VarServAPI
 class SPDI:
-    """_summary_
-    """
-    def __init__(self,sequence,position,deletion,insertion):
+
+    def __init__(self,sequence: str, position: int, deletion: str, insertion: str):
+        """Initialize SPDI object.
+
+        Args:
+            sequence (str): The sequence identifier.
+            position (int): The starting position of the variation.
+            deletion (str): The deleted sequence.
+            insertion (str): The inserted sequence.
+
+        Raises:
+            SPDIValidationException: If there is an issue validating the SPDI expression.
+        """
         self.sequence = sequence
         self.position = position
         self.deletion = deletion
@@ -12,25 +21,28 @@ class SPDI:
         self.api = VarServAPI()
 
         spdi = f"{sequence}:{position}:{deletion}:{insertion}"
-        try:
-            self.api.validate_spdi(spdi)
-        except Exception as e:
-            raise e
+        # TODO: test new method
+        self.api.validate_spdi(spdi)
+        # TODO: delete after testing
+        # try:
+        #     self.api.validate_spdi(spdi)
+        # except Exception as e:
+        #     raise e
 
-    def to_string(self):
-        """_summary_
+    def to_string(self) -> str:
+        """Convert SPDI object to a string representation.
 
         Returns:
-            _type_: _description_
+            str: The string representation of the SPDI object.
         """
         spdi_expression = f"{self.sequence}:{self.position}:{self.deletion}:{self.insertion}"
         return spdi_expression 
 
-    def to_dict(self):
-        """_summary_
+    def to_dict(self) -> dict:
+        """Convert SPDI object to a dictionary.
 
         Returns:
-            _type_: _description_
+            dict: A dictionary representation of the SPDI object.
         """
         return {
             'sequence': self.sequence,
