@@ -1,4 +1,3 @@
-
 from src.api.ncbi_variation_services_api import VarServAPI
 class SPDI:
 

@@ -1,3 +1,7 @@
+#TODO: edit test provide just a bit more examples
+#TODO: make sure that this is enough to test the core variant class
+#TODO: many of the things have changed double check everything. 
+
 import pytest
 from src.core_variant import CoreVariantClass
 
