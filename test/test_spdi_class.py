@@ -1,42 +1,40 @@
-# import pytest
-# from src.spdi.spdi_class import SPDI
-
-# spdi_string_examples = (
-#     (SPDI('NC_000001.11', 161629780, 'T', 'T'), 'NC_000001.11:161629780:T:T'),
-# )
-
-# spdi_dict_examples = (
-#     (SPDI('NC_000001.11', 161629780, 'T', 'T'), {'sequence': 'NC_000001.11', 'position': 161629780, 'deletion': 'T', 'insertion': 'T'}),
-# )
-
-# @pytest.mark.parametrize("spdi,expected", spdi_string_examples)
-# def test_spdi_to_string(spdi, expected):
-#     resp = spdi.to_string()
-#     assert resp == expected
-
-# @pytest.mark.parametrize("spdi,expected", spdi_dict_examples)
-# def test_spdi_to_dict(spdi, expected):
-#     resp = spdi.to_dict()
-#     assert resp == expected
-
-
 import pytest
 from src.spdi.spdi_class import SPDI
 
+spdi_tests = [
+    # Unchanged
+    ('NC_000001.11', 161629780, 'T', 'T'),
 
-class TestSPDIClass:
-    
-    def test_spdi_init(self):
-        spdi = SPDI('NC_000001.11', 161629780, 'T', 'T')
-        assert spdi.sequence == 'NC_000001.11'
-        assert spdi.position == 161629780
-        assert spdi.deletion == 'T'
-        assert spdi.insertion == 'T'
-    
-    def test_spdi_to_string(self):
-        spdi = SPDI('NC_000001.11', 161629780, 'T', 'T')
-        assert spdi.to_string() == 'NC_000001.11:100:A:C'
-    
-    def test_spdi_to_dict(self):
-        spdi = SPDI('NC_000001.11', 161629780, 'T', 'T')
-        assert spdi.to_dict() == {'sequence': 'NC_000001.11', 'position': 161629780, 'deletion': 'T', 'insertion': 'T'}
+    # Substitution
+    ('NC_000001.11', '161629780', 'T', 'T')
+]
+
+@pytest.mark.parametrize("sequence, position, deletion, insertion", spdi_tests)
+def test_spdi_init(sequence, position, deletion, insertion):
+    spdi_expression = SPDI(sequence, position, deletion, insertion)
+
+    assert spdi_expression.sequence == sequence
+    assert spdi_expression.position == position
+    assert spdi_expression.deletion == deletion
+    assert spdi_expression.insertion == insertion
+
+@pytest.mark.parametrize("sequence, position, deletion, insertion", spdi_tests)
+def test_spdi_to_string(sequence, position, deletion, insertion):
+    spdi_expression = SPDI(sequence, position, deletion, insertion)
+    str_format = spdi_expression.to_string()  
+
+    assert isinstance(str_format, str) 
+    assert str_format == f"{sequence}:{position}:{deletion}:{insertion}"
+
+@pytest.mark.parametrize("sequence, position, deletion, insertion", spdi_tests)
+def test_spdi_to_dictionary(sequence, position, deletion, insertion):
+    spdi_expression = SPDI(sequence, position, deletion, insertion)
+    dict_format = spdi_expression.to_dict()  
+    expected_dict = {
+        'sequence': sequence,
+        'position': position,
+        'deletion': deletion,
+        'insertion': insertion
+    }
+    assert isinstance(dict_format, dict) 
+    assert dict_format == expected_dict

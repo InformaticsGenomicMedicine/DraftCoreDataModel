@@ -67,9 +67,9 @@ class CoreVariantClass:
         """
         return json.dumps(self.as_dict(),indent=2) 
 
-    # NOTE: """The validation step occurs within the constructor (__init__) method. If an error occurs during validation, 
-    # a ValueError is raised, and the object is not fully instantiated. This means that the values are captured in the __init__ method,
-    # but if an error occurs, the object won't be created."""
+    # NOTE: The validation step occurs within the constructor (__init__) method. If an error occurs during validation, 
+    # a ValueError is raised, and the object is not fully instantiated.
+    #  This means that the values are captured in the __init__ method, but if an error occurs, the object won't be created.
 
     def init_params(self):
         """ A dictionary of the initial parameters. 
