@@ -121,7 +121,7 @@ class VarServAPI:
                 #TODO: delete once tested/ check message 
                 # error_json = response.json()
                 # error_message = error_json['error']['message']
-                raise requests.HTTPError(f'Failed to validate SPDI expression: {hgvs_id}.') # Error Message: {error_message}
+                raise requests.HTTPError(f'Failed to validate HGVS expression: {hgvs_id}.') # Error Message: {error_message}
             except json.JSONDecodeError:
                 raise requests.HTTPError(f'Failed to parse error response as JSON: {response.text}')
         # else:

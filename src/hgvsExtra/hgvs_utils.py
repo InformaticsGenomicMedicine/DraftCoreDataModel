@@ -4,7 +4,8 @@ import hgvs.validator
 import hgvs.normalizer
 from hgvs.exceptions import HGVSError
 
-from src.api.vicc_api import VarNormAPI
+# from src.api.vicc_api import VarNormAPI
+from src.api.variation_norm_api import VarNormRestApi
 from src.api.ncbi_variation_services_api import VarServAPI
 # from src.api.seqrepo_api import SeqRepoAPI
 
@@ -15,7 +16,7 @@ class HGVSTranslate:
         # self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
         # self.dp = self.cn.dp
         # self.tlr = self.cn.tlr
-        self.var_norm_api = VarNormAPI()
+        self.var_norm_api = VarNormRestApi()
         self.var_serv_api = VarServAPI()
 
         self.hp = hgvs.parser.Parser()

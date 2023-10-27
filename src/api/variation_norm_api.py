@@ -2,7 +2,7 @@ from ga4gh.vrs.extras.variation_normalizer_rest_dp import VariationNormalizerRES
 import requests
 import json
 
-class VariationNormalizerWithVRS(VariationNormalizerRESTDataProxy):
+class VarNormRestApi(VariationNormalizerRESTDataProxy):
     """
     Extended Rest data proxy for Variation Normalizer API with additional method
     """
@@ -38,9 +38,28 @@ class VariationNormalizerWithVRS(VariationNormalizerRESTDataProxy):
             raise requests.HTTPError(f'Request failed with status code: {response.status_code}')
 
 if __name__ == "__main__":
-    # Create an instance of VariationNormalizerWithVRS
-    proxy_with_vrs = VariationNormalizerWithVRS()
-    # Query the API
-    variation_query = "NM_000059.3:c.274G>A"
-    vrs_result = proxy_with_vrs.variation_to_vrs(variation_query)
-    print("Result from variation_to_vrs method:", vrs_result)
+    from ga4gh.vrs import models
+    proxy_with_vrs = VarNormRestApi()
+
+    allele = models.Allele(
+    location = models.SequenceLocation(
+        sequence_id = 'ga4gh:SQ._0wi-qoDrvram155UmcSC-zA5ZK4fpLT',
+        interval = models.SequenceInterval(
+            start = models.Number(value=32936731, type="Number"),
+            end = models.Number(value=32936732, type="Number"),
+            type="SequenceInterval"
+        ),
+        type="SequenceLocation"
+    ),
+    state = models.SequenceExpression(
+        sequence = "C",
+        type="LiteralSequenceExpression"
+    ),
+    type="Allele")
+    
+    hgvs = "NM_000059.3:c.274G>A"
+    vrs_result = proxy_with_vrs.variation_to_vrs(hgvs)
+    print("translated hgvs to vrs", vrs_result)
+    
+    hgvs_result = proxy_with_vrs.to_hgvs(allele)
+    print("translated vrs to hgvs", hgvs_result)
