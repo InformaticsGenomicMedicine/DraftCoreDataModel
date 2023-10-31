@@ -9,7 +9,7 @@ class VrsTranslate:
         self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
         self.dp = self.cn.dp
         self.tlr = self.cn.tlr
-        self.vnorm = VarNormRestApi()
+        self.var_norm_api = VarNormRestApi()
 
     def from_vrs_to_spdi(self, expression):
         """Convert a VRS dict or object into a SPDI expression.
@@ -42,8 +42,8 @@ class VrsTranslate:
             if isinstance(expression, dict):
                 #if input is a dictionary need to convert it to a vrs object in order to translate it to a HGVS expression using variation normalizer
                 vrs_object = self.tlr.translate_from(expression, "vrs")
-                return self.vnorm.to_hgvs(vrs_object)[0]
+                return self.var_norm_api.to_hgvs(vrs_object)[0]
             elif isinstance(expression, object):
-                return self.vnorm.to_hgvs(expression)[0]
+                return self.var_norm_api.to_hgvs(expression)[0]
         except Exception as e:
             return f"{e}. Expression Error: {expression}"

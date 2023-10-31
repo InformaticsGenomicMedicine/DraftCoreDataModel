@@ -1,7 +1,8 @@
 from src.api.ncbi_variation_services_api import VarServAPI
-class SPDI:
 
-    def __init__(self,sequence: str, position: int, deletion: str, insertion: str):
+
+class SPDI:
+    def __init__(self, sequence: str, position: int, deletion: str, insertion: str):
         """Initialize SPDI object.
 
         Args:
@@ -34,8 +35,10 @@ class SPDI:
         Returns:
             str: The string representation of the SPDI object.
         """
-        spdi_expression = f"{self.sequence}:{self.position}:{self.deletion}:{self.insertion}"
-        return spdi_expression 
+        spdi_expression = (
+            f"{self.sequence}:{self.position}:{self.deletion}:{self.insertion}"
+        )
+        return spdi_expression
 
     def to_dict(self) -> dict:
         """Convert SPDI object to a dictionary.
@@ -44,8 +47,8 @@ class SPDI:
             dict: A dictionary representation of the SPDI object.
         """
         return {
-            'sequence': self.sequence,
-            'position':self.position,
-            'deletion': self.deletion,
-            'insertion': self.insertion
+            "sequence": self.sequence,
+            "position": self.position,
+            "deletion": self.deletion,
+            "insertion": self.insertion,
         }

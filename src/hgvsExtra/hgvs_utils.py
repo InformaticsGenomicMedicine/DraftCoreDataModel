@@ -7,10 +7,11 @@ from hgvs.exceptions import HGVSError
 # from src.api.vicc_api import VarNormAPI
 from src.api.variation_norm_api import VarNormRestApi
 from src.api.ncbi_variation_services_api import VarServAPI
+
 # from src.api.seqrepo_api import SeqRepoAPI
 
-class HGVSTranslate:
 
+class HGVSTranslate:
     def __init__(self):
         """Initialize class with the API URL """
         # self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
@@ -24,7 +25,7 @@ class HGVSTranslate:
         self.hn = hgvs.normalizer.Normalizer(self.hdp)
         self.vr = hgvs.validator.Validator(hdp=self.hdp)
 
-    def _validate_hgvs_variants(self,expression):
+    def _validate_hgvs_variants(self, expression):
         """Validate an HGVS expression.
 
         Args:
@@ -43,7 +44,7 @@ class HGVSTranslate:
         except HGVSError as e:
             raise HGVSError(f"Validation failed: {e}")
 
-    def from_hgvs_to_vrs(self,expression):
+    def from_hgvs_to_vrs(self, expression):
         """Convert HGVS on GRCh37 or GRCh 38 assembly to VRS variation. 
         Performs fully-justified allele normalization. (Using the  Variation Normalization API)
 
@@ -60,7 +61,7 @@ class HGVSTranslate:
         except Exception as e:
             return f"{e}. Expression Error: {hgvs_expression}"
 
-    def from_hgvs_to_spdi(self,expression):
+    def from_hgvs_to_spdi(self, expression):
         """ Translate HGVS expression to SPDI expression. (Using NCBI API)
 
         Args:
@@ -70,31 +71,29 @@ class HGVSTranslate:
             str: The SPDI representation of the HGVS expression.
         """
         hgvs_expression = self._validate_hgvs_variants(expression)
-        try: 
+        try:
             return self.var_serv_api.hgvs_to_spdi(hgvs_expression)
-        except Exception as e: 
+        except Exception as e:
             return f"{e}. Expression Error: {hgvs_expression}"
-        
-
 
 
 # NOTE: this uses the translate module-- possible remove later.
-    # def to_vrs_tranmod(self,expression):
-    #     """Convert HGVS, SPDI, gnomad (vcf), beacon to VRS variation. (Using the vrs translate module)
+# def to_vrs_tranmod(self,expression):
+#     """Convert HGVS, SPDI, gnomad (vcf), beacon to VRS variation. (Using the vrs translate module)
 
-    #     Args:
-    #         expression (str): hgvs, spdi, gnomad (vcf) or beacon expression
+#     Args:
+#         expression (str): hgvs, spdi, gnomad (vcf) or beacon expression
 
-    #     Raises:
-    #         ValueError: If the provided input is not a string. 
+#     Raises:
+#         ValueError: If the provided input is not a string.
 
-    #     Returns:
-    #         dict: VRS object
-    #     """
-    #     if not isinstance(expression, str):
-    #         raise ValueError('Invalid {}: is not an integer.'.format(expression))
-    #     try:
-    #         expr = self.tlr.translate_from(expression)
-    #         return expr.as_dict()
-    #     except Exception as e: 
-    #         return '{}. Expression Error: {}'.format(e, expression)
+#     Returns:
+#         dict: VRS object
+#     """
+#     if not isinstance(expression, str):
+#         raise ValueError('Invalid {}: is not an integer.'.format(expression))
+#     try:
+#         expr = self.tlr.translate_from(expression)
+#         return expr.as_dict()
+#     except Exception as e:
+#         return '{}. Expression Error: {}'.format(e, expression)

@@ -1,11 +1,11 @@
 import psycopg2
 from src.core_variant import CoreVariantClass
 
-#TODO: look into SQLAlchemy python package for database connection
+# TODO: look into SQLAlchemy python package for database connection
+
 
 class request_local_api:
-
-    def __init__(self,hostname='',database='',username='',pwd='',portId=''):
+    def __init__(self, hostname="", database="", username="", pwd="", portId=""):
 
         self.hostname = hostname
         self.database = database
@@ -13,7 +13,7 @@ class request_local_api:
         self.pwd = pwd
         self.portId = portId
 
-    def getExample(self,rowId):
+    def getExample(self, rowId):
         """Retrieve a specific row in the database. 
 
         Args:
@@ -23,11 +23,21 @@ class request_local_api:
             dict: A dictionary of the selected rowID from the database. 
         """
         try:
-            self.connect = psycopg2.connect(host = self.hostname, dbname = self.database, user = self.username, password = self.pwd, port = self.portId) 
+            self.connect = psycopg2.connect(
+                host=self.hostname,
+                dbname=self.database,
+                user=self.username,
+                password=self.pwd,
+                port=self.portId,
+            )
             self.cursor = self.connect.cursor()
-            self.cursor.execute('SELECT * FROM core_variant_translation_demo WHERE id = {}'.format(rowId))
+            self.cursor.execute(
+                "SELECT * FROM core_variant_translation_demo WHERE id = {}".format(
+                    rowId
+                )
+            )
 
-            row = self.cursor.fetchone()  
+            row = self.cursor.fetchone()
             attributeNames = [desc[0] for desc in self.cursor.description]
 
             rowDict = {}
@@ -39,7 +49,7 @@ class request_local_api:
         except Exception as e:
             return e
 
-        finally: 
+        finally:
             self.cursor.close()
             self.connect.close()
 
@@ -50,19 +60,25 @@ class request_local_api:
             list: A list containing all examples from the database.
         """
         try:
-            self.connect = psycopg2.connect(host = self.hostname, dbname = self.database, user = self.username, password = self.pwd, port = self.portId)
-            self.cursor = self.connect.cursor() 
-            self.cursor.execute('SELECT * FROM core_variant_translation_demo')
+            self.connect = psycopg2.connect(
+                host=self.hostname,
+                dbname=self.database,
+                user=self.username,
+                password=self.pwd,
+                port=self.portId,
+            )
+            self.cursor = self.connect.cursor()
+            self.cursor.execute("SELECT * FROM core_variant_translation_demo")
             return self.cursor.fetchall()
-         
+
         except Exception as e:
             return e
-        
-        finally: 
+
+        finally:
             self.cursor.close()
             self.connect.close()
-            
-    def db_to_cvc(self,rowId):
+
+    def db_to_cvc(self, rowId):
         """Converting a specific row from the database to a CoreVariantClass object.
 
         Args:
@@ -72,10 +88,18 @@ class request_local_api:
             dict: A dictionary of the database result as a CoreVariantClass object. 
         """
         dbResult = self.getExample(rowId)
-        cvcValue = CoreVariantClass(origCoordSystem= dbResult['origcoordsystem'],
-                                    seqType=dbResult['seqtype'], refAllele=dbResult['refallele'],
-                                    altAllele=dbResult['altallele'], start=dbResult['startcoord'],
-                                    end=dbResult['endcoord'], allelicState = dbResult['allelicstate'],
-                                    geneSymbol = dbResult['genesymbol'], hgncId = dbResult['hgncid'], 
-                                    chrom=dbResult['chrom'],genomeBuild=dbResult['genomebuild'],sequenceId=dbResult['sequenceid'])
+        cvcValue = CoreVariantClass(
+            origCoordSystem=dbResult["origcoordsystem"],
+            seqType=dbResult["seqtype"],
+            refAllele=dbResult["refallele"],
+            altAllele=dbResult["altallele"],
+            start=dbResult["startcoord"],
+            end=dbResult["endcoord"],
+            allelicState=dbResult["allelicstate"],
+            geneSymbol=dbResult["genesymbol"],
+            hgncId=dbResult["hgncid"],
+            chrom=dbResult["chrom"],
+            genomeBuild=dbResult["genomebuild"],
+            sequenceId=dbResult["sequenceid"],
+        )
         return cvcValue.init_params()
