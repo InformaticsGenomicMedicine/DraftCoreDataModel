@@ -4,26 +4,37 @@
 import requests
 import json
 
+# TODO: test the error message output. see if its informative enough
+# TODO: rewrite documentation for this function because the error message has changed.
+
 
 class VarServAPI:
-    def __init__(self):
+    def __init__(self) -> None:
         """ Initialize class with the API URL """
 
         self.base_ncbi_url_api = "https://api.ncbi.nlm.nih.gov/variation/v0/"
 
         self.headers = {"Content-Type": "application/json; charset=utf-8"}
 
-    def spdi_attribute_concat(self, r):
-        """ Extract SPDI attributes, and concatenating the attributes to create a SPDI expressions.
+    def spdi_attribute_concat(self, r: requests.Response) -> str:
+        """ Extract SPDI attributes, and concatenating the attributes to create a SPDI expression.
 
         Args:
             r (request.Response): The response containing SPDI data
 
+        Raises:
+            requests.HTTPError: If the request fails with a non-200 status code.
+
         Returns:
-            list: A list of SPDI expressions 
+            str: A SPDI expression 
         """
         response_json = json.loads(r.text)
-        spdi_dict = response_json["data"]["spdis"][0]  # first spdi expression.
+        try:
+            spdi_dict = response_json["data"]["spdi"]
+        except KeyError:
+            raise requests.HTTPError(
+                f"Failed to extract SPDI attributes from response: {response_json}"
+            )
         return ":".join(
             (
                 spdi_dict["seq_id"],
@@ -35,7 +46,7 @@ class VarServAPI:
 
     # TODO: Write documentation
     # NOTE: added validation from NCBI API
-    def validate_spdi(self, spdi_id):
+    def validate_spdi(self, spdi_id: str) -> str:
         """_summary_
 
         Args:
@@ -66,18 +77,20 @@ class VarServAPI:
             )
         else:
             try:
-                # TODO: delete once tested/ check message
-                # error_json = response.json()
-                # error_message = error_json['error']['message']
+                error_json = response.json()
+                error_message = error_json.get("error", {}).get(
+                    "message", "Unknown error"
+                )
                 raise requests.HTTPError(
-                    f"Failed to validate SPDI expression: {spdi_id}."
-                )  # Error Message: {error_message}
+                    f"Failed to validate SPDI expression: {spdi_id}. Error message: {error_message}"
+                )
             except json.JSONDecodeError:
                 raise requests.HTTPError(
                     f"Failed to parse error response as JSON: {response.text}"
                 )
 
-    def spdi_to_hgvs(self, spdi_id):
+    def spdi_to_hgvs(self, spdi_id: str) -> str:
+
         """ Translate SPDI expression to right-shift hgvs notation. 
         End point used from variation service api: /spdi/{spdi}/hgvs
 
@@ -100,20 +113,18 @@ class VarServAPI:
             return json.loads(response.text)["data"]["hgvs"]
         else:
             try:
-                # TODO: delete once tested/ check message
-                # error_json = response.json()
-                # error_message = error_json['error']['message']
+                error_json = response.json()
+                error_message = error_json["error"]["message"]
                 raise requests.HTTPError(
-                    f"Failed to validate SPDI expression: {spdi_id}."
-                )  # Error Message: {error_message}
+                    f"Failed to convert SPDI expression {spdi_id} to HGVS notation. Error message: {error_message}"
+                )
             except json.JSONDecodeError:
                 raise requests.HTTPError(
                     f"Failed to parse error response as JSON: {response.text}"
                 )
-        # else:
-        #     raise requests.HTTPError(f'Request failed with status code: {response.status_code}')
 
-    def hgvs_to_spdi(self, hgvs_id, assembly="GCF_000001405.38"):
+    def hgvs_to_spdi(self, hgvs_id: str, assembly: str ="GCF_000001405.38") -> str:
+
         """Translate HGVS expression to SPDI expression.
         End point used from variation service api: /hgvs/{hgvs}/contextuals
 
@@ -138,15 +149,14 @@ class VarServAPI:
             return self.spdi_attribute_concat(response)
         else:
             try:
-                # TODO: delete once tested/ check message
-                # error_json = response.json()
-                # error_message = error_json['error']['message']
+                error_json = response.json()
+                error_message = error_json.get("error", {}).get(
+                    "message", "Unknown error"
+                )
                 raise requests.HTTPError(
-                    f"Failed to validate HGVS expression: {hgvs_id}."
-                )  # Error Message: {error_message}
+                    f"Failed to convert HGVS expression {hgvs_id} to SPDI notation. Error message: {error_message}"
+                )
             except json.JSONDecodeError:
                 raise requests.HTTPError(
                     f"Failed to parse error response as JSON: {response.text}"
                 )
-        # else:
-        #     raise requests.HTTPError(f'Request failed with status code: {response.status_code}')

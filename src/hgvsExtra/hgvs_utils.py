@@ -4,28 +4,22 @@ import hgvs.validator
 import hgvs.normalizer
 from hgvs.exceptions import HGVSError
 
-# from src.api.vicc_api import VarNormAPI
 from src.api.variation_norm_api import VarNormRestApi
 from src.api.ncbi_variation_services_api import VarServAPI
 
-# from src.api.seqrepo_api import SeqRepoAPI
-
 
 class HGVSTranslate:
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize class with the API URL """
-        # self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
-        # self.dp = self.cn.dp
-        # self.tlr = self.cn.tlr
-        self.var_norm_api = VarNormRestApi()
-        self.var_serv_api = VarServAPI()
+        self.var_norm_api: VarNormRestApi = VarNormRestApi()
+        self.var_serv_api: VarServAPI = VarServAPI()
 
-        self.hp = hgvs.parser.Parser()
-        self.hdp = hgvs.dataproviders.uta.connect()
-        self.hn = hgvs.normalizer.Normalizer(self.hdp)
-        self.vr = hgvs.validator.Validator(hdp=self.hdp)
+        self.hp: hgvs.parser.Parser = hgvs.parser.Parser()
+        self.hdp: hgvs.dataproviders.uta.AssemblyDataProvider = hgvs.dataproviders.uta.connect()
+        self.hn: hgvs.normalizer.Normalizer = hgvs.normalizer.Normalizer(self.hdp)
+        self.vr: hgvs.validator.Validator = hgvs.validator.Validator(hdp=self.hdp)
 
-    def _validate_hgvs_variants(self, expression):
+    def _validate_hgvs_variants(self, expression: str) -> str:
         """Validate an HGVS expression.
 
         Args:
@@ -42,9 +36,9 @@ class HGVSTranslate:
             self.vr.validate(parsed_variant)
             return expression
         except HGVSError as e:
-            raise HGVSError(f"Validation failed: {e}")
+            raise HGVSError(f"Validation failed for HGVS expression '{expression}': {e}")
 
-    def from_hgvs_to_vrs(self, expression):
+    def from_hgvs_to_vrs(self, expression: str) -> dict:
         """Convert HGVS on GRCh37 or GRCh 38 assembly to VRS variation. 
         Performs fully-justified allele normalization. (Using the  Variation Normalization API)
 
@@ -58,10 +52,10 @@ class HGVSTranslate:
         hgvs_expression = self._validate_hgvs_variants(expression)
         try:
             return self.var_norm_api.variation_to_vrs(hgvs_expression)
-        except Exception as e:
-            return f"{e}. Expression Error: {hgvs_expression}"
+        except Exception:
+            raise ValueError(f"An error occurred while translating the HGVS expression '{hgvs_expression}' to a VRS expression.")
 
-    def from_hgvs_to_spdi(self, expression):
+    def from_hgvs_to_spdi(self, expression: str) -> str:
         """ Translate HGVS expression to SPDI expression. (Using NCBI API)
 
         Args:
@@ -73,8 +67,8 @@ class HGVSTranslate:
         hgvs_expression = self._validate_hgvs_variants(expression)
         try:
             return self.var_serv_api.hgvs_to_spdi(hgvs_expression)
-        except Exception as e:
-            return f"{e}. Expression Error: {hgvs_expression}"
+        except Exception:
+            raise ValueError(f"An error occurred while translating the HGVS expression '{hgvs_expression}' to a SPDI expression.")
 
 
 # NOTE: this uses the translate module-- possible remove later.

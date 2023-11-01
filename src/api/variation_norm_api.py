@@ -1,3 +1,6 @@
+# #Citation: Variant Interpretation for Cancer Consortium (VICC) - https://normalize.cancervariants.org/
+# #Citation: Variant Interpretation for Cancer Consortium (VICC)- https://normalize.cancervariants.org/variation
+
 from ga4gh.vrs.extras.variation_normalizer_rest_dp import (
     VariationNormalizerRESTDataProxy,
 )
@@ -10,7 +13,7 @@ class VarNormRestApi(VariationNormalizerRESTDataProxy):
     Extended Rest data proxy for Variation Normalizer API with additional method
     """
 
-    def variation_to_vrs(self, q, untranslatable_returns_text="true"):
+    def variation_to_vrs(self, q: str, untranslatable_returns_text: str = "false") -> Dict:
         """Convert HGVS, gnomAD VCF or free text variation on GRCh37 or GRCh38 assembly 
         to VRS Variation. 
             * Fully-justified allele normalization: (https://github.com/ga4gh/vrs-python/blob/main/src/ga4gh/vrs/normalize.py). 
@@ -34,12 +37,11 @@ class VarNormRestApi(VariationNormalizerRESTDataProxy):
         response = requests.get(url, params=params)
 
         if response.status_code == 200:
-            return json.loads(response.text)["variations"][0]
+            return json.loads(response.text)["variations"]#[0]
         else:
             raise requests.HTTPError(
                 f"Request failed with status code: {response.status_code}"
             )
-
 
 if __name__ == "__main__":
     from ga4gh.vrs import models

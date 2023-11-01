@@ -46,12 +46,12 @@ class CVCTranslator:
 
         return sequence_type
 
-    def cvc_to_spdi(self, expression, format_output):
+    def cvc_to_spdi(self, expression, output_format):
         """Converts a CoreVariantClass object into an SPDI expression. 
 
         Args:
             expression (object): An object representing a core variant class.
-            format_output (str): Desired format for the output. Can be "object","string", or "dict".
+            output_format (str): Desired format for the output. Can be "object","string", or "dict".
 
         Raises:
             ValueError: If the origCoordSystem of the expression is not "0-based interbase".
@@ -64,7 +64,7 @@ class CVCTranslator:
         if not isinstance(expression, CoreVariantClass):
             raise ValueError("Invalid input format. Expected CoreVariantClass object.")
 
-        if format_output not in ("obj", "string", "dict"):
+        if output_format not in ("obj", "string", "dict"):
             raise ValueError("Invalid output format. Use 'obj', 'string', or 'dict'.")
 
         if expression.origCoordSystem != "0-based interbase":
@@ -77,19 +77,19 @@ class CVCTranslator:
             insertion=expression.altAllele,
         )
 
-        if format_output == "obj":
+        if output_format == "obj":
             return spdi_obj
-        elif format_output == "string":
+        elif output_format == "string":
             return spdi_obj.to_string()
-        elif format_output == "dict":
+        elif output_format == "dict":
             return spdi_obj.to_dict()
 
-    def cvc_to_hgvs(self, expression, format_output):
+    def cvc_to_hgvs(self, expression, output_format):
         """Converts a CoreVariantClass object into an HGVS expression. 
 
         Args:
             expression (object): An object representing a core variant class.
-            format_output (str): Desired format for the output. Can be "parse" or "string".
+            output_format (str): Desired format for the output. Can be "parse" or "string".
 
         Raises:
             ValueError: If an invalid output format is provided.
@@ -101,26 +101,26 @@ class CVCTranslator:
         if not isinstance(expression, CoreVariantClass):
             raise ValueError("Invalid input format. Expected CoreVariantClass object.")
 
-        if format_output not in ("parse", "string"):
+        if output_format not in ("parse", "string"):
             raise ValueError("Invalid output format. Use 'parse' or 'string'.")
 
-        spdi_expression = self.cvc_to_spdi(expression, format_output="string")
+        spdi_expression = self.cvc_to_spdi(expression, output_format="string")
 
-        if format_output == "parse":
+        if output_format == "parse":
             return self.trans_spdi.from_spdi_to_rightshift_hgvs(
-                spdi_expression, format_output="parse"
+                spdi_expression, output_format="parse"
             )
-        elif format_output == "string":
+        elif output_format == "string":
             return self.trans_spdi.from_spdi_to_rightshift_hgvs(
-                spdi_expression, format_output="string"
+                spdi_expression, output_format="string"
             )
 
-    def cvc_to_vrs(self, expression, format_output="obj"):
+    def cvc_to_vrs(self, expression, output_format="obj"):
         """Converts a CoreVariantClass object into an VRS expression.
 
         Args:
             expression (object): An object representing a CoreVariantClass.
-            format_output (str): Desired format for the output. Can be "obj" or "dict", or "json".
+            output_format (str): Desired format for the output. Can be "obj" or "dict", or "json".
 
         Raises:
             ValueError: If an invalid output format is provided.
@@ -132,23 +132,23 @@ class CVCTranslator:
         if not isinstance(expression, CoreVariantClass):
             raise ValueError("Invalid input format. Expected CoreVariantClass object.")
 
-        if format_output not in ("obj", "dict", "json"):
+        if output_format not in ("obj", "dict", "json"):
             raise ValueError("Invalid output format. Use 'obj', 'dict', or 'json'.")
 
-        spdi_expression = self.cvc_to_spdi(expression, format_output="string")
+        spdi_expression = self.cvc_to_spdi(expression, output_format="string")
         try:
 
-            if format_output == "obj":
+            if output_format == "obj":
                 return self.trans_spdi.from_spdi_to_vrs(
-                    spdi_expression, format_output="obj"
+                    spdi_expression, output_format="obj"
                 )
-            elif format_output == "dict":
+            elif output_format == "dict":
                 return self.trans_spdi.from_spdi_to_vrs(
-                    spdi_expression, format_output="dict"
+                    spdi_expression, output_format="dict"
                 )
-            elif format_output == "json":
+            elif output_format == "json":
                 return self.trans_spdi.from_spdi_to_vrs(
-                    spdi_expression, format_output="json"
+                    spdi_expression, output_format="json"
                 )
         except ValueError as e:
             raise ValueError(f"{e}. Expression Error: {spdi_expression}")

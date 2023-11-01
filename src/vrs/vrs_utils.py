@@ -1,9 +1,10 @@
 from src.api.variation_norm_api import VarNormRestApi
 from src.api.seqrepo_api import SeqRepoAPI
+from typing import Union
 
 class VrsTranslate:
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize class with the API URL """
 
         self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
@@ -11,7 +12,7 @@ class VrsTranslate:
         self.tlr = self.cn.tlr
         self.var_norm_api = VarNormRestApi()
 
-    def from_vrs_to_spdi(self, expression):
+    def from_vrs_to_spdi(self, expression: Union[dict, object]) -> str:
         """Convert a VRS dict or object into a SPDI expression.
 
         Args:
@@ -26,10 +27,10 @@ class VrsTranslate:
                 return self.tlr.translate_to(vrs_dict, "spdi")[0]
             elif isinstance(expression, object):
                 return self.tlr.translate_to(expression, "spdi")[0]
-        except Exception as e:
-            return f"{e}. Expression Error: {expression}"
+        except Exception:
+            raise ValueError(f"An error occurred while translating the VRS expression '{expression}' to a SPDI expression.")
         
-    def from_vrs_to_normalize_hgvs(self,expression):
+    def from_vrs_to_normalize_hgvs(self, expression: Union[dict, object]) -> str:
         """Convert a VRS dictionary or object into a normalized HGVS expression.
 
         Args:
@@ -45,5 +46,5 @@ class VrsTranslate:
                 return self.var_norm_api.to_hgvs(vrs_object)[0]
             elif isinstance(expression, object):
                 return self.var_norm_api.to_hgvs(expression)[0]
-        except Exception as e:
-            return f"{e}. Expression Error: {expression}"
+        except Exception:
+            raise ValueError(f"An error occurred while translating the VRS expression '{expression}' to a HGVS expression.")

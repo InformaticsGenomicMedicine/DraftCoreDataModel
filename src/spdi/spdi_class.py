@@ -2,7 +2,7 @@ from src.api.ncbi_variation_services_api import VarServAPI
 
 
 class SPDI:
-    def __init__(self, sequence: str, position: int, deletion: str, insertion: str):
+    def __init__(self, sequence: str, position: int, deletion: str, insertion: str) -> None:
         """Initialize SPDI object.
 
         Args:
@@ -21,13 +21,7 @@ class SPDI:
         self.api = VarServAPI()
 
         spdi = f"{sequence}:{position}:{deletion}:{insertion}"
-        # TODO: test new method
         self.api.validate_spdi(spdi)
-        # TODO: delete after testing
-        # try:
-        #     self.api.validate_spdi(spdi)
-        # except Exception as e:
-        #     raise e
 
     def to_string(self) -> str:
         """Convert SPDI object to a string representation.

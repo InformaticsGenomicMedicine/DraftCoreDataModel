@@ -3,7 +3,7 @@ from ga4gh.vrs.extras.translator import Translator
 
 
 class SeqRepoAPI:
-    def __init__(self, seqrepo_rest_service_url):
+    def __init__(self, seqrepo_rest_service_url: str) -> None:
         """Initialize the SeqRepoAPI instance with the specified SeqRepo REST service URL.
 
         Args:

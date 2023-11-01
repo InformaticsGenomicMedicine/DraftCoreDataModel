@@ -20,11 +20,11 @@ class CoreVariantClass:
         chrom: str = None,
         genomeBuild: str = None,
         sequenceId: str = None,
-        **kwargs,
-    ):
+        **kwargs: dict,
+    ) -> None:
 
         # saving initial parameters
-        self.initParamValues = {
+        self.initParamValues: dict = {
             "origCoordSystem": origCoordSystem,
             "seqType": seqType,
             "refAllele": refAllele,
@@ -37,26 +37,26 @@ class CoreVariantClass:
             "chrom": chrom,
             "genomeBuild": genomeBuild,
             "sequenceId": sequenceId,
-            "extra": kwargs,
+            "kwargs": kwargs,
         }
 
         self._validate_input_conditions(chrom, genomeBuild, sequenceId)
-        self.origCoordSystem = self._validate_orig_coord_system(origCoordSystem)
-        self.seqType = self._validate_seq_type(seqType)
-        self.refAllele = self._validate_reference_allele(refAllele)
-        self.altAllele = self._validate_alternative_allele(altAllele)
-        self.start = self._validate_coordinates(start, "start")
-        self.end = self._validate_coordinates(end, "end")
+        self.origCoordSystem: str = self._validate_orig_coord_system(origCoordSystem)
+        self.seqType: str = self._validate_seq_type(seqType)
+        self.refAllele: str = self._validate_reference_allele(refAllele)
+        self.altAllele: str = self._validate_alternative_allele(altAllele)
+        self.start: int = self._validate_coordinates(start, "start")
+        self.end: int = self._validate_coordinates(end, "end")
         self._validate_start_coord_end_coord()
-        self.allelicState = self._is_valid_allelic_state(allelicState)
-        self.geneSymbol = self._is_valid_gene_symbol(geneSymbol)
-        self.hgncId = self._is_valid_hgnc_id(hgncId)
-        self.chrom = self._validate_chrom(chrom)
-        self.genomeBuild = self._validate_genome_build(genomeBuild)
-        self.sequenceId = self._validate_sequence_id(sequenceId)
-        self.extra = kwargs
+        self.allelicState: str = self._is_valid_allelic_state(allelicState)
+        self.geneSymbol: str = self._is_valid_gene_symbol(geneSymbol)
+        self.hgncId: int = self._is_valid_hgnc_id(hgncId)
+        self.chrom: str = self._validate_chrom(chrom)
+        self.genomeBuild: str = self._validate_genome_build(genomeBuild)
+        self.sequenceId: str = self._validate_sequence_id(sequenceId)
+        self.kwargs: dict = kwargs
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Returns a string representation of the CoreVariantClass object.
 
         Returns:
@@ -86,7 +86,7 @@ class CoreVariantClass:
             "extra": self.extra,
         }
 
-    def as_json(self):
+    def as_json(self) -> str:
         """Converts CoreVariantClass object to a JSON string representation. 
 
         Returns:
@@ -98,7 +98,7 @@ class CoreVariantClass:
     # a ValueError is raised, and the object is not fully instantiated.
     #  This means that the values are captured in the __init__ method, but if an error occurs, the object won't be created.
 
-    def init_params(self):
+    def init_params(self) -> dict:
         """ A dictionary of the initial parameters. 
 
         Returns:
@@ -106,7 +106,7 @@ class CoreVariantClass:
         """
         return self.initParamValues
 
-    def normalized_data(self):
+    def normalized_data(self) --> dict:
         """A dictionary of the normalized data. This method checks to see if the initial parameters can be normalized. 
 
         Raises:
@@ -227,7 +227,7 @@ class CoreVariantClass:
             "RNA": r"^[ACGU]*$",
             # NOTE: Typically written with a capital letter first followed by two lower letters.
             # Changed the regular expression checker to only allow a single string upper case 1 letter iupac syntax
-            "PROTEIN": r"^[ACDEFGHIKLMNPQRSTVWY]{1}$",
+            "PROTEIN": r"^[ACDEFGHIKLMNPQRSTVWY]$",
         }
 
         if re.match(pat["emp_pat"], val, re.IGNORECASE):
@@ -268,7 +268,7 @@ class CoreVariantClass:
             "emp_pat": "^$",
             "DNA": r"^[ACGT]*$",
             "RNA": r"^[ACGU]*$",
-            "PROTEIN": r"^[ACDEFGHIKLMNPQRSTVWY]{1}$",
+            "PROTEIN": r"^[ACDEFGHIKLMNPQRSTVWY]$",
         }
 
         if re.match(pat["emp_pat"], val, re.IGNORECASE):
