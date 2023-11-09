@@ -6,7 +6,6 @@ from src.core_variant import CoreVariantClass
 
 class request_local_api:
     def __init__(self, hostname="", database="", username="", pwd="", portId=""):
-
         self.hostname = hostname
         self.database = database
         self.username = username
@@ -14,13 +13,13 @@ class request_local_api:
         self.portId = portId
 
     def getExample(self, rowId):
-        """Retrieve a specific row in the database. 
+        """Retrieve a specific row in the database.
 
         Args:
-            rowId (int): The rowId number. 
+            rowId (int): The rowId number.
 
         Returns:
-            dict: A dictionary of the selected rowID from the database. 
+            dict: A dictionary of the selected rowID from the database.
         """
         try:
             self.connect = psycopg2.connect(
@@ -54,7 +53,7 @@ class request_local_api:
             self.connect.close()
 
     def getAllExamples(self):
-        """Retrieve all examples from the database. 
+        """Retrieve all examples from the database.
 
         Returns:
             list: A list containing all examples from the database.
@@ -82,10 +81,10 @@ class request_local_api:
         """Converting a specific row from the database to a CoreVariantClass object.
 
         Args:
-            rowId (int): The rowId number. 
+            rowId (int): The rowId number.
 
         Returns:
-            dict: A dictionary of the database result as a CoreVariantClass object. 
+            dict: A dictionary of the database result as a CoreVariantClass object.
         """
         dbResult = self.getExample(rowId)
         cvcValue = CoreVariantClass(

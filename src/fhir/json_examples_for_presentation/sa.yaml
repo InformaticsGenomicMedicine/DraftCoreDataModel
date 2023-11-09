@@ -1,0 +1,51 @@
+$schema: http://json-schema.org/draft-07/schema
+title: GA4GH-SA-Definitions
+type: object
+definitions:
+  SequenceFeature:
+    properties:
+      id:
+        type: string
+      location:
+        $ref: "https://raw.githubusercontent.com/ga4gh/vrs/main/schema/vrs.yaml#definitions/Location"
+      seqOntologyRef:
+        type: string
+    required:
+    - id
+    - location
+    - seqOntologyRef
+    oneOf:
+    - "$ref": "#/definitions/Gene"
+    - "$ref": "#/definitions/Transcript"
+    - "$ref": "#/definitions/TranscriptRegion"
+  Gene:
+    properties:
+      transcripts:
+        type: array
+        items:
+          oneOf:
+          - "$ref": "#/definitions/Transcript"
+      strand:
+        type: string
+        enum:
+        - "+"
+        - "-"
+      referenceGenome:
+        type: string
+    required:
+    - strand
+    additionalProperties: true
+  Transcript:
+    properties:
+      coding:
+        type: boolean
+      regions:
+        type: array
+        items:
+          oneOf:
+          - "$ref": "#/definitions/TranscriptRegion"
+    additionalProperties: true
+  TranscriptRegion:
+    properties:
+      type:
+        type: string

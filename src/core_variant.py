@@ -62,7 +62,7 @@ class CoreVariantClass:
         Returns:
             str: A string representation of the CoreVariantClass object.
         """
-        return f"CoreVariantClass({self.origCoordSystem},{self.seqType},{self.refAllele},{self.altAllele},{self.start},{self.end},{self.allelicState},{self.geneSymbol},{self.hgncId},{self.chrom},{self.genomeBuild},{self.sequenceId},{self.extra})"
+        return f"CoreVariantClass({self.origCoordSystem},{self.seqType},{self.refAllele},{self.altAllele},{self.start},{self.end},{self.allelicState},{self.geneSymbol},{self.hgncId},{self.chrom},{self.genomeBuild},{self.sequenceId},{self.kwargs})"
 
     def as_dict(self) -> dict:
         """Converts CoreVariantClass object to a dictionary representation.
@@ -83,7 +83,7 @@ class CoreVariantClass:
             "chrom": self.chrom,
             "genomeBuild": self.genomeBuild,
             "sequenceId": self.sequenceId,
-            "extra": self.extra,
+            "kwargs": self.kwargs,
         }
 
     def as_json(self) -> str:
@@ -106,38 +106,74 @@ class CoreVariantClass:
         """
         return self.initParamValues
 
-    def normalized_data(self) --> dict:
-        """A dictionary of the normalized data. This method checks to see if the initial parameters can be normalized. 
-
-        Raises:
-            ValueError: If the origCoordSystem is not "0-based interbase".
+    def _normalize_origCoordSystem(self):
+        if self.origCoordSystem == "0-based interbase":
+            pass
+        elif self.origCoordSystem == "0-based counting":
+            self.start += 1
+            self.origCoordSystem = "0-based interbase"
+        elif self.origCoordSystem == "1-based counting":
+            self.start -= 1
+            self.origCoordSystem = "0-based interbase"
+        else:
+            raise ValueError("Invalid coordinate system specified.")
+# TODO: create test
+    def normalized_data(self) -> dict:
+        """Generates a dictionary representation of normalized data.
 
         Returns:
-            dict: A dictionary of the normalized data with validate attribute values. 
+            dict: A dictionary representation of normalized data.
         """
-        if self.initParamValues["origCoordSystem"] == "0-based interbase":
-            return {
-                "origCoordSystem": self.origCoordSystem,
-                "seqType": self.seqType,
-                "allelicState": self.allelicState,
-                "associatedGene": {
-                    "geneSymbol": self.geneSymbol,
-                    "hgncId": self.hgncId,
-                },
-                "refAllele": self.refAllele,
-                "altAllele": self.altAllele,
-                "position": {
-                    "chrom": self.chrom,
-                    "genomeBuild": self.genomeBuild,
-                    "start": self.start,
-                    "end": self.end,
-                    "sequenceId": self.sequenceId,
-                },
-            }
-        else:
-            raise ValueError(
-                'Data can not be normalized, origCoordSystem is not set to "0-based interbase".'
-            )
+        self._normalize_origCoordSystem()
+
+        return {
+            "origCoordSystem": self.origCoordSystem,
+            "seqType": self.seqType,
+            "allelicState": self.allelicState,
+            "associatedGene": {"geneSymbol": self.geneSymbol, "hgncId": self.hgncId,},
+            "refAllele": self.refAllele,
+            "altAllele": self.altAllele,
+            "position": {
+                "chrom": self.chrom,
+                "genomeBuild": self.genomeBuild,
+                "start": self.start,
+                "end": self.end,
+                "sequenceId": self.sequenceId,
+            },
+        }
+
+    # def normalized_data(self) -> dict:
+    #     """A dictionary of the normalized data. This method checks to see if the initial parameters can be normalized.
+
+    #     Raises:
+    #         ValueError: If the origCoordSystem is not "0-based interbase".
+
+    #     Returns:
+    #         dict: A dictionary of the normalized data with validate attribute values.
+    #     """
+    #     if self.initParamValues["origCoordSystem"] == "0-based interbase":
+    #         return {
+    #             "origCoordSystem": self.origCoordSystem,
+    #             "seqType": self.seqType,
+    #             "allelicState": self.allelicState,
+    #             "associatedGene": {
+    #                 "geneSymbol": self.geneSymbol,
+    #                 "hgncId": self.hgncId,
+    #             },
+    #             "refAllele": self.refAllele,
+    #             "altAllele": self.altAllele,
+    #             "position": {
+    #                 "chrom": self.chrom,
+    #                 "genomeBuild": self.genomeBuild,
+    #                 "start": self.start,
+    #                 "end": self.end,
+    #                 "sequenceId": self.sequenceId,
+    #             },
+    #         }
+    #     else:
+    #         raise ValueError(
+    #             'Data can not be normalized, origCoordSystem is not set to "0-based interbase".'
+    #         )
 
     def _validate_input_conditions(self, chrom, genomeBuild, sequenceId):
         """ Validate the required conditions for chrom, genomeBuild, and sequenceId. Requirements include

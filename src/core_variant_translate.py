@@ -4,10 +4,10 @@
 import hgvs.parser
 import re
 
-from src.spdi.spdi_class import SPDI
 from src.spdi.spdi_utils import SPDITranslate
 from src.core_variant import CoreVariantClass
 from src.api.seqrepo_api import SeqRepoAPI
+from src.spdi.spdi_class import SPDI
 
 
 class CVCTranslator:
@@ -16,17 +16,18 @@ class CVCTranslator:
         self.hp = hgvs.parser.Parser()
         self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
         self.dp = self.cn.dp
+        # self.spdi = SPDI()
 
     def _detect_sequence_type(self, input_str):
         """ Detects that sequence type based on the reference sequence provided.
         Formatted reference sequence: 
-            * NC_, NM_, NR_, NP_
+            * NC_, NM_, NG_, NR_, NP_
 
         Args:
             input_str (str): A string representing the reference sequence.
 
         Raises:
-            ValueError: If the input reference sequence is not one of the following format: NC_, NM_, NR_, NP_
+            ValueError: If the input reference sequence is not one of the following format: NC_, NM_, NG_, NR_, NP_
 
         Returns:
             str: The sequence type which can be "DNA", "RNA", or "protein".
@@ -34,6 +35,7 @@ class CVCTranslator:
         sequence_prefix_map = {
             "NC_": "DNA",
             "NM_": "DNA",
+            "NG_": "DNA",
             "NR_": "RNA",
             "NP_": "protein",
         }
@@ -166,34 +168,41 @@ class CVCTranslator:
             object: An object representing the CoreVariantClass format.
         """
         # TODO: I think i should use the the spdi validation step here then if its valid then extract the values.
-        spdi_re = re.compile(
-            r"(?P<sequenceId>[^:]+):(?P<pos>\d+):(?P<del_len_or_seq>\w*):(?P<ins_seq>\w*)"
-        )
-        match_obj = spdi_re.match(expression)
-
-        if not match_obj:
-            raise ValueError(f"Invalid SPDI expression: {expression}")
-
-        spdi_dict = match_obj.groupdict()
-
+        # spdi_re = re.compile(
+        #     r"(?P<sequenceId>[^:]+):(?P<pos>\d+):(?P<del_len_or_seq>\w*):(?P<ins_seq>\w*)"
+        # )
+        # match_obj = spdi_re.match(expression)
+        # if not match_obj:
+        #     raise ValueError(f"Invalid SPDI expression: {expression}")
+        # spdi_dict = match_obj.groupdict()
         # TODO: if we use the validation step then we need to make sure that we modify this part.
-        try:
-            deletion_length = int(spdi_dict["del_len_or_seq"])
-        except ValueError:
-            deletion_length = len(spdi_dict["del_len_or_seq"])
+        # try:
+        #     deletion_length = int(spdi_dict["del_len_or_seq"])
+        # except ValueError:
+        #     deletion_length = len(spdi_dict["del_len_or_seq"])
+        # start_position = int(spdi_dict["pos"])
+        # end_position = start_position + deletion_length
+        # TODO: test out new method of converting SPDI to CVC
+        s, p, d, i = expression.split(":")
+        spdi = SPDI(s, p, d, i)
 
-        start_position = int(spdi_dict["pos"])
-        end_position = start_position + deletion_length
+        try:
+            del_len = int(spdi.deletion)
+        except ValueError:
+            del_len = len(spdi.deletion)
+
+        start_position = int(spdi.position)
+        end_position = start_position + del_len
 
         try:
             return CoreVariantClass(
                 origCoordSystem="0-based interbase",
                 seqType=self._detect_sequence_type(expression),
-                refAllele=spdi_dict["del_len_or_seq"],
-                altAllele=spdi_dict["ins_seq"],
+                refAllele=spdi.deletion,  # spdi_dict["del_len_or_seq"],
+                altAllele=spdi.insertion,  # spdi_dict["ins_seq"],
                 start=start_position,
                 end=end_position,
-                sequenceId=spdi_dict["sequenceId"],
+                sequenceId=spdi.sequence  # spdi_dict["sequenceId"],
                 # NOTE:
                 # kwargs= expression
             )

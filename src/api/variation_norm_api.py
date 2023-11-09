@@ -13,14 +13,16 @@ class VarNormRestApi(VariationNormalizerRESTDataProxy):
     Extended Rest data proxy for Variation Normalizer API with additional method
     """
 
-    def variation_to_vrs(self, q: str, untranslatable_returns_text: str = "false") -> Dict:
-        """Convert HGVS, gnomAD VCF or free text variation on GRCh37 or GRCh38 assembly 
-        to VRS Variation. 
-            * Fully-justified allele normalization: (https://github.com/ga4gh/vrs-python/blob/main/src/ga4gh/vrs/normalize.py). 
+    def variation_to_vrs(
+        self, q: str, untranslatable_returns_text: str = "true"
+    ) -> dict:
+        """Convert HGVS, gnomAD VCF or free text variation on GRCh37 or GRCh38 assembly
+        to VRS Variation.
+            * Fully-justified allele normalization: (https://github.com/ga4gh/vrs-python/blob/main/src/ga4gh/vrs/normalize.py).
 
         Args:
             q (str): Variation query in HGVS, gnomAD VCF, or free text format.
-            untranslatable_returns_text (str, optional): True returns VRS Text object when unable to translate or normalize query. 
+            untranslatable_returns_text (str, optional): True returns VRS Text object when unable to translate or normalize query.
             False returns an empty list when unable to translate or normalize query. Defaults to 'true'.
 
         Raises:
@@ -37,11 +39,12 @@ class VarNormRestApi(VariationNormalizerRESTDataProxy):
         response = requests.get(url, params=params)
 
         if response.status_code == 200:
-            return json.loads(response.text)["variations"]#[0]
+            return json.loads(response.text)["variations"]  # [0]
         else:
             raise requests.HTTPError(
                 f"Request failed with status code: {response.status_code}"
             )
+
 
 if __name__ == "__main__":
     from ga4gh.vrs import models

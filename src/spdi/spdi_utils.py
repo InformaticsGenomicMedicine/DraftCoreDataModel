@@ -8,31 +8,33 @@ from typing import Union
 
 class SPDITranslate:
     def __init__(self) -> None:
-
-        self.cn: SeqRepoAPI = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
-        self.dp: str = self.cn.dp
-        self.tlr: str = self.cn.tlr
-        self.var_serv_api: VarServAPI = VarServAPI()
-        self.hp: hgvs.parser.Parser = hgvs.parser.Parser()
+        self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
+        self.dp = self.cn.dp
+        self.tlr = self.cn.tlr
+        self.var_serv_api = VarServAPI()
+        self.hp = hgvs.parser.Parser()
 
     def from_spdi_to_rightshift_hgvs(
-        self, expression: str, validate: bool = True, output_format: str = "string"
-    ) -> Union[str, hgvs.parser.ParserResult]:
-        """Translate SPDI expression to right-shift HGVS expression using NCBI API.
+            self, expression: str, validate: bool = True, output_format: str = "string"
+        ):
+        """ Translates a given SPDI expression to a right-shift HGVS expression. (Using NCBI API)
 
         Args:
-            expression (str): SPDI expression.
-            validate (bool, optional): Perform SPDI validation. Defaults to True.
-            output_format (str, optional): Format the output as a string or parse it into an HGVS object.
-                Defaults to 'string'.
-
-        Returns:
-            str or hgvs.parser.ParserResult: Right-shift normalized HGVS expression.
+            expression (str): The SPDI expression to be translated.
+            validate (bool, optional): If True, the SPDI expression will be validated before translation. Defaults to True.
+            output_format (str, optional): The format of the output. Supported values are 'string' or 'parse'. Defaults to "string".
 
         Raises:
-             ValueError: If validation fails or there's an issue with the translation.
-        """
+            ValueError: If validate is not a boolean.
+            ValueError: If output_format is not supported.
 
+        Returns:
+            str or hgvs.parser.ParserResult: The translated right-shift HGVS expression. If output_format is 'string', a string is returned. If output_format is 'parse', a hgvs.parser.ParserResult is returned.
+            
+        Raises:
+            ValueError: If an error occurs while translating the SPDI expression to a right-shift HGVS expression.
+        """
+        
         if not isinstance(validate, bool):
             raise ValueError(
                 f"Invalid value for 'validate': {validate}. Expected a boolean."
@@ -60,22 +62,23 @@ class SPDITranslate:
             )
 
     def from_spdi_to_vrs(
-        self, expression: str, validate: bool = True, output_format: str = "obj"
-    ) -> Union[object, dict, str]:
-        """Translate SPDI expression to VRS expression.
+            self, expression: str, validate: bool = True, output_format: str = "obj"
+        ) -> Union[object, dict, str]:
+        """ Translates an SPDI expression to a VRS expression.
 
         Args:
-            expression (str): SPDI expression
-            validate (bool, optional): Perform SPDI validation. Defaults to True.
-            format_output (str, optional): Output format ('obj', 'dict', 'json'). Defaults to 'obj'.
-
-        Returns:
-            object or dict or str: Translated VRS expression.
+            expression (str): The SPDI expression to translate.
+            validate (bool, optional): Whether to validate the SPDI expression before translating it. Defaults to True.
+            output_format (str, optional): The format in which to return the VRS expression. Supported values are 'obj', 'dict', and 'json'. Defaults to "obj".
 
         Raises:
-            ValueError: If validation fails or there's an issue with the translation.
-        """
+            ValueError: If validate is not a boolean.
+            ValueError: If output_format is not one of 'obj', 'dict', or 'json'.
+            ValueError: If an error occurs while translating the SPDI expression to a VRS expression.
 
+        Returns:
+            Union[object, dict, str]: The translated VRS expression. The format of the return value depends on the value of output_format.
+        """
         if not isinstance(validate, bool):
             raise ValueError(
                 f"Invalid value for 'validate': {validate}. Expected a boolean."

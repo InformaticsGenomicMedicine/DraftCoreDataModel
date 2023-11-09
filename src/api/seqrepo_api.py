@@ -8,7 +8,7 @@ class SeqRepoAPI:
 
         Args:
             seqrepo_rest_service_url (str): The base URL of the SeqRepo REST service.
-            
+
         Attributes:
             dp (ga4gh.vrs.dataproxy.SeqRepoRESTDataProxy): The data proxy for SeqRepoRESTData.
                 It allows retrieval of genomic sequence data.
