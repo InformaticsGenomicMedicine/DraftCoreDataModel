@@ -12,39 +12,42 @@ A few things to note:
 
 
 #### NOTE: This is the current structure
+notebooks/
 src/
-│   
-├── api/
-│   ├── __init__.py
-│   ├── ncbi_variation_services_api.py
-│   ├── seqrepo_api.py
-│   └── vicc_api.py
-│ 
-├── database/
-│   ├── __init__.py
-│   └── database_extract.py
-│  
-├── fhir/
-│  
-│  
-├── hgvsExtra/
-│   ├── __init__.py
-│   ├── hgvs_utils.py
-│   └── hgvs_validation.py
-│  
-├── spdi/
-│   ├── __init__.py
-│   ├── spdi_class.py
-│   └── spdi_utils.py
-│  
-├── vrs/
-│   ├── __init__.py
-│   └── vrs_utils.py
-|
-├── __init__.py
-|
-├── core_variant_translate.py
-|
-├── core_variant.py
+    │   
+    ├── api/
+    │   ├── __init__.py
+    │   ├── ncbi_variation_services_api.py
+    │   ├── seqrepo_api.py
+    │   └── vicc_api.py
+    │ 
+    ├── database/
+    │   ├── __init__.py
+    │   └── database_extract.py
+    │  
+    ├── fhir/
+    │  
+    │  
+    ├── hgvsExtra/
+    │   ├── __init__.py
+    │   ├── hgvs_utils.py
+    │   └── hgvs_validation.py
+    │  
+    ├── spdi/
+    │   ├── __init__.py
+    │   ├── spdi_class.py
+    │   └── spdi_utils.py
+    │  
+    ├── vrs/
+    │   ├── __init__.py
+    │   └── vrs_utils.py
+    |
+    ├── __init__.py
+    |
+    ├── core_variant_translate.py
+    |
+    ├── core_variant.py
+test/
+
 |
 └── main.py

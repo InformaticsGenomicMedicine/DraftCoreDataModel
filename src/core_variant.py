@@ -352,7 +352,9 @@ class CoreVariantClass:
         Raises:
             ValueError: If the start coordinate is greater than or equal to the end coordinate. 
         """
-        if self.start >= self.end:
+        #TODO: why cant the start be equal to the end?
+        #Example: for an hgvs expression like: 'NM_001256850.1:c.1141G>A' wouldnt the start and end be = 1141? Or is my thinking wrong?
+        if self.start > self.end:
             raise ValueError(
                 f"The start coordinate value: {self.start} can not be greater than or equal to the end coordinate value {self.end}."
             )
