@@ -11,6 +11,9 @@ from ga4gh.vrs import models, normalize as do_normalize
 # import hgvs.sequencevariant
 import hgvs.dataproviders.uta
 
+#NOTE: this was seperated from core_variant_translate.py to help debug. 
+#TODO: use a better name for this class
+
 class ToTranslate:
     def __init__(self):
         self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
@@ -36,7 +39,8 @@ class ToTranslate:
         if letter is None:
             raise ValueError("Unknown reference sequence type.")
         return letter
-
+    
+    #TODO: allow format features
     def cvc_to_hgvs(self, expression):
         if expression.origCoordSystem != "0-based interbase":
             raise ValueError("The origCoordsystem must equal 0-based interbase.")
@@ -115,7 +119,8 @@ class ToTranslate:
         elif output_format == "dict":
             return spdi_obj.to_dict()
         
-    # Method that normalizes the vrs allele.
+    # NOTE: Method that normalizes the vrs allele.
+    # TODO: Make this a parameter in in the cvc_to_vrs: normalize = true
     def _post_normalize_allele(self, allele):
         seq_id = self.dp.translate_sequence_identifier(allele.location.sequence_id._value, "ga4gh")[0]
         allele.location.sequence_id = seq_id
@@ -123,7 +128,8 @@ class ToTranslate:
         allele._id = ga4gh_identify(allele)
         allele.location._id = ga4gh_identify(allele.location)
         return allele
-
+    
+    #TODO: allow format features
     def cvc_to_vrs(self, expression): 
         if expression.origCoordSystem != "0-based interbase":
             raise ValueError("The origCoordsystem must equal 0-based interbase.")
