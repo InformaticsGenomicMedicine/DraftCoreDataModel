@@ -23,7 +23,7 @@ class SPDI:
     }
 
     def __init__(
-        self, sequence: str, position: int, deletion: str, insertion: str
+        self, sequence: str, position: str, deletion: str, insertion: str
     ) -> None:
         """Initialize SPDI object.
 
@@ -39,7 +39,7 @@ class SPDI:
 
         self.api = VarServAPI()
         self.sequence = self._validate_sequence(sequence)
-        self.position = self._validate_position(position)
+        self.position = self._validate_position(position)  
         self.deletion = self._validate_deletion(deletion)
         self.insertion = self._validate_insertion(insertion)
 
@@ -66,28 +66,37 @@ class SPDI:
         if sequence_prefix not in self.sequence_prefix_map:
             raise ValueError(f"Invalid reference sequence prefix: {sequence_prefix}")
         return sequence
+    
+# TODO:Remove this code once the above code is tested 
+# TODO: this need to handle strings so we need to use a regular expression. 
+    # def _validate_position(self, position: int) -> int:
+    #     """
+    #     Validates the given position.
 
-    def _validate_position(self, position: int) -> int:
-        """
-        Validates the given position.
+    #     Args:
+    #         position (int): The position to validate.
 
-        Args:
-            position (int): The position to validate.
+    #     Raises:
+    #         TypeError: If the position is not an integer.
+    #         ValueError: If the position is less then 0.
 
-        Raises:
-            TypeError: If the position is not an integer.
-            ValueError: If the position is less then 0.
-
-        Returns:
-            int: The validated position.
-        """
-        if not isinstance(position, int):
-            raise TypeError(f"Position must be an integer, not {type(position)}")
-        if position < 0:
-            raise ValueError(f"Position must be greater than or equal to 0.")
-        return position
+    #     Returns:
+    #         int: The validated position.
+    #     """
+    #     if not isinstance(position, int):
+    #         raise TypeError(f"Position must be an integer, not {type(position)}")
+    #     if position < 0:
+    #         raise ValueError(f"Position must be greater than or equal to 0.")
+    #     return position
 
     # need to match the reference sequence with the correct regular expression
+
+    def _validate_position(self, position: str) -> str:
+
+        if not re.match(self.pattern["DIGIT"], position):
+            raise ValueError(f"Position must be an nonnegative integer value.")
+        return position
+
     def _match_refseq_to_regex(self) -> str:
         """Matches the reference sequence with the correct regular expression.
 
@@ -151,7 +160,8 @@ class SPDI:
                     f"Invalid insertion sequence for {sequence_type} reference sequence"
                 )
         return insertion
-
+    
+    # TODO:Remove this code once the above code is tested 
     # def _validate_deletion(self, deletion):
     #     """
     #     Validates the deletion sequence for a given reference sequence.
@@ -298,7 +308,7 @@ class SPDI:
 
 if __name__ == "__main__":
     ex1 = SPDI(
-        sequence="NC_000001.11", position=161629780, deletion="CC", insertion="C"
+        sequence="NC_000001.11", position='161629780', deletion="CC", insertion="C"
     )
     # print(ex1.to_string())
     print(ex1.sequence)

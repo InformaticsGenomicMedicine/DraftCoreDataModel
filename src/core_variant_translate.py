@@ -47,113 +47,116 @@ class CVCTranslator:
             raise ValueError("Unknown sequence type")
 
         return sequence_type
+    
+# NOTE: These were moved to cvc_to_translate.py in order to debug better.
 
-    def cvc_to_spdi(self, expression, output_format):
-        """Converts a CoreVariantClass object into an SPDI expression. 
+    # def cvc_to_spdi(self, expression, output_format='string'):
+    #     """Converts a CoreVariantClass object into an SPDI expression. 
 
-        Args:
-            expression (object): An object representing a core variant class.
-            output_format (str): Desired format for the output. Can be "object","string", or "dict".
+    #     Args:
+    #         expression (object): An object representing a core variant class.
+    #         output_format (str): Desired format for the output. Can be "object","string", or "dict".
 
-        Raises:
-            ValueError: If the origCoordSystem of the expression is not "0-based interbase".
-            ValueError: If an invalid output format is provided.
+    #     Raises:
+    #         ValueError: If the origCoordSystem of the expression is not "0-based interbase".
+    #         ValueError: If an invalid output format is provided.
 
-        Returns:
-            (object or str or dict): Spdi Expression
-        """
+    #     Returns:
+    #         (object or str or dict): Spdi Expression
+    #     """
 
-        if not isinstance(expression, CoreVariantClass):
-            raise ValueError("Invalid input format. Expected CoreVariantClass object.")
+    #     if not isinstance(expression, CoreVariantClass):
+    #         raise ValueError("Invalid input format. Expected CoreVariantClass object.")
 
-        if output_format not in ("obj", "string", "dict"):
-            raise ValueError("Invalid output format. Use 'obj', 'string', or 'dict'.")
+    #     if output_format not in ("obj", "string", "dict"):
+    #         raise ValueError("Invalid output format. Use 'obj', 'string', or 'dict'.")
 
-        if expression.origCoordSystem != "0-based interbase":
-            raise ValueError("The origCoordsystem must equal 0-based interbase.")
+    #     if expression.origCoordSystem != "0-based interbase":
+    #         raise ValueError("The origCoordsystem must equal 0-based interbase.")
 
-        spdi_obj = SPDI(
-            sequence=expression.sequenceId,
-            position=expression.start,
-            deletion=expression.refAllele,
-            insertion=expression.altAllele,
-        )
+    #     spdi_obj = SPDI(
+    #         sequence=expression.sequenceId,
+    #         #TODO: double check this this should probably be the end position
+    #         position=str(expression.start),
+    #         deletion=expression.refAllele,
+    #         insertion=expression.altAllele,
+    #     )
 
-        if output_format == "obj":
-            return spdi_obj
-        elif output_format == "string":
-            return spdi_obj.to_string()
-        elif output_format == "dict":
-            return spdi_obj.to_dict()
+    #     if output_format == "obj":
+    #         return spdi_obj
+    #     elif output_format == "string":
+    #         return spdi_obj.to_string()
+    #     elif output_format == "dict":
+    #         return spdi_obj.to_dict()
 
-    def cvc_to_hgvs(self, expression, output_format):
-        """Converts a CoreVariantClass object into an HGVS expression. 
+    # def cvc_to_hgvs(self, expression, output_format):
+    #     """Converts a CoreVariantClass object into an HGVS expression. 
 
-        Args:
-            expression (object): An object representing a core variant class.
-            output_format (str): Desired format for the output. Can be "parse" or "string".
+    #     Args:
+    #         expression (object): An object representing a core variant class.
+    #         output_format (str): Desired format for the output. Can be "parse" or "string".
 
-        Raises:
-            ValueError: If an invalid output format is provided.
+    #     Raises:
+    #         ValueError: If an invalid output format is provided.
 
-        Returns:
-            (parse or string): HGVS expression 
-        """
+    #     Returns:
+    #         (parse or string): HGVS expression 
+    #     """
 
-        if not isinstance(expression, CoreVariantClass):
-            raise ValueError("Invalid input format. Expected CoreVariantClass object.")
+    #     if not isinstance(expression, CoreVariantClass):
+    #         raise ValueError("Invalid input format. Expected CoreVariantClass object.")
 
-        if output_format not in ("parse", "string"):
-            raise ValueError("Invalid output format. Use 'parse' or 'string'.")
+    #     if output_format not in ("parse", "string"):
+    #         raise ValueError("Invalid output format. Use 'parse' or 'string'.")
 
-        spdi_expression = self.cvc_to_spdi(expression, output_format="string")
+    #     spdi_expression = self.cvc_to_spdi(expression, output_format="string")
 
-        if output_format == "parse":
-            return self.trans_spdi.from_spdi_to_rightshift_hgvs(
-                spdi_expression, output_format="parse"
-            )
-        elif output_format == "string":
-            return self.trans_spdi.from_spdi_to_rightshift_hgvs(
-                spdi_expression, output_format="string"
-            )
+    #     if output_format == "parse":
+    #         return self.trans_spdi.from_spdi_to_rightshift_hgvs(
+    #             spdi_expression, output_format="parse"
+    #         )
+    #     elif output_format == "string":
+    #         return self.trans_spdi.from_spdi_to_rightshift_hgvs(
+    #             spdi_expression, output_format="string"
+    #         )
 
-    def cvc_to_vrs(self, expression, output_format="obj"):
-        """Converts a CoreVariantClass object into an VRS expression.
+    # def cvc_to_vrs(self, expression, output_format="obj"):
+    #     """Converts a CoreVariantClass object into an VRS expression.
 
-        Args:
-            expression (object): An object representing a CoreVariantClass.
-            output_format (str): Desired format for the output. Can be "obj" or "dict", or "json".
+    #     Args:
+    #         expression (object): An object representing a CoreVariantClass.
+    #         output_format (str): Desired format for the output. Can be "obj" or "dict", or "json".
 
-        Raises:
-            ValueError: If an invalid output format is provided.
+    #     Raises:
+    #         ValueError: If an invalid output format is provided.
 
-        Returns:
-            (obj,dict,json): VRS expression
-        """
+    #     Returns:
+    #         (obj,dict,json): VRS expression
+    #     """
 
-        if not isinstance(expression, CoreVariantClass):
-            raise ValueError("Invalid input format. Expected CoreVariantClass object.")
+    #     if not isinstance(expression, CoreVariantClass):
+    #         raise ValueError("Invalid input format. Expected CoreVariantClass object.")
 
-        if output_format not in ("obj", "dict", "json"):
-            raise ValueError("Invalid output format. Use 'obj', 'dict', or 'json'.")
+    #     if output_format not in ("obj", "dict", "json"):
+    #         raise ValueError("Invalid output format. Use 'obj', 'dict', or 'json'.")
 
-        spdi_expression = self.cvc_to_spdi(expression, output_format="string")
-        try:
+    #     spdi_expression = self.cvc_to_spdi(expression, output_format="string")
+    #     try:
 
-            if output_format == "obj":
-                return self.trans_spdi.from_spdi_to_vrs(
-                    spdi_expression, output_format="obj"
-                )
-            elif output_format == "dict":
-                return self.trans_spdi.from_spdi_to_vrs(
-                    spdi_expression, output_format="dict"
-                )
-            elif output_format == "json":
-                return self.trans_spdi.from_spdi_to_vrs(
-                    spdi_expression, output_format="json"
-                )
-        except ValueError as e:
-            raise ValueError(f"{e}. Expression Error: {spdi_expression}")
+    #         if output_format == "obj":
+    #             return self.trans_spdi.from_spdi_to_vrs(
+    #                 spdi_expression, output_format="obj"
+    #             )
+    #         elif output_format == "dict":
+    #             return self.trans_spdi.from_spdi_to_vrs(
+    #                 spdi_expression, output_format="dict"
+    #             )
+    #         elif output_format == "json":
+    #             return self.trans_spdi.from_spdi_to_vrs(
+    #                 spdi_expression, output_format="json"
+    #             )
+    #     except ValueError as e:
+    #         raise ValueError(f"{e}. Expression Error: {spdi_expression}")
 
     def spdi_to_cvc(self, expression):
         """Converts an SPDI expression to a CoreVariantClass object.
@@ -180,8 +183,8 @@ class CVCTranslator:
         #     deletion_length = int(spdi_dict["del_len_or_seq"])
         # except ValueError:
         #     deletion_length = len(spdi_dict["del_len_or_seq"])
-        # start_position = int(spdi_dict["pos"])
-        # end_position = start_position + deletion_length
+        # start_pos = int(spdi_dict["pos"])
+        # end_pos = start_pos + deletion_length
         # TODO: test out new method of converting SPDI to CVC
         s, p, d, i = expression.split(":")
         spdi = SPDI(s, p, d, i)
@@ -191,8 +194,8 @@ class CVCTranslator:
         except ValueError:
             del_len = len(spdi.deletion)
 
-        start_position = int(spdi.position)
-        end_position = start_position + del_len
+        start_pos = int(spdi.position)
+        end_pos = start_pos + del_len
 
         try:
             return CoreVariantClass(
@@ -200,8 +203,8 @@ class CVCTranslator:
                 seqType=self._detect_sequence_type(expression),
                 refAllele=spdi.deletion,  # spdi_dict["del_len_or_seq"],
                 altAllele=spdi.insertion,  # spdi_dict["ins_seq"],
-                start=start_position,
-                end=end_position,
+                start=start_pos,
+                end=end_pos,
                 sequenceId=spdi.sequence  # spdi_dict["sequenceId"],
                 # NOTE:
                 # kwargs= expression
@@ -243,14 +246,14 @@ class CVCTranslator:
         # modifying position form 1 base indexing to 0 base indexing
         # Based on the vrs-python translate.py module
         if parsed_variant.posedit.edit.type == "ins":
-            start_position = parsed_variant.posedit.pos.start.base
-            end_position = parsed_variant.posedit.pos.start.base
+            start_pos = parsed_variant.posedit.pos.start.base
+            end_pos = parsed_variant.posedit.pos.start.base
         elif parsed_variant.posedit.edit.type in ("sub", "del", "delins"):
-            start_position = parsed_variant.posedit.pos.start.base - 1
-            end_position = parsed_variant.posedit.pos.end.base
+            start_pos = parsed_variant.posedit.pos.start.base - 1
+            end_pos = parsed_variant.posedit.pos.end.base
         elif parsed_variant.posedit.edit.type == "dup":
-            start_position = parsed_variant.posedit.pos.start.base - 1
-            end_position = parsed_variant.posedit.pos.end.base
+            start_pos = parsed_variant.posedit.pos.start.base - 1
+            end_pos = parsed_variant.posedit.pos.end.base
         else:
             raise ValueError(
                 f"HGVS variant type {parsed_variant.posedit.edit.type} is unsupported"
@@ -261,8 +264,8 @@ class CVCTranslator:
             seqType=self._detect_sequence_type(expression),
             refAllele=parsed_variant.posedit.edit.ref,
             altAllele=parsed_variant.posedit.edit.alt,
-            start=start_position,
-            end=end_position,
+            start=start_pos,
+            end=end_pos,
             sequenceId=parsed_variant.ac,
             # kwargs=expression
         )
@@ -283,6 +286,7 @@ class CVCTranslator:
         """
         sequence_id = expression.location.sequence_id
         translated_sequence_ids = self.dp.translate_sequence_identifier(
+            # we are specifying we only want the reference sequence id. 
             sequence_id, namespace="refseq"
         )
 
@@ -290,10 +294,12 @@ class CVCTranslator:
             raise ValueError(f"Unable to translate sequence identifier: {sequence_id}")
         try:
             # Based on the vrs-python translate.py module
-            sequenceId = translated_sequence_ids[0].split(":")[1]
+            #translated_sequence_id returns example = 'refseq:NC_000019.10'
+            # so we need to remove the refseq
+            ref_sequence_id = translated_sequence_ids[0].split(":")[1]
             reference_allele = str(
                 self.dp.get_sequence(
-                    sequenceId,
+                    ref_sequence_id,
                     expression.location.interval.start.value,
                     expression.location.interval.end.value,
                 )
@@ -309,12 +315,12 @@ class CVCTranslator:
 
             return CoreVariantClass(
                 origCoordSystem="0-based interbase",
-                seqType=self._detect_sequence_type(sequenceId),
+                seqType=self._detect_sequence_type(ref_sequence_id),
                 refAllele=reference_allele,
                 altAllele=alternative_allele,
                 start=start_val,
                 end=end_val,
-                sequenceId=sequenceId,
+                sequenceId=ref_sequence_id,
                 # kwargs=expression
             )
         except Exception as e:

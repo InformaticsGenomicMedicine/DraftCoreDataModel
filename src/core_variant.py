@@ -117,7 +117,37 @@ class CoreVariantClass:
             self.origCoordSystem = "0-based interbase"
         else:
             raise ValueError("Invalid coordinate system specified.")
-# TODO: create test
+        
+    def init_normalized_data(self) -> dict:
+        """Generates a dictionary representation of normalized data.
+
+        Returns:
+            dict: A dictionary representation of normalized data.
+        """
+        self._normalize_origCoordSystem()
+
+        return {
+            "origCoordSystem": self.origCoordSystem,
+            "seqType": self.seqType,
+            "refAllele": self.refAllele,
+            "altAllele": self.altAllele,
+            "start": self.start,
+            "end": self.end,
+            "allelicState": self.allelicState,
+            "geneSymbol": self.geneSymbol,
+            "hgncId": self.hgncId,
+            "chrom": self.chrom,
+            "genomeBuild": self.genomeBuild,
+            "sequenceId": self.sequenceId,
+            "kwargs": self.kwargs,
+        }
+    
+    # TODO: create test
+    # TODO: Currently went we translate SPDI,HGVS,VRS it is translated into the CVC base format and not the normalized_data format. 
+    # We need to address the point of this normalized_data method. Currently I dont see much use of this especially that is has a different format then the base format. 
+    # Seems that we are over complicating things by having two different formats structures. IF we want to say that 0-based interbase is the normalized form then i dont think we need to create a whole new output format. 
+    # we can just use the _normalize_origCoordSystem which will change the start coordinate to 0-based interbase and then we can just use the base format to output the data.
+
     def normalized_data(self) -> dict:
         """Generates a dictionary representation of normalized data.
 
@@ -236,7 +266,8 @@ class CoreVariantClass:
                 f'Invalid seqType input: "{seqType}". Allowed types: {allowedSeqType} (Case Insensitive).'
             )
         return value
-
+    #TODO: SPDI handles IUPC nucleotide codes: https://www.bioinformatics.org/sms/iupac.html
+    #TODO: We will need to change the regular expression to support this to: r"^[ACDEFGHIKLMNPQRSTVWY]*$"
     def _validate_reference_allele(self, refAllele):
         """ Validate the refAllele input. Method checks the input against defined regular expression patterns based on the sequence type. 
         The allowed sequence types and corresponding patterns are as follows:
@@ -280,7 +311,7 @@ class CoreVariantClass:
                     f'Invalid {refAllele} input: "{val}". Value need to match regular expression patter: ({pat["PROTEIN"]}).'
                 )
             return val
-
+    #TODO: Change regular expression to support IUPAC nucleotide codes: https://www.bioinformatics.org/sms/iupac.html to r"^[ACDEFGHIKLMNPQRSTVWY]*$"
     def _validate_alternative_allele(self, altAllele):
         """ Validate the altAllele input. Method checks the input against defined regular expression patterns based on the sequence type. 
         The allowed sequence types and corresponding patterns are as follows:
