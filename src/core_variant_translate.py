@@ -1,13 +1,17 @@
 # Citation: https://github.com/ga4gh/vrs-python/blob/main/src/ga4gh/vrs/extras/translator.py
 # Citation: https://github.com/biocommons/hgvs
 
-import hgvs.parser
+
 import re
 
 from src.spdi.spdi_utils import SPDITranslate
 from src.core_variant import CoreVariantClass
 from src.api.seqrepo_api import SeqRepoAPI
 from src.spdi.spdi_class import SPDI
+
+import hgvs.parser
+import hgvs.dataproviders.uta
+import hgvs.validator
 
 
 class CVCTranslator:
@@ -16,6 +20,8 @@ class CVCTranslator:
         self.hp = hgvs.parser.Parser()
         self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
         self.dp = self.cn.dp
+        self.hdp = hgvs.dataproviders.uta.connect()
+        self.vr = hgvs.validator.Validator(hdp=self.hdp)
         # self.spdi = SPDI()
 
     def _detect_sequence_type(self, input_str):
@@ -189,10 +195,10 @@ class CVCTranslator:
         s, p, d, i = expression.split(":")
         spdi = SPDI(s, p, d, i)
 
-        try:
-            del_len = int(spdi.deletion)
-        except ValueError:
-            del_len = len(spdi.deletion)
+        if isinstance(spdi.deletion, int):
+            del_len = spdi.deletion
+        else:
+            del_len = len(str(spdi.deletion)) 
 
         start_pos = int(spdi.position)
         end_pos = start_pos + del_len
@@ -214,6 +220,7 @@ class CVCTranslator:
                 f"Error creating CoreVariantClass from SPDI: {e}. SPDI Expression: {expression}"
             )
 
+
     def hgvs_to_cvc(self, expression):
         """Converts an HGVS expression to a CoreVariantClass object.
             Only supports (ins,sub,del,delins,or dup) HGVS expressions.
@@ -228,32 +235,48 @@ class CVCTranslator:
         Returns:
             object: An object representing the CoreVariantClass format.
         """
-
-        # parsing the hgvs expression to obtain specific felids needed
+        # validate hgvs input
         parsed_variant = self.hp.parse_hgvs_variant(expression)
+        if not self.vr.validate(parsed_variant):
+            raise(ValueError(f"Invalid HGVS expression: {expression}"))
 
-        # Checks if the position is in the intronic region for both the start position and end position
-        # Based on the vrs-python translate.py module
+        # checks if posedit.pos is an intronic region
         if isinstance(parsed_variant.posedit.pos, hgvs.location.BaseOffsetInterval):
-            if (
-                parsed_variant.posedit.pos.start.is_intronic
-                or parsed_variant.posedit.pos.end.is_intronic
-            ):
-                raise ValueError(
-                    f"Intronic HGVS variants are not supported ({parsed_variant.posedit})"
-                )
-
-        # modifying position form 1 base indexing to 0 base indexing
-        # Based on the vrs-python translate.py module
+            # checks if the start or end position is intronic
+            if (parsed_variant.posedit.pos.start.is_intronic or parsed_variant.posedit.pos.end.is_intronic):
+                raise ValueError(f"Intronic HGVS variants are not supported ({parsed_variant.posedit})")
+            
         if parsed_variant.posedit.edit.type == "ins":
             start_pos = parsed_variant.posedit.pos.start.base
-            end_pos = parsed_variant.posedit.pos.start.base
-        elif parsed_variant.posedit.edit.type in ("sub", "del", "delins"):
-            start_pos = parsed_variant.posedit.pos.start.base - 1
             end_pos = parsed_variant.posedit.pos.end.base
-        elif parsed_variant.posedit.edit.type == "dup":
-            start_pos = parsed_variant.posedit.pos.start.base - 1
+
+            ref_seq = parsed_variant.posedit.edit.ref or ""
+            alt_seq = parsed_variant.posedit.edit.alt
+
+        elif parsed_variant.posedit.edit.type in ("sub","del","delins","identity","dup"):
+            # The starting position is changed to account for 0-interbase indexing
+            start_pos = parsed_variant.posedit.pos.start.base - 1 
             end_pos = parsed_variant.posedit.pos.end.base
+
+            if parsed_variant.posedit.edit.type == "sub":
+                ref_seq = parsed_variant.posedit.edit.ref
+                alt_seq = parsed_variant.posedit.edit.alt
+
+            elif parsed_variant.posedit.edit.type == "del":
+                ref_seq = self.dp.get_sequence(parsed_variant.ac,start_pos,end_pos)
+                alt_seq = parsed_variant.posedit.edit.alt or ""
+                
+            elif parsed_variant.posedit.edit.type == "delins":
+                ref_seq = self.dp.get_sequence(parsed_variant.ac,start_pos,end_pos)
+                alt_seq = parsed_variant.posedit.edit.alt
+            
+            elif parsed_variant.posedit.edit.type == "identity":
+                ref_seq = self.dp.get_sequence(parsed_variant.ac,start_pos,end_pos)
+                alt_seq = ref_seq
+
+            elif parsed_variant.posedit.edit.type == "dup":
+                ref_seq = self.dp.get_sequence(parsed_variant.ac,start_pos,end_pos)
+                alt_seq = ref_seq + ref_seq
         else:
             raise ValueError(
                 f"HGVS variant type {parsed_variant.posedit.edit.type} is unsupported"
@@ -262,8 +285,8 @@ class CVCTranslator:
         cvc_instance = CoreVariantClass(
             origCoordSystem="0-based interbase",
             seqType=self._detect_sequence_type(expression),
-            refAllele=parsed_variant.posedit.edit.ref,
-            altAllele=parsed_variant.posedit.edit.alt,
+            refAllele= ref_seq, #parsed_variant.posedit.edit.ref,
+            altAllele= alt_seq, #parsed_variant.posedit.edit.alt,
             start=start_pos,
             end=end_pos,
             sequenceId=parsed_variant.ac,
@@ -271,6 +294,45 @@ class CVCTranslator:
         )
 
         return cvc_instance
+    
+# NOTE: THIS IS THE OLD WAY I DID IT AND RELEASED THERE WAS ERROR:
+# TODO: delelte this after making sure the new method works
+
+        # # modifying position form 1 base indexing to 0 base indexing
+        # # Based on the vrs-python translate.py module
+        # if parsed_variant.posedit.edit.type == "ins":
+        #     start_pos = parsed_variant.posedit.pos.start.base
+        #     end_pos = parsed_variant.posedit.pos.start.base
+            
+        #     alt_allele = parsed_variant.posedit.edit.alt
+        #     ref_allele = parsed_variant.posedit.edit.ref
+
+        # elif parsed_variant.posedit.edit.type in ("sub", "del", "delins", "identity"):
+
+        #     start_pos = parsed_variant.posedit.pos.start.base - 1
+        #     end_pos = parsed_variant.posedit.pos.end.base
+
+
+        #     if parsed_variant.posedit.edit.type == "identity":
+        #         alt_allele = self.data_proxy.get_sequence(parsed_variant.ac,
+        #                                              start_pos,
+        #                                              end_pos)
+        #     else:
+        #         alt_allele = parsed_variant.posedit.edit.alt or ""
+
+        # elif parsed_variant.posedit.edit.type == "dup":
+        #     start_pos = parsed_variant.posedit.pos.start.base - 1
+        #     end_pos = parsed_variant.posedit.pos.end.base
+
+        #     ref_allele = self.data_proxy.get_sequence(parsed_variant.ac,
+        #                                              start_pos,
+        #                                              end_pos)
+        #     alt_allele = ref_allele + ref_allele
+
+        # else:
+        #     raise ValueError(
+        #         f"HGVS variant type {parsed_variant.posedit.edit.type} is unsupported"
+        #     )
 
     def vrs_to_cvc(self, expression):
         """Converts an VRS expression to a CoreVariantClass object.
@@ -284,46 +346,59 @@ class CVCTranslator:
         Returns:
             object: An object representing the CoreVariantClass format.
         """
-        sequence_id = expression.location.sequence_id
+        # sequence_id = expression.location.sequence_id
+
         translated_sequence_ids = self.dp.translate_sequence_identifier(
             # we are specifying we only want the reference sequence id. 
-            sequence_id, namespace="refseq"
+            expression.location.sequence_id, namespace="refseq"
         )
-
         if not translated_sequence_ids:
-            raise ValueError(f"Unable to translate sequence identifier: {sequence_id}")
-        try:
+            raise ValueError(f"Unable to translate VRS Sequence ID: {expression.location.sequence_id}")
+        
+        # try:
             # Based on the vrs-python translate.py module
             #translated_sequence_id returns example = 'refseq:NC_000019.10'
             # so we need to remove the refseq
-            ref_sequence_id = translated_sequence_ids[0].split(":")[1]
-            reference_allele = str(
-                self.dp.get_sequence(
-                    ref_sequence_id,
-                    expression.location.interval.start.value,
-                    expression.location.interval.end.value,
+        ref_sequence_id_parts = translated_sequence_ids[0].split(":")
+        if len(ref_sequence_id_parts) < 2:
+            raise ValueError(f"Invalid translated sequence identifier format: {translated_sequence_ids[0]}")
+        
+        ref_sequence_id = ref_sequence_id_parts[1]
+
+        ref_seq = str(
+            self.dp.get_sequence(
+                ref_sequence_id, 
+                expression.location.interval.start.value, 
+                expression.location.interval.end.value,
                 )
             )
 
             # TODO: look into this: https://github.com/ga4gh/vrs-python/blob/593508c6e8229336ca1f53a06f69966020cd68f7/src/ga4gh/vrs/extras/translator.py#L412
-            alternative_allele = (
-                str(expression.state.sequence) if expression.state.sequence else None
-            )
+            # alternative_allele = (
+            #     str(expression.state.sequence) if expression.state.sequence else None
+            # )
 
-            start_val = int(expression.location.interval.start.value)
-            end_val = int(expression.location.interval.end.value)
+        if expression.state.sequence_type:
+            alt_seq = str(expression.state.sequence_type)
+        else:
+            alt_seq = None
 
-            return CoreVariantClass(
-                origCoordSystem="0-based interbase",
-                seqType=self._detect_sequence_type(ref_sequence_id),
-                refAllele=reference_allele,
-                altAllele=alternative_allele,
-                start=start_val,
-                end=end_val,
-                sequenceId=ref_sequence_id,
-                # kwargs=expression
-            )
-        except Exception as e:
-            raise ValueError(
-                f"Error while creating CoreVariantClass from VRS expression: {e}"
-            )
+        start_pos = int(expression.location.interval.start.value)
+        end_pos = int(expression.location.interval.end.value)
+
+        return CoreVariantClass(
+            origCoordSystem="0-based interbase",
+            seqType=self._detect_sequence_type(ref_sequence_id),
+            refAllele=ref_seq,
+            altAllele=alt_seq,
+            start=start_pos,
+            end=end_pos,
+            sequenceId=ref_sequence_id,
+            # kwargs=expression
+        )
+        # except Exception as e:
+        #     raise ValueError(
+        #         f"Error while creating CoreVariantClass from VRS expression: {e}"
+        #     )
+
+

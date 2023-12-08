@@ -41,6 +41,7 @@ class ToTranslate:
         return letter
     
     #TODO: allow format features
+    #Double check: https://github.com/ga4gh/vrs-python/blob/e09e09c33e0fd310277d048083812bf5b47b3c74/src/ga4gh/vrs/extras/translator.py#L355C2-L450
     def cvc_to_hgvs(self, expression):
         if expression.origCoordSystem != "0-based interbase":
             raise ValueError("The origCoordsystem must equal 0-based interbase.")
@@ -130,7 +131,7 @@ class ToTranslate:
         return allele
     
     #TODO: allow format features
-    def cvc_to_vrs(self, expression): 
+    def cvc_to_vrs(self, expression, normalize=True): 
         if expression.origCoordSystem != "0-based interbase":
             raise ValueError("The origCoordsystem must equal 0-based interbase.")
 
@@ -138,10 +139,14 @@ class ToTranslate:
                                             end=models.Number(value=expression.end))
         # NOTE: sequence id need to have this particular format: refseq:sequenceId
         location = models.SequenceLocation(sequence_id=f"refseq:{expression.sequenceId}", interval=interval)
+        #NOTE: State in the translator.py in vrs-python is always literal. 
         state = models.LiteralSequenceExpression(sequence=expression.altAllele)
         allele = models.Allele(location=location, state=state)
-        allele = self._post_normalize_allele(allele)
-        return allele
+        if normalize:
+            allele = self._post_normalize_allele(allele)
+            return allele
+        else: 
+            return allele
     
 #NOTE: THIS IS OLD KEEP TILL WE FORSURE DONT WANT TO USE API TO GO FROM CVC -> SPDI -> VRS
     # def cvc_to_vrs(self, expression, output_format="obj"):

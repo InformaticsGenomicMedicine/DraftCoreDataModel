@@ -118,6 +118,8 @@ class CoreVariantClass:
         else:
             raise ValueError("Invalid coordinate system specified.")
         
+    #NOTE: this was created to for test purpose this will be removed later
+    #TODO: remove this method later 
     def init_normalized_data(self) -> dict:
         """Generates a dictionary representation of normalized data.
 

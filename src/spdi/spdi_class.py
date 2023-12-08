@@ -4,7 +4,6 @@
 import re
 from src.api.ncbi_variation_services_api import VarServAPI
 
-
 class SPDI:
     sequence_prefix_map = {
         "NC_": "DNA",
