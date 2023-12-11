@@ -16,7 +16,7 @@ class HGVSTranslate:
 
         self.hp = hgvs.parser.Parser()
         self.hdp = hgvs.dataproviders.uta.connect()
-        self.hn = hgvs.normalizer.Normalizer(self.hdp)
+        # self.hn = hgvs.normalizer.Normalizer(self.hdp)
         self.vr = hgvs.validator.Validator(hdp=self.hdp)
 
     def _validate_hgvs_variants(self, expression: str) -> str:

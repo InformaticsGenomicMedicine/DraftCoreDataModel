@@ -2,10 +2,18 @@ import pytest
 from src.spdi.spdi_class import SPDI
 
 spdi_tests = [
-    # Unchanged
-    ("NC_000001.11", 161629780, "T", "T"),
+    # Insertion
+    ("NC_000007.14", '55181230', "", "GGCT"),
     # Substitution
-    ("NC_000001.11", "161629780", "T", "T"),
+    ("NC_000019.10", "44908821", "C", "T"),
+    # Deletion
+    ("NC_000007.14", '55181219', "T", ""),
+    # Deletion Insertion
+    ("NC_000023.11", "32386322", "T", "GA"),
+    # Identity
+    ("NC_000013.11", '32936731', "C", "C"),
+    # Duplication
+    ("NC_000013.11", "19993837", "GT", "GTGT"),
 ]
 
 
