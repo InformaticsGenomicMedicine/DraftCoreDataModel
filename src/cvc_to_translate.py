@@ -9,6 +9,7 @@ import hgvs.validator
 import hgvs.parser
 import hgvs.validator
 import hgvs.dataproviders.uta
+import json
 
 # NOTE: this was seperated from core_variant_translate.py to help debug.
 # TODO: use a better name for this class
@@ -57,10 +58,11 @@ class ToTranslate:
 
         if expression.origCoordSystem != "0-based interbase":
             raise ValueError("The origCoordsystem must equal 0-based interbase.")
-
+        
+        # SPDI object has built in validation for the sequence, position, deletion and insertion
         spdi_obj = SPDI(
             sequence=expression.sequenceId,
-            # TODO: double check this this should probably be the end position
+            # Position represents the starting position.
             position=str(expression.start),
             deletion=expression.refAllele,
             insertion=expression.altAllele,
@@ -73,7 +75,7 @@ class ToTranslate:
         elif output_format == "dict":
             return spdi_obj.to_dict()
 
-    # Double check: https://github.com/ga4gh/vrs-python/blob/e09e09c33e0fd310277d048083812bf5b47b3c74/src/ga4gh/vrs/extras/translator.py#L355C2-L450
+    # TODO: Double check: https://github.com/ga4gh/vrs-python/blob/e09e09c33e0fd310277d048083812bf5b47b3c74/src/ga4gh/vrs/extras/translator.py#L355C2-L450
     def cvc_to_hgvs(self, expression, output_format="string"):
 
         # Checking coordSystem
@@ -142,7 +144,7 @@ class ToTranslate:
         return allele
 
     # TODO: allow format features
-    def cvc_to_vrs(self, expression, normalize=True):
+    def cvc_to_vrs(self, expression, normalize=True,output_format="obj"):
 
         # Checking coordSystem
         if expression.origCoordSystem != "0-based interbase":
@@ -166,9 +168,15 @@ class ToTranslate:
         # Normalizing the allele
         if normalize:
             allele = self._post_normalize_allele(allele)
+
+        if output_format == "obj":
             return allele
+        elif output_format == "dict":
+            return allele.as_dict()
+        elif output_format == "json":
+            return json.dumps(allele.as_dict())
         else:
-            return allele
+            raise ValueError("Invalid output format. Use 'obj', 'dict', or 'json'.")
 
 
 # NOTE: THIS IS OLD KEEP TILL WE FORSURE DONT WANT TO USE API TO GO FROM CVC -> SPDI -> VRS

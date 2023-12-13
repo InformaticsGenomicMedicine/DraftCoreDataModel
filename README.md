@@ -11,6 +11,11 @@ A few things to note:
 * File: notebooks/databse_examples.ipynb is currently not working because it is configured to my local database.
 
 
+###### THINGS TO THINK ABOUT
+* What is lost but can be derived? What is lost and can not be derived or recovered?
+
+
+
 #### NOTE: This is the current structure
 notebooks/
 src/
