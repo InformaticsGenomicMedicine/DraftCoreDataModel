@@ -53,4 +53,4 @@ def variation_normalize_api():
 @pytest.mark.parametrize("variation,expected", variation_vrs_test)
 def test_variation_to_vrs(variation_normalize_api, variation, expected):
     resp = variation_normalize_api.variation_to_vrs(variation)
-    assert resp == expected
+    assert resp[0] == expected

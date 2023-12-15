@@ -336,6 +336,8 @@ from src.core_variant import CoreVariantClass
 #             "NC_000004.11",
 #         ),
 
+#NOTE: These were made up demos to ensure that validation is preforming the way we would like. 
+#Later one we will change this to be more robust and use real data.
 
 # DONT change this is good
 @pytest.mark.parametrize("input_data, expected_output", [
