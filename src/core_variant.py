@@ -48,9 +48,9 @@ class CoreVariantClass:
         self.start: int = self._validate_coordinates(start, "start")
         self.end: int = self._validate_coordinates(end, "end")
         self._validate_start_coord_end_coord()
-        self.allelicState: str = self._is_valid_allelic_state(allelicState)
-        self.geneSymbol: str = self._is_valid_gene_symbol(geneSymbol)
-        self.hgncId: int = self._is_valid_hgnc_id(hgncId)
+        self.allelicState: str = self._validate_allelic_state(allelicState)
+        self.geneSymbol: str = self._validate_gene_symbol(geneSymbol)
+        self.hgncId: int = self._validate_hgnc_id(hgncId)
         self.chrom: str = self._validate_chrom(chrom)
         self.genomeBuild: str = self._validate_genome_build(genomeBuild)
         self.sequenceId: str = self._validate_sequence_id(sequenceId)
@@ -392,7 +392,7 @@ class CoreVariantClass:
                 f"The start coordinate value: {self.start} can not be greater than or equal to the end coordinate value {self.end}."
             )
 
-    def _is_valid_allelic_state(self, allelicState):
+    def _validate_allelic_state(self, allelicState):
         """Validate allelicState input. Method checks if the provided allelicState is one of the allowed types: ('heterozygous','homozygous').
 
         Args:
@@ -415,7 +415,7 @@ class CoreVariantClass:
             )
         return value
 
-    def _is_valid_gene_symbol(self, geneSymbol):
+    def _validate_gene_symbol(self, geneSymbol):
         """Validate geneSymbol input. Method checks if input value matches regular expression pattern ^[a-zA-Z0-9]*$ .
 
         Args:
@@ -438,7 +438,7 @@ class CoreVariantClass:
             )
         return value
 
-    def _is_valid_hgnc_id(self, hgncId):
+    def _validate_hgnc_id(self, hgncId):
         """ Validate the hgncId input. Method checks if the value is an integer and is greater than 1.
 
         Args:
