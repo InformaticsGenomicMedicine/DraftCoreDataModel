@@ -1,9 +1,9 @@
-# import sys
 
-# sys.path.append("..")
 import re
-from src.api.ncbi_variation_services_api import VarServAPI
+# TODO: I dont think we need this any more because many of the valdiation that NCBI does is not very extensive
+# from src.api.ncbi_variation_services_api import VarServAPI
 
+ 
 class SPDI:
     sequence_prefix_map = {
         "NC_": "DNA",
@@ -35,16 +35,18 @@ class SPDI:
         Raises:
             SPDIValidationException: If there is an issue validating the SPDI expression.
         """
-
-        self.api = VarServAPI()
+        # TODO: I dont think we need this any more because many of the valdiation that NCBI does is not very extensive
+        # self.api = VarServAPI()
         self.sequence = self._validate_sequence(sequence)
         self.position = self._validate_position(position)  
         self.deletion = self._validate_deletion(deletion)
         self.insertion = self._validate_insertion(insertion)
-
+        # self.api.validate_spdi(spdi)
         spdi = f"{self.sequence}:{self.position}:{self.deletion}:{self.insertion}"
-        self.api.validate_spdi(spdi)
 
+    def __str__(self):
+        return f"{self.sequence}:{self.position}:{self.deletion}:{self.insertion}"
+    
     def _validate_sequence(self, sequence: str) -> str:
         """ Validates a given reference sequence.
 
@@ -65,30 +67,6 @@ class SPDI:
         if sequence_prefix not in self.sequence_prefix_map:
             raise ValueError(f"Invalid reference sequence prefix: {sequence_prefix}")
         return sequence
-    
-# TODO:Remove this code once the above code is tested 
-# TODO: this need to handle strings so we need to use a regular expression. 
-    # def _validate_position(self, position: int) -> int:
-    #     """
-    #     Validates the given position.
-
-    #     Args:
-    #         position (int): The position to validate.
-
-    #     Raises:
-    #         TypeError: If the position is not an integer.
-    #         ValueError: If the position is less then 0.
-
-    #     Returns:
-    #         int: The validated position.
-    #     """
-    #     if not isinstance(position, int):
-    #         raise TypeError(f"Position must be an integer, not {type(position)}")
-    #     if position < 0:
-    #         raise ValueError(f"Position must be greater than or equal to 0.")
-    #     return position
-
-    # need to match the reference sequence with the correct regular expression
 
     def _validate_position(self, position: str) -> str:
 
@@ -159,127 +137,7 @@ class SPDI:
                     f"Invalid insertion sequence for {sequence_type} reference sequence"
                 )
         return insertion
-    
-    # TODO:Remove this code once the above code is tested 
-    # def _validate_deletion(self, deletion):
-    #     """
-    #     Validates the deletion sequence for a given reference sequence.
-
-    #     Args:
-    #         deletion (str): The deletion sequence to be validated.
-
-    #     Raises:
-    #         ValueError: If the sequence type is unknown.
-    #         ValueError: If the deletion sequence is invalid for a DNA reference sequence.
-    #         ValueError: If the deletion sequence is invalid for an RNA reference sequence.
-    #         ValueError: If the deletion sequence is invalid for a protein reference sequence.
-
-    #     Returns:
-    #         str: The validated deletion sequence.
-    #     """
-    #     sequence_prefix_map = {
-    #         "NC_": "DNA",
-    #         "NM_": "DNA",
-    #         "NG_": "DNA",
-    #         "NR_": "RNA",
-    #         "NP_": "protein",
-    #     }
-    #     pat = {
-    #         "emp_pat": "^$",
-    #         "digit": r"^\d+$",
-    #         "DNA": r"^[ACGTRYSWKMBDHVN]*$",
-    #         "RNA": r"^[ACGU]*$",
-    #         "PROTEIN": r"^[ACDEFGHIKLMNPQRSTVWY]$",
-    #     }
-
-    #     if re.match(pat["emp_pat"], deletion, re.IGNORECASE):
-    #         return ""
-
-    #     if isinstance(deletion, str):
-    #         sequence_prefix = self.sequence[:3]
-    #         sequence_type = sequence_prefix_map.get(sequence_prefix)
-
-    #         if sequence_type not in pat:
-    #             raise ValueError(f"Unknown sequence type: {sequence_type}")
-
-    #         deletion = deletion.strip().upper()
-
-    #         if re.match(pat["digit"], deletion):
-    #             return deletion
-
-    #         if sequence_type == "DNA":
-    #             if not re.match(pat["DNA"], deletion):
-    #                 raise ValueError(
-    #                     f"Invalid deletion sequence for DNA reference sequence."
-    #                 )
-    #         elif sequence_type == "RNA":
-    #             if not re.match(pat["RNA"], deletion):
-    #                 raise ValueError(
-    #                     f"Invalid deletion sequence for RNA reference sequence."
-    #                 )
-    #         elif sequence_type == "protein":
-    #             if not re.match(pat["protein"], deletion):
-    #                 raise ValueError(
-    #                     f"Invalid deletion sequence for protein reference sequence."
-    #                 )
-    #         return deletion
-
-    # def _validate_insertion(self, insertion: str) -> None:
-    #     """Validates the insertion sequence for the reference sequence.
-
-    #     Args:
-    #         insertion (str): The insertion sequence to be validated.
-
-    #     Raises:
-    #         ValueError: If the sequence type is unknown.
-    #         ValueError: If the insertion sequence is invalid for a DNA reference sequence.
-    #         ValueError: If the insertion sequence is invalid for an RNA reference sequence.
-    #         ValueError: If the insertion sequence is invalid for a protein reference sequence.
-
-    #     Returns:
-    #         str: The validated insertion sequence.
-    #     """
-    #     sequence_prefix_map = {
-    #         "NC_": "DNA",
-    #         "NM_": "DNA",
-    #         "NG_": "DNA",
-    #         "NR_": "RNA",
-    #         "NP_": "protein",
-    #     }
-    #     pat = {
-    #         "emp_pat": "^$",
-    #         "DNA": r"^[ACGTRYSWKMBDHVN]*$",
-    #         "RNA": r"^[ACGU]*$",
-    #         "protein": r"^[ACDEFGHIKLMNPQRSTVWY]*$",
-    #     }
-
-    #     if re.match(pat["emp_pat"], insertion, re.IGNORECASE):
-    #         return ""
-
-    #     sequence_prefix = self.sequence[:3]
-    #     sequence_type = sequence_prefix_map.get(sequence_prefix)
-
-    #     if sequence_type not in pat:
-    #         raise ValueError(f"Unknown sequence type: {sequence_type}")
-
-    #     insertion = insertion.strip().upper()
-    #     if sequence_type == "DNA":
-    #         if not re.match(pat["DNA"], insertion, re.IGNORECASE):
-    #             raise ValueError(
-    #                 f"Invalid insertion sequence for DNA reference sequence."
-    #             )
-    #     elif sequence_type == "RNA":
-    #         if not re.match(pat["RNA"], insertion, re.IGNORECASE):
-    #             raise ValueError(
-    #                 f"Invalid insertion sequence for RNA reference sequence."
-    #             )
-    #     elif sequence_type == "protein":
-    #         if not re.match(pat["protein"], insertion, re.IGNORECASE):
-    #             raise ValueError(
-    #                 f"Invalid insertion sequence for protein reference sequence."
-    #             )
-    #     return insertion
-
+    # TODO: plan to get rid of this and just use the __str__ method 
     def to_string(self) -> str:
         """Convert SPDI object to a string representation.
 
