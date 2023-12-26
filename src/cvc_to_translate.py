@@ -15,8 +15,8 @@ import json
 # TODO: use a better name for this class
 class ToTranslate:
     def __init__(self):
-        self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
-        self.dp = self.cn.dp
+        self.seqrepo_api = SeqRepoAPI()
+        self.dp = self.seqrepo_api.seqrepo_data_proxy 
         self.hp = hgvs.parser.Parser()
         self.hdp = hgvs.dataproviders.uta.connect()
         self.hn = hgvs.normalizer.Normalizer(self.hdp)

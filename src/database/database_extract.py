@@ -1,16 +1,28 @@
 import psycopg2
 from src.core_variant import CoreVariantClass
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 # TODO: look into SQLAlchemy python package for database connection
 
 
-class request_local_api:
-    def __init__(self, hostname="", database="", username="", pwd="", portId=""):
+# TODO: test this code to make sure it is correct.
+class RequestLocalAPI:
+
+    HOSTNAME = os.getenv("HOSTNAME")
+    DATABASE = os.getenv("DATABASE")
+    USERNAME = os.getenv("USERNAME")
+    PWD = os.getenv("PWD")
+    PORTID = os.getenv("PORTID")
+
+    def __init__(self, hostname=HOSTNAME, database=DATABASE, username=USERNAME, pwd=PWD, portId=PORTID):
         self.hostname = hostname
         self.database = database
         self.username = username
         self.pwd = pwd
         self.portId = portId
+        self.connect = None
+        self.cursor = None
 
     def getExample(self, rowId):
         """Retrieve a specific row in the database.
@@ -102,3 +114,5 @@ class request_local_api:
             sequenceId=dbResult["sequenceid"],
         )
         return cvcValue.init_params()
+
+

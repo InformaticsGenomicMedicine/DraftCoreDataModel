@@ -17,8 +17,8 @@ class CVCTranslator:
     def __init__(self):
         self.trans_spdi = SPDITranslate()
         self.hp = hgvs.parser.Parser()
-        self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
-        self.dp = self.cn.dp
+        self.seqrepo_api = SeqRepoAPI()
+        self.dp = self.seqrepo_api.seqrepo_data_proxy 
         self.hdp = hgvs.dataproviders.uta.connect()
         self.vr = hgvs.validator.Validator(hdp=self.hdp)
         # self.spdi = SPDI()

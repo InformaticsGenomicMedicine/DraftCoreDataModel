@@ -8,9 +8,9 @@ from typing import Union
 
 class SPDITranslate:
     def __init__(self) -> None:
-        self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
-        self.dp = self.cn.dp
-        self.tlr = self.cn.tlr
+        self.seqrepo_api = SeqRepoAPI()
+        self.dp = self.seqrepo_api.seqrepo_data_proxy 
+        self.tlr = self.seqrepo_api.tlr
         self.var_serv_api = VarServAPI()
         self.hp = hgvs.parser.Parser()
 

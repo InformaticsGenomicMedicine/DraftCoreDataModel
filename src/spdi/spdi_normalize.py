@@ -7,8 +7,8 @@ from src.spdi.spdi_class import SPDI
 class VocaNormalizeSpdi:
 
     def __init__(self):
-        self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
-        self.dp = self.cn.dp   
+        self.seqrepo_api = SeqRepoAPI()
+        self.dp = self.seqrepo_api.seqrepo_data_proxy 
 
     def spdi_voca_normalize(self, expression: str) -> str:
 

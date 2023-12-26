@@ -7,9 +7,9 @@ class VrsTranslate:
     def __init__(self) -> None:
         """Initialize class with the API URL"""
 
-        self.cn = SeqRepoAPI("https://services.genomicmedlab.org/seqrepo")
-        self.dp = self.cn.dp
-        self.tlr = self.cn.tlr
+        self.seqrepo_api = SeqRepoAPI()
+        self.dp = self.seqrepo_api.seqrepo_data_proxy 
+        self.tlr = self.seqrepo_api.tlr
         self.var_norm_api = VarNormRestApi()
 
     def from_vrs_to_spdi(self, expression: Union[dict, object]) -> str:
