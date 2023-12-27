@@ -18,8 +18,9 @@ class SeqRepoAPI:
                 It provides functionalities such as translation, normalization, and identification.
         """
 
-        self.url = "https://services.genomicmedlab.org/seqrepo"
-        self.seqrepo_rest_service_url = seqrepo_rest_service_url or self.url 
+        self.seqrepo_url = "https://services.genomicmedlab.org/seqrepo"
+        
+        self.seqrepo_rest_service_url = seqrepo_rest_service_url or self.seqrepo_url 
         self.seqrepo_data_proxy = SeqRepoRESTDataProxy(base_url=self.seqrepo_rest_service_url)
         self.tlr = Translator(
             data_proxy=self.seqrepo_data_proxy,
