@@ -4,7 +4,7 @@ import json
 
 class CoreVariantClass:
 
-    """ The CoreVariantClass is draft schema."""
+    """The CoreVariantClass is draft schema."""
 
     def __init__(
         self,
@@ -22,7 +22,6 @@ class CoreVariantClass:
         sequenceId: str = None,
         **kwargs: dict,
     ) -> None:
-
         # saving initial parameters
         self.initParamValues: dict = {
             "origCoordSystem": origCoordSystem,
@@ -68,7 +67,7 @@ class CoreVariantClass:
         """Converts CoreVariantClass object to a dictionary representation.
 
         Returns:
-            dict: A dictionary representation of the object. 
+            dict: A dictionary representation of the object.
         """
         return {
             "origCoordSystem": self.origCoordSystem,
@@ -87,7 +86,7 @@ class CoreVariantClass:
         }
 
     def as_json(self) -> str:
-        """Converts CoreVariantClass object to a JSON string representation. 
+        """Converts CoreVariantClass object to a JSON string representation.
 
         Returns:
             str: A JSON formatted string of the CoreVariantClass object.
@@ -99,10 +98,10 @@ class CoreVariantClass:
     #  This means that the values are captured in the __init__ method, but if an error occurs, the object won't be created.
 
     def init_params(self) -> dict:
-        """ A dictionary of the initial parameters. 
+        """A dictionary of the initial parameters.
 
         Returns:
-            dict: A dictionary (Key: Initial parameters, Values: parameters values). 
+            dict: A dictionary (Key: Initial parameters, Values: parameters values).
         """
         return self.initParamValues
 
@@ -167,7 +166,10 @@ class CoreVariantClass:
             "origCoordSystem": self.origCoordSystem,
             "seqType": self.seqType,
             "allelicState": self.allelicState,
-            "associatedGene": {"geneSymbol": self.geneSymbol, "hgncId": self.hgncId,},
+            "associatedGene": {
+                "geneSymbol": self.geneSymbol,
+                "hgncId": self.hgncId,
+            },
             "refAllele": self.refAllele,
             "altAllele": self.altAllele,
             "position": {
@@ -213,7 +215,7 @@ class CoreVariantClass:
     #         )
 
     def _validate_input_conditions(self, chrom, genomeBuild, sequenceId):
-        """ Validate the required conditions for chrom, genomeBuild, and sequenceId. Requirements include
+        """Validate the required conditions for chrom, genomeBuild, and sequenceId. Requirements include
         that the user inputs either both "chrom" and "genomeBuild" or just "sequenceId.
 
         Args:
@@ -255,13 +257,13 @@ class CoreVariantClass:
         return value
 
     def _validate_seq_type(self, seqType):
-        """ Validate sequence type input. Method checks if the provided seqType is one of the allowed types: ('DNA','RNA','PROTEIN'). 
+        """Validate sequence type input. Method checks if the provided seqType is one of the allowed types: ('DNA','RNA','PROTEIN').
 
         Args:
-            seqType (str): The seqType to be validated. 
+            seqType (str): The seqType to be validated.
 
         Raises:
-            ValueError: If the provided seqType is not in the allowed types. 
+            ValueError: If the provided seqType is not in the allowed types.
 
         Returns:
             str: The validate sequence type value input.
@@ -275,24 +277,24 @@ class CoreVariantClass:
         return value
 
     def _validate_reference_allele(self, refAllele):
-        """Validate the reference allele. See summary for more information. 
+        """Validate the reference allele. See summary for more information.
 
         Args:
             refAllele (str): The reference allele to be validated.
 
         Raises:
-            ValueError: If the provided refAllele is not empty and does not match the expected pattern for the given sequence type. 
-            ValueError: If the provided sequence type is not recognized. 
+            ValueError: If the provided refAllele is not empty and does not match the expected pattern for the given sequence type.
+            ValueError: If the provided sequence type is not recognized.
 
         Returns:
-            str: The validated reference allele value input.  
+            str: The validated reference allele value input.
 
         Summary:
-            Method checks the input against defined regular expression patterns based on the sequence type. 
+            Method checks the input against defined regular expression patterns based on the sequence type.
             The allowed sequence types and corresponding patterns are as follows:
                 - EMPTY: Only contains an empty string.
                 - DIGIT: Only contains digits.
-                - DNA: Only contains characters ('A', 'C', 'G', and 'T') or digits. 
+                - DNA: Only contains characters ('A', 'C', 'G', and 'T') or digits.
                 - RNA: Only contains characters ('A', 'C', 'G', and 'U') or digits.
                 - PROTEIN: Only contains 1-letter IUPAC codes (ACDEFGHIKLMNPQRSTVWY)
         """
@@ -322,23 +324,23 @@ class CoreVariantClass:
             return val
 
     def _validate_alternative_allele(self, altAllele):
-        """ Validate the alternative allele. See summary for more information. 
+        """Validate the alternative allele. See summary for more information.
 
         Args:
             altAllele (str): The alternative allele to be validated.
 
         Raises:
-            ValueError: If the provided altAllele is not empty and does not match the expected pattern for the given sequence type. 
-            ValueError: If the provided sequence type is not recognized. 
+            ValueError: If the provided altAllele is not empty and does not match the expected pattern for the given sequence type.
+            ValueError: If the provided sequence type is not recognized.
 
         Returns:
-            str: The validated alternative allele value input.  
+            str: The validated alternative allele value input.
 
         Summary:
-            Method checks the input against defined regular expression patterns based on the sequence type. 
+            Method checks the input against defined regular expression patterns based on the sequence type.
             The allowed sequence types and corresponding patterns are as follows:
                 - EMPTY: Only contains an empty string.
-                - DNA: Only contains characters 'A', 'C', 'G', and 'T'. 
+                - DNA: Only contains characters 'A', 'C', 'G', and 'T'.
                 - RNA: Only contains characters 'A', 'C', 'G', and 'U'.
                 - PROTEIN: Only contains 1-letter IUPAC codes (ACDEFGHIKLMNPQRSTVWY).
         """
@@ -370,8 +372,8 @@ class CoreVariantClass:
         """Validate the coordinate input. Method checks if the value is an integer and is greater than or equal to 0.
 
         Args:
-            value (int): The coordinate value to be validated. 
-            attributeName (str): The name of the attribute associated with the coordinate value. 
+            value (int): The coordinate value to be validated.
+            attributeName (str): The name of the attribute associated with the coordinate value.
 
         Raises:
             ValueError: If the provided {attributeName} is not an integer.
@@ -391,11 +393,11 @@ class CoreVariantClass:
         return value
 
     def _validate_start_coord_end_coord(self):
-        """ Validate the start and end coordinate input. Method checks if the start coordinate is grater than the 
-        end coordinate. 
+        """Validate the start and end coordinate input. Method checks if the start coordinate is grater than the
+        end coordinate.
 
         Raises:
-            ValueError: If the start coordinate is greater than the end coordinate. 
+            ValueError: If the start coordinate is greater than the end coordinate.
         """
         if self.start > self.end:
             raise ValueError(
@@ -450,17 +452,17 @@ class CoreVariantClass:
         return value
 
     def _validate_hgnc_id(self, hgncId):
-        """ Validate the hgncId input. Method checks if the value is an integer and is greater than 1.
+        """Validate the hgncId input. Method checks if the value is an integer and is greater than 1.
 
         Args:
-            hgncId (int or None): The hgncId value to be validated. 
+            hgncId (int or None): The hgncId value to be validated.
 
         Raises:
             ValueError: If the provided hgncID is not None and not an integer.
-            ValueError: If the validated hgncId is not greater than or equal to 1. 
+            ValueError: If the validated hgncId is not greater than or equal to 1.
 
         Returns:
-            int or None: The validated HGNC value input. 
+            int or None: The validated HGNC value input.
         """
 
         if hgncId is None:
@@ -475,13 +477,13 @@ class CoreVariantClass:
         return hgncId
 
     def _validate_chrom(self, chrom):
-        """ Validate the chromosome identifier. Method allows chr prefix and checks if the provided chromosome is one of the allowed inputs: (1-22, X, Y, MT) or None.
+        """Validate the chromosome identifier. Method allows chr prefix and checks if the provided chromosome is one of the allowed inputs: (1-22, X, Y, MT) or None.
 
         Args:
             chrom (str or None): The chromosome identifier to be validated.
 
         Raises:
-            ValueError: If the provided chrom is not None and does not match the expected format. 
+            ValueError: If the provided chrom is not None and does not match the expected format.
             ValueError: ValueError: If the provided input is not one of the allowed types.
 
         Returns:
