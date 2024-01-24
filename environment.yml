@@ -5,25 +5,25 @@ channels:
   - defaults
 dependencies:
   - pip:
-    # - biocommons-seqrepo==0.6.5
-    # - bioutils==0.5.7
-    # - canonicaljson==1.6.4
-    # - coloredlogs==15.0.1
-    # - jsonschema==3.2.0
-    # - numpy==1.24.0
-    # - python-jsonschema-objects==0.4.1
-    # - pyyaml==6.0
-    # - ga4gh-gks-metaschema==0.2.0rc4
-    # - ga4gh-vrs==0.8.5 # - ga4gh-vrs==0.8.1 Note: I test this version 
-    # - hgvs==1.5.4
-    # - pandas==1.5.3
-    - click==8.1.7
-    - exceptiongroup==1.2.0
-    - ga4gh.vrs==0.8.5
+    - biocommons-seqrepo==0.6.5
+    - bioutils==0.5.7
+    - canonicaljson==1.6.4
+    - coloredlogs==15.0.1
+    - jsonschema==3.2.0
+    - numpy==1.24.0
+    - python-jsonschema-objects==0.4.1
+    - pyyaml==6.0
+    - ga4gh-gks-metaschema==0.2.0rc4
+    - ga4gh-vrs==0.8.5 # - ga4gh-vrs==0.8.1 Note: I test this version 
     - hgvs==1.5.4
-    - importlib-resources==6.1.1
-    - ipykernel==6.28.0
-    - pipdeptree==2.13.1
-    - psycopg2-binary==2.9.9
-    - pydantic==2.5.3
-    - pytest==7.4.4
+    - pandas==1.5.3
+    # - click==8.1.7
+    # - exceptiongroup==1.2.0
+    # - ga4gh.vrs==0.8.5
+    # - hgvs==1.5.4
+    # - importlib-resources==6.1.1
+    # - ipykernel==6.28.0
+    # - pipdeptree==2.13.1
+    # - psycopg2-binary==2.9.9
+    # - pydantic==2.5.3
+    # - pytest==7.4.4
