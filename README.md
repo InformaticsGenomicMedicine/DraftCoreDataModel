@@ -1,63 +1,21 @@
 # DraftCoreDataModel
-Draft of CoreDataModel 
 
-To be able to interact with the notebooks in this repository, please click the tag: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/InformaticsGenomicMedicine/DraftCoreDataModel.git/dev-sb)
+This repository contains a draft of the CoreDataModel. To interact with the notebooks in this repository, click the badge below:
 
-A few things to note: 
-* Mybinder may take a few minutes to load up.
-* Mybinder session will be disablled when the user logs fof or become inactive for more than a few minutes.
-* You are able to edit the files but once the mybinder tab is closed NONE of the changes will be saved. 
-* Only way to save changes that were made in mybinder is by downloading the file the changes were made to.
-* File: notebooks/databse_examples.ipynb is currently not working because it is configured to my local database.
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/InformaticsGenomicMedicine/DraftCoreDataModel.git/dev-sb)
 
+### Notes:
 
-###### THINGS TO THINK ABOUT
-* What is lost but can be derived? What is lost and can not be derived or recovered?
+- MyBinder may take a few minutes to load.
+- MyBinder sessions will be disabled when the user logs off or becomes inactive for more than a few minutes.
+- You can edit files during the session, but changes won't be saved once the MyBinder tab is closed.
+- To save changes made in MyBinder, download the modified files.
+- The file `notebooks/databse_examples.ipynb` is currently not working due to configuration with a local database.
 
-
-
-#### NOTE: This is the current structure
-notebooks/
-src/
-    │   
-    ├── api/
-    │   ├── __init__.py
-    │   ├── ncbi_variation_services_api.py
-    │   ├── seqrepo_api.py
-    │   └── vicc_api.py
-    │ 
-    ├── database/
-    │   ├── __init__.py
-    │   └── database_extract.py
-    │  
-    ├── fhir/
-    │  
-    │  
-    ├── hgvsExtra/
-    │   ├── __init__.py
-    │   ├── hgvs_utils.py
-    │   └── hgvs_validation.py
-    │  
-    ├── spdi/
-    │   ├── __init__.py
-    │   ├── spdi_class.py
-    │   └── spdi_utils.py
-    │  
-    ├── vrs/
-    │   ├── __init__.py
-    │   └── vrs_utils.py
-    |
-    ├── __init__.py
-    |
-    ├── core_variant_translate.py
-    |
-    ├── core_variant.py
-test/
-
-|
-└── main.py
-
-
-mybinder link: 
+### New MyBinder Link (Using Branch Name: issue-dev-sb):
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/InformaticsGenomicMedicine/DraftCoreDataModel/issue-dev-sb)
+
+### Notebooks Link:
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/InformaticsGenomicMedicine/DraftCoreDataModel/issue-dev-sb?urlpath=https%3A%2F%2Fgithub.com%2FInformaticsGenomicMedicine%2FDraftCoreDataModel%2Ftree%2Fissue-dev-sb%2Fnotebooks)
