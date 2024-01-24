@@ -16,7 +16,8 @@ dependencies:
     - ga4gh-gks-metaschema==0.2.0rc4
     - ga4gh-vrs==0.8.5 # - ga4gh-vrs==0.8.1 Note: I test this version 
     - hgvs==1.5.4
-    - pandas==1.5.3
+    # - pandas==1.5.3
+    - pydantic==2.5.3
     # - click==8.1.7
     # - exceptiongroup==1.2.0
     # - ga4gh.vrs==0.8.5
