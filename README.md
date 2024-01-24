@@ -56,3 +56,8 @@ test/
 
 |
 └── main.py
+
+
+mybinder link: 
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/InformaticsGenomicMedicine/DraftCoreDataModel/issue-dev-sb)
