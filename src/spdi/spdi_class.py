@@ -137,6 +137,7 @@ class SPDI:
                     f"Invalid insertion sequence for {sequence_type} reference sequence"
                 )
         return insertion
+
     # TODO: plan to get rid of this and just use the __str__ method 
     def to_string(self) -> str:
         """Convert SPDI object to a string representation.

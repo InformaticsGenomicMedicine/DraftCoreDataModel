@@ -38,7 +38,8 @@ class CoreVariantClass:
             "sequenceId": sequenceId,
             "kwargs": kwargs,
         }
-
+        
+# post init in data classes
         self._validate_input_conditions(chrom, genomeBuild, sequenceId)
         self.origCoordSystem: str = self._validate_orig_coord_system(origCoordSystem)
         self.seqType: str = self._validate_seq_type(seqType)
