@@ -2,20 +2,15 @@
 
 Welcome to the DraftCoreDataModel repository! This repository contains an early version of the CoreDataModel.
 
-
-
-
-
-
-
 To interact with the notebooks in this repository, please click the badge below:
 
 ### Access Notebooks (MyBinder)
 
 **Note:** MyBinder is currently undergoing maintenance, and access to notebooks may be limited. We apologize for any inconvenience.
 
-- [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/InformaticsGenomicMedicine/DraftCoreDataModel.git/dev-sb)
-- [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/InformaticsGenomicMedicine/DraftCoreDataModel/issue-dev-sb)
+
+- Link for issue-dev-sb branch: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/InformaticsGenomicMedicine/DraftCoreDataModel/issue-dev-sb)
+- Link for dev-sb branch: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/InformaticsGenomicMedicine/DraftCoreDataModel.git/dev-sb)
 
 ### Notes:
 - MyBinder sessions may take a few minutes to load.
