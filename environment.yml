@@ -1,9 +1,24 @@
+name: cvc-mybinder
+dependencies:
+  - pip:
+    - ga4gh.vrs==0.8.5
+    - hgvs==1.5.4
+    - bioutils>=0.4.0,<1.0
+    - psycopg2-binary==2.9.9
+    - pydantic==2.5.3
+    - ipykernel==6.28.0
+    - click==8.1.7
+    - exceptiongroup==1.2.0
+    - configparser>=3.3.0
+    - importlib-resources==6.1.1
+    - pipdeptree==2.13.1
 
-# # This is the requirements for the binder environment
+
+
 # name: cvc-mybinder
-# channels:
-#   - bioconda
-#   - defaults
+# # channels:
+# #   - bioconda
+# #   - defaults
 # dependencies:
 #   - pip:
 #     - biocommons.seqrepo==0.6.6
