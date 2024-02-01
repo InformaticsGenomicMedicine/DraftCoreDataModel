@@ -57,6 +57,11 @@ If you're new to using Codespace, you may find the following resources helpful:
 
 Thank you for your patience and understanding! If you encounter any issues or have questions, feel free to reach out.
 
+---
+
+## TODO: Future Implementation: Access Notebooks (VSCODE)
+
+
 <!--
 ### Access Notebooks (VSCODE)
 
