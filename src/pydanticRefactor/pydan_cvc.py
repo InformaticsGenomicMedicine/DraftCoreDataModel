@@ -1,11 +1,12 @@
 from pydantic import field_validator,model_validator,Field,ConfigDict,ValidationInfo
 from pydantic import BaseModel, PositiveInt
-from typing import Optional,Dict,Any,Union
+from typing import Optional
 import re
 
 # Citation of pydantic BaseModel: https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel
 
 class pdCVC(BaseModel):
+    """Pydantic Model for CoreVariantClass (CVC)"""
     origCoordSystem: str
     seqType: str
     refAllele: str
@@ -18,11 +19,7 @@ class pdCVC(BaseModel):
     chrom: Optional[str] = None
     genomeBuild: Optional[str] = Field(default=None, strip_whitespace=True)
     sequenceId: Optional[str] = Field(default=None, strip_whitespace=True)
-    model_config = ConfigDict(extra='allow') #can potentially set it to ignore then would need to create a method to capture the extra data.
-    #By default, Pydantic models won't error when you provide data for unrecognized fields, they will just be ignored
-
-    # def get_extra_fields(self):
-    #     return self.__pydantic_extra__
+    model_config = ConfigDict(extra='allow') 
     
     @field_validator("origCoordSystem")
     def origCoordSystem_is_valid(cls, v):
@@ -78,7 +75,7 @@ class pdCVC(BaseModel):
 
         Args:
             v (str): The reference allele to be validated.
-            info (ValidationInfo): _description_
+            info (ValidationInfo): All of the fields and data being validated for this model.
 
         Raises:
             ValueError: If the provided refAllele is not empty and does not match the expected pattern for the given sequence type.
@@ -86,15 +83,7 @@ class pdCVC(BaseModel):
 
         Returns:
             str: The validated reference allele value input.
-        
-        Summary:
-            Method checks the input against defined regular expression patterns based on the sequence type.
-            The allowed sequence types and corresponding patterns are as follows:
-                - EMPTY: Only contains an empty string.
-                - DIGIT: Only contains digits.
-                - DNA: Only contains characters ('A', 'C', 'G', and 'T') or digits.
-                - RNA: Only contains characters ('A', 'C', 'G', and 'U') or digits.
-                - PROTEIN: Only contains 1-letter IUPAC codes (ACDEFGHIKLMNPQRSTVWY)
+
         """
         val = v.upper().strip()
         pat = {
@@ -126,7 +115,7 @@ class pdCVC(BaseModel):
 
         Args:
             v (str): The alternative allele to be validated.
-            info (ValidationInfo): _description_
+            info (ValidationInfo): All of the fields and data being validated for this model.
 
         Raises:
             ValueError: If the provided altAllele is not empty and does not match the expected pattern for the given sequence type.
@@ -135,13 +124,6 @@ class pdCVC(BaseModel):
         Returns:
             str: The validated alternative allele value input.
 
-        Summary:
-            Method checks the input against defined regular expression patterns based on the sequence type.
-            The allowed sequence types and corresponding patterns are as follows:
-                - EMPTY: Only contains an empty string.
-                - DNA: Only contains characters 'A', 'C', 'G', and 'T'.
-                - RNA: Only contains characters 'A', 'C', 'G', and 'U'.
-                - PROTEIN: Only contains 1-letter IUPAC codes (ACDEFGHIKLMNPQRSTVWY).
         """
         val = v.upper().strip()
         pat = {
@@ -196,7 +178,7 @@ class pdCVC(BaseModel):
 
         Args:
             v (int): _description_
-            info (ValidationInfo): _description_
+            info (ValidationInfo): All of the fields and data being validated for this model.
 
         Raises:
             ValueError: _description_
@@ -257,38 +239,3 @@ class pdCVC(BaseModel):
             raise ValueError(
                 "Either (chrom AND genomeBuild) or sequenceId is required."
             )
-
-    def normalized_data(self) -> dict:
-        #TODO: double check this implementation
-        # if self.origCoordSystem == "0-based interbase":
-        #     pass
-        # elif self.origCoordSystem == "0-based counting":
-        #     self.start += 1
-        #     self.origCoordSystem = "0-based interbase"
-        # elif self.origCoordSystem == "1-based counting":
-        #     self.start -= 1
-        #     self.origCoordSystem = "0-based interbase"
-        # else:
-        #     raise ValueError("Invalid coordinate system specified.")
-        
-        return {
-            "origCoordSystem": self.origCoordSystem,
-            "seqType": self.seqType,
-            "allelicState": self.allelicState,
-            "associatedGene": {
-                "geneSymbol": self.geneSymbol,
-                "hgncId": self.hgncId,
-            },
-            "refAllele": self.refAllele,
-            "altAllele": self.altAllele,
-            "position": {
-                "chrom": self.chrom,
-                "genomeBuild": self.genomeBuild,
-                "start": self.start,
-                "end": self.end,
-                "sequenceId": self.sequenceId,
-            },
-        }
-
-
-

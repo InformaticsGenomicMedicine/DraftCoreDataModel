@@ -11,9 +11,10 @@ import hgvs.validator
 import hgvs.dataproviders.uta
 import json
 
-# NOTE: this was seperated from core_variant_translate.py to help debug.
-# TODO: use a better name for this class
+# TODO: This was seperated from core_variant_translate.py to help debug and code review. Will be merged back once code is reviewed.
+
 class ToTranslate:
+    """Preforming translations from CVC to SPDI, HGVS, and VRS."""
     def __init__(self):
         self.seqrepo_api = SeqRepoAPI()
         self.dp = self.seqrepo_api.seqrepo_data_proxy 
@@ -75,7 +76,7 @@ class ToTranslate:
         elif output_format == "dict":
             return spdi_obj.to_dict()
 
-    # TODO: Double check: https://github.com/ga4gh/vrs-python/blob/e09e09c33e0fd310277d048083812bf5b47b3c74/src/ga4gh/vrs/extras/translator.py#L355C2-L450
+    # reference: Double check: https://github.com/ga4gh/vrs-python/blob/e09e09c33e0fd310277d048083812bf5b47b3c74/src/ga4gh/vrs/extras/translator.py#L355C2-L450
     def cvc_to_hgvs(self, expression, output_format="string"):
 
         # Checking coordSystem
@@ -143,7 +144,6 @@ class ToTranslate:
         allele.location._id = ga4gh_identify(allele.location)
         return allele
 
-    # TODO: allow format features
     def cvc_to_vrs(self, expression, normalize=True,output_format="obj"):
 
         # Checking coordSystem
@@ -177,76 +177,3 @@ class ToTranslate:
             return json.dumps(allele.as_dict())
         else:
             raise ValueError("Invalid output format. Use 'obj', 'dict', or 'json'.")
-
-
-# NOTE: THIS IS OLD KEEP TILL WE FORSURE DONT WANT TO USE API TO GO FROM CVC -> SPDI -> VRS
-# def cvc_to_vrs(self, expression, output_format="obj"):
-#     """Converts a CoreVariantClass object into an VRS expression.
-
-#     Args:
-#         expression (object): An object representing a CoreVariantClass.
-#         output_format (str): Desired format for the output. Can be "obj" or "dict", or "json".
-
-#     Raises:
-#         ValueError: If an invalid output format is provided.
-
-#     Returns:
-#         (obj,dict,json): VRS expression
-#     """
-
-#     if not isinstance(expression, CoreVariantClass):
-#         raise ValueError("Invalid input format. Expected CoreVariantClass object.")
-
-#     if output_format not in ("obj", "dict", "json"):
-#         raise ValueError("Invalid output format. Use 'obj', 'dict', or 'json'.")
-
-#     spdi_expression = self.cvc_to_spdi(expression, output_format="string")
-#     try:
-
-#         if output_format == "obj":
-#             return self.trans_spdi.from_spdi_to_vrs(
-#                 spdi_expression, output_format="obj"
-#             )
-#         elif output_format == "dict":
-#             return self.trans_spdi.from_spdi_to_vrs(
-#                 spdi_expression, output_format="dict"
-#             )
-#         elif output_format == "json":
-#             return self.trans_spdi.from_spdi_to_vrs(
-#                 spdi_expression, output_format="json"
-#             )
-#     except ValueError as e:
-#         raise ValueError(f"{e}. Expression Error: {spdi_expression}")
-
-
-# NOTE: THIS IS OLD KEEP TILL WE FORSURE DONT WANT TO USE API TO GO FROM CVC -> SPDI -> HGVS
-# def cvc_to_hgvs(self, expression, output_format):
-#     """Converts a CoreVariantClass object into an HGVS expression.
-
-#     Args:
-#         expression (object): An object representing a core variant class.
-#         output_format (str): Desired format for the output. Can be "parse" or "string".
-
-#     Raises:
-#         ValueError: If an invalid output format is provided.
-
-#     Returns:
-#         (parse or string): HGVS expression
-#     """
-
-#     if not isinstance(expression, CoreVariantClass):
-#         raise ValueError("Invalid input format. Expected CoreVariantClass object.")
-
-#     if output_format not in ("parse", "string"):
-#         raise ValueError("Invalid output format. Use 'parse' or 'string'.")
-
-#     spdi_expression = self.cvc_to_spdi(expression, output_format="string")
-
-#     if output_format == "parse":
-#         return self.trans_spdi.from_spdi_to_rightshift_hgvs(
-#             spdi_expression, output_format="parse"
-#         )
-#     elif output_format == "string":
-#         return self.trans_spdi.from_spdi_to_rightshift_hgvs(
-#             spdi_expression, output_format="string"
-#         )

@@ -27,6 +27,17 @@ class DASPDI(BaseModel):
 
     @field_validator("sequence")
     def sequence_valid(cls,v):
+        """Validates a given reference sequence.
+
+        Args:
+            v (str): The reference sequence to be validated.
+
+        Raises:
+            ValueError: If the reference sequence prefix is not one of ["NC_", "NM_", "NG_", "NR_", "NP_"].
+
+        Returns:
+            str: The validated reference sequence.
+        """
         sequence_prefix = v[:3]
         if sequence_prefix not in cls.sequence_prefix_map:
             raise ValueError(f"Invalid reference sequence prefix: {sequence_prefix}")
@@ -34,6 +45,18 @@ class DASPDI(BaseModel):
     
     @field_validator("deletion")
     def deletion_valid(cls,v,info: ValidationInfo):
+        """Validates the deletion sequence.
+
+        Args:
+            v (str): The deletion sequence to validate.
+            info (ValidationInfo): All of the fields and data being validated for this model.
+
+        Raises:
+            ValueError: If the deletion sequence is not valid or the sequence type is unknown.
+
+        Returns:
+            str: The validated deletion sequence.
+        """
         deletion = v.upper().strip()
         if re.match(cls.pattern["EMPTY"], deletion):
             return ""
@@ -54,6 +77,18 @@ class DASPDI(BaseModel):
     
     @field_validator("insertion")
     def insertion_valid(cls,v,info: ValidationInfo):
+        """Validates the insertion sequence.
+
+        Args:
+            v (str): The insertion sequence to validate.
+            info (ValidationInfo): All of the fields and data being validated for this model.
+
+        Raises:
+            ValueError: If the insertion sequence is not valid or the sequence type is unknown.
+
+        Returns:
+            str: The validated insertion sequence.
+        """
         insertion = v.upper().strip()
         if re.match(cls.pattern["EMPTY"], insertion):
             return ""

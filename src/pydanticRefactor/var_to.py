@@ -9,7 +9,7 @@ import hgvs.dataproviders.uta
 import hgvs.validator
 
 # pydantic cvc class
-from src.pydan_cvc import pdCVC
+from src.pydanticRefactor.pydan_cvc import pdCVC
 
 # SPDI imports
 from src.spdi.spdi_utils import SPDITranslate

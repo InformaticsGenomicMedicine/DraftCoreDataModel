@@ -7,7 +7,7 @@ import hgvs.dataproviders.uta
 import hgvs.validator
 
 # pydantic cvc class
-from src.pydan_cvc import pdCVC
+from src.pydanticRefactor.pydan_cvc import pdCVC
 
 # SPDI imports
 from src.spdi.spdi_utils import SPDITranslate
@@ -22,6 +22,8 @@ import json
 
 
 class CvcToVar:
+    """Preforming translations from CVC to SPDI, HGVS, and VRS.
+    """
     def __init__(self):
         self.seqrepo_api = SeqRepoAPI()
         self.dp = self.seqrepo_api.seqrepo_data_proxy 
@@ -70,7 +72,7 @@ class CvcToVar:
         elif output_format == "dict":
             return spdi_obj.model_dump()
 
-    # TODO: Double check: https://github.com/ga4gh/vrs-python/blob/e09e09c33e0fd310277d048083812bf5b47b3c74/src/ga4gh/vrs/extras/translator.py#L355C2-L450
+    # reference: https://github.com/ga4gh/vrs-python/blob/e09e09c33e0fd310277d048083812bf5b47b3c74/src/ga4gh/vrs/extras/translator.py#L355C2-L450
     def cvc_to_hgvs(self, expression, output_format="string"):
 
         # Checking coordSystem
@@ -138,7 +140,6 @@ class CvcToVar:
         allele.location._id = ga4gh_identify(allele.location)
         return allele
 
-    # TODO: allow format features
     def cvc_to_vrs(self, expression, normalize=True,output_format="obj"):
 
         # Checking coordSystem

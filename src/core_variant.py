@@ -123,8 +123,7 @@ class CoreVariantClass:
         else:
             raise ValueError("Invalid coordinate system specified.")
 
-    # NOTE: this was created to for test purpose this will be removed later
-    # TODO: remove this method later
+    # TODO: this was created to for test purpose this will be removed later
     def init_normalized_data(self) -> dict:
         """Generates a dictionary representation of normalized data.
 
@@ -181,39 +180,6 @@ class CoreVariantClass:
                 "sequenceId": self.sequenceId,
             },
         }
-
-    # def normalized_data(self) -> dict:
-    #     """A dictionary of the normalized data. This method checks to see if the initial parameters can be normalized.
-
-    #     Raises:
-    #         ValueError: If the origCoordSystem is not "0-based interbase".
-
-    #     Returns:
-    #         dict: A dictionary of the normalized data with validate attribute values.
-    #     """
-    #     if self.initParamValues["origCoordSystem"] == "0-based interbase":
-    #         return {
-    #             "origCoordSystem": self.origCoordSystem,
-    #             "seqType": self.seqType,
-    #             "allelicState": self.allelicState,
-    #             "associatedGene": {
-    #                 "geneSymbol": self.geneSymbol,
-    #                 "hgncId": self.hgncId,
-    #             },
-    #             "refAllele": self.refAllele,
-    #             "altAllele": self.altAllele,
-    #             "position": {
-    #                 "chrom": self.chrom,
-    #                 "genomeBuild": self.genomeBuild,
-    #                 "start": self.start,
-    #                 "end": self.end,
-    #                 "sequenceId": self.sequenceId,
-    #             },
-    #         }
-    #     else:
-    #         raise ValueError(
-    #             'Data can not be normalized, origCoordSystem is not set to "0-based interbase".'
-    #         )
 
     def _validate_input_conditions(self, chrom, genomeBuild, sequenceId):
         """Validate the required conditions for chrom, genomeBuild, and sequenceId. Requirements include
@@ -289,15 +255,6 @@ class CoreVariantClass:
 
         Returns:
             str: The validated reference allele value input.
-
-        Summary:
-            Method checks the input against defined regular expression patterns based on the sequence type.
-            The allowed sequence types and corresponding patterns are as follows:
-                - EMPTY: Only contains an empty string.
-                - DIGIT: Only contains digits.
-                - DNA: Only contains characters ('A', 'C', 'G', and 'T') or digits.
-                - RNA: Only contains characters ('A', 'C', 'G', and 'U') or digits.
-                - PROTEIN: Only contains 1-letter IUPAC codes (ACDEFGHIKLMNPQRSTVWY)
         """
         val = refAllele.upper().strip()
 
@@ -336,14 +293,6 @@ class CoreVariantClass:
 
         Returns:
             str: The validated alternative allele value input.
-
-        Summary:
-            Method checks the input against defined regular expression patterns based on the sequence type.
-            The allowed sequence types and corresponding patterns are as follows:
-                - EMPTY: Only contains an empty string.
-                - DNA: Only contains characters 'A', 'C', 'G', and 'T'.
-                - RNA: Only contains characters 'A', 'C', 'G', and 'U'.
-                - PROTEIN: Only contains 1-letter IUPAC codes (ACDEFGHIKLMNPQRSTVWY).
         """
         val = altAllele.upper().strip()
 
