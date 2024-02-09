@@ -1,0 +1,69 @@
+{
+    "resourceType" : "MolecularDefinition",
+    "id" : "example-allele1",
+    "meta" : {
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/allele"]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative: MolecularDefinition</b><a name=\"example-allele1\"> </a></p><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Resource MolecularDefinition &quot;example-allele1&quot; </p><p style=\"margin-bottom: 0px\">Profile: <a href=\"allele.html\">Molecular Definition as Allele Profile</a></p></div><p><b>type</b>: dna</p><p><b>name</b>: NG_008384.3:g.5124C&gt;T</p><blockquote><p><b>location</b></p><blockquote><p><b>sequenceLocation</b></p><p><b>sequenceContext</b>: <a href=\"broken-link.html\">MolecularDefinition/SequenceLrg584: Starting Sequence Resource</a></p><h3>CoordinateIntervals</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>NumberingSystem</b></td><td><b>Start[x]</b></td><td><b>End[x]</b></td></tr><tr><td style=\"display: none\">*</td><td>0-based interval counting <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\"> (<a href=\"https://loinc.org/\">LOINC</a>#LA30100-4)</span></td><td>5001</td><td>97867</td></tr></table></blockquote></blockquote><blockquote><p><b>representation</b></p><blockquote><p><b>relative</b></p><p><b>startingMolecule</b>: <a href=\"broken-link.html\">MolecularDefinition/SequenceLrg584: Starting Sequence Resource</a></p><h3>Edits</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>CoordinateSystem</b></td><td><b>Start</b></td><td><b>End</b></td><td><b>ReplacementMolecule</b></td><td><b>ReplacedMolecule</b></td></tr><tr><td style=\"display: none\">*</td><td>0-based interval counting <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\"> (<a href=\"https://loinc.org/\">LOINC</a>#LA30100-4)</span></td><td>5123</td><td>5124</td><td><a href=\"broken-link.html\">MolecularDefinition/SequenceT: Replacement Sequence Resource</a></td><td><a href=\"broken-link.html\">MolecularDefinition/SequenceC: Replaced Sequence Resource</a></td></tr></table></blockquote></blockquote></div>"
+    },
+    "type" : "dna",
+    "name" : ["NG_008384.3:g.5124C>T"],
+    "location" : [{
+      "sequenceLocation" : {
+        "sequenceContext" : {
+          "reference" : "MolecularDefinition/SequenceLrg584",
+          "type" : "MolecularDefinition",
+          "display" : "Starting Sequence Resource"
+        },
+        "coordinateInterval" : {
+          "numberingSystem" : {
+            "coding" : [{
+              "system" : "http://loinc.org",
+              "code" : "LA30100-4",
+              "display" : "0-based interval counting"
+            }],
+            "text" : "0-based interval counting"
+          },
+          "startQuantity" : {
+            "value" : 5001
+          },
+          "endQuantity" : {
+            "value" : 97867
+          }
+        }
+      }
+    }],
+    "representation" : [{
+      "relative" : {
+        "startingMolecule" : {
+          "reference" : "MolecularDefinition/SequenceLrg584",
+          "type" : "MolecularDefinition",
+          "display" : "Starting Sequence Resource"
+        },
+        "edit" : [{
+          "coordinateSystem" : {
+            "coding" : [{
+              "system" : "http://loinc.org",
+              "code" : "LA30100-4",
+              "display" : "0-based interval counting"
+            }],
+            "text" : "0-based interval counting"
+          },
+          "start" : 5123,
+          "end" : 5124,
+          "replacementMolecule" : {
+            "reference" : "MolecularDefinition/SequenceT",
+            "type" : "MolecularDefinition",
+            "display" : "Replacement Sequence Resource"
+          },
+          "replacedMolecule" : {
+            "reference" : "MolecularDefinition/SequenceC",
+            "type" : "MolecularDefinition",
+            "display" : "Replaced Sequence Resource"
+          }
+        }]
+      }
+    }]
+  }
