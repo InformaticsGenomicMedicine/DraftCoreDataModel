@@ -1,0 +1,49 @@
+{
+    "resourceType" : "MolecularDefinition",
+    "id" : "example-haplotype1",
+    "meta" : {
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/haplotype"]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative: MolecularDefinition</b><a name=\"example-haplotype1\"> </a></p><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Resource MolecularDefinition &quot;example-haplotype1&quot; </p><p style=\"margin-bottom: 0px\">Profile: <a href=\"haplotype.html\">Molecular Definition as Haplotype Profile</a></p></div><p><b>type</b>: dna</p><p><b>name</b>: CYP2C19*1B, CYP2C19*1.002</p><blockquote><p><b>location</b></p><blockquote><p><b>sequenceLocation</b></p><p><b>sequenceContext</b>: <a href=\"broken-link.html\">MolecularDefinition/example-sequenceLrg584: Starting Sequence Resource</a></p><h3>CoordinateIntervals</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>NumberingSystem</b></td><td><b>Start[x]</b></td><td><b>End[x]</b></td></tr><tr><td style=\"display: none\">*</td><td>0-based interval counting <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\"> (<a href=\"https://loinc.org/\">LOINC</a>#LA30100-4)</span></td><td>5001</td><td>97867</td></tr></table></blockquote></blockquote><p><b>memberState</b>: </p><ul><li><a href=\"moleculardefinition-example-allele1.html\">MolecularDefinition/example-allele1: First Allele, NG_008384.3:g.5124C&gt;T</a> &quot;NG_008384.3:g.5124C&gt;T&quot;</li><li><a href=\"moleculardefinition-example-allele2.html\">MolecularDefinition/example-allele2: Second Allele, NG_008384.3:g.85186A&gt;G</a> &quot;NG_008384.3:g.85186A&gt;G&quot;</li></ul></div>"
+    },
+    "type" : "dna",
+    "name" : ["CYP2C19*1B",
+    "CYP2C19*1.002"],
+    "location" : [{
+      "sequenceLocation" : {
+        "sequenceContext" : {
+          "reference" : "MolecularDefinition/example-sequenceLrg584",
+          "type" : "MolecularDefinition",
+          "display" : "Starting Sequence Resource"
+        },
+        "coordinateInterval" : {
+          "numberingSystem" : {
+            "coding" : [{
+              "system" : "http://loinc.org",
+              "code" : "LA30100-4",
+              "display" : "0-based interval counting"
+            }],
+            "text" : "0-based interval counting"
+          },
+          "startQuantity" : {
+            "value" : 5001
+          },
+          "endQuantity" : {
+            "value" : 97867
+          }
+        }
+      }
+    }],
+    "memberState" : [{
+      "reference" : "MolecularDefinition/example-allele1",
+      "type" : "MolecularDefinition",
+      "display" : "First Allele, NG_008384.3:g.5124C>T"
+    },
+    {
+      "reference" : "MolecularDefinition/example-allele2",
+      "type" : "MolecularDefinition",
+      "display" : "Second Allele, NG_008384.3:g.85186A>G"
+    }]
+  }

@@ -1,0 +1,23 @@
+{
+    "resourceType" : "MolecularDefinition",
+    "id" : "example-genotype1",
+    "meta" : {
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/genotype"]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative: MolecularDefinition</b><a name=\"example-genotype1\"> </a></p><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Resource MolecularDefinition &quot;example-genotype1&quot; </p><p style=\"margin-bottom: 0px\">Profile: <a href=\"genotype.html\">Molecular Definition as Genotype Profile</a></p></div><p><b>type</b>: dna</p><p><b>name</b>: CYP2C19*1B and HLA00002</p><p><b>memberState</b>: </p><ul><li><a href=\"moleculardefinition-example-haplotype1.html\">MolecularDefinition/example-haplotype1: First haplotype, CYP2C19*1B</a> &quot;CYP2C19*1B&quot;</li><li><a href=\"moleculardefinition-example-haplotype2.html\">MolecularDefinition/example-haplotype2: Second haplotype, HLA00002</a> &quot;HLA-A*01:02:01:01&quot;</li></ul></div>"
+    },
+    "type" : "dna",
+    "name" : ["CYP2C19*1B and HLA00002"],
+    "memberState" : [{
+      "reference" : "MolecularDefinition/example-haplotype1",
+      "type" : "MolecularDefinition",
+      "display" : "First haplotype, CYP2C19*1B"
+    },
+    {
+      "reference" : "MolecularDefinition/example-haplotype2",
+      "type" : "MolecularDefinition",
+      "display" : "Second haplotype, HLA00002"
+    }]
+  }

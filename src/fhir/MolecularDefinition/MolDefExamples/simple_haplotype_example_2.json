@@ -1,0 +1,48 @@
+{
+    "resourceType" : "MolecularDefinition",
+    "id" : "example-haplotype2",
+    "meta" : {
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/haplotype"]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative: MolecularDefinition</b><a name=\"example-haplotype2\"> </a></p><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Resource MolecularDefinition &quot;example-haplotype2&quot; </p><p style=\"margin-bottom: 0px\">Profile: <a href=\"haplotype.html\">Molecular Definition as Haplotype Profile</a></p></div><p><b>type</b>: dna</p><p><b>name</b>: HLA-A*01:02:01:01, HLA00002</p><blockquote><p><b>location</b></p><h3>SequenceLocations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>SequenceContext</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"broken-link.html\">MolecularDefinition/example-sequenceHla000011: Starting Sequence Resource</a></td></tr></table></blockquote><p><b>memberState</b>: </p><ul><li><a href=\"moleculardefinition-example-allele3.html\">MolecularDefinition/example-allele3: First Allele, HLA00001.1:c.98T&gt;C</a> &quot;HLA00001.1:c.98T&gt;C&quot;</li><li><a href=\"moleculardefinition-example-allele4.html\">MolecularDefinition/example-allele4: Second Allele, HLA00001.1:c.121C&gt;A</a> &quot;HLA00001.1:c.121C&gt;A&quot;</li><li><a href=\"moleculardefinition-example-allele5.html\">MolecularDefinition/example-allele5: Third Allele, HLA00001.1:c.123C&gt;T</a> &quot;HLA00001.1:c.123C&gt;T&quot;</li><li><a href=\"moleculardefinition-example-allele6.html\">MolecularDefinition/example-allele6: Fourth Allele, HLA00001.1:c.126G&gt;A</a> &quot;HLA00001.1:c.126G&gt;A&quot;</li><li><a href=\"moleculardefinition-example-allele7.html\">MolecularDefinition/example-allele7: Fifth Allele, HLA00001.1:c.144C&gt;A</a> &quot;HLA00001.1:c.144C&gt;A&quot;</li></ul></div>"
+    },
+    "type" : "dna",
+    "name" : ["HLA-A*01:02:01:01",
+    "HLA00002"],
+    "location" : [{
+      "sequenceLocation" : {
+        "sequenceContext" : {
+          "reference" : "MolecularDefinition/example-sequenceHla000011",
+          "type" : "MolecularDefinition",
+          "display" : "Starting Sequence Resource"
+        }
+      }
+    }],
+    "memberState" : [{
+      "reference" : "MolecularDefinition/example-allele3",
+      "type" : "MolecularDefinition",
+      "display" : "First Allele, HLA00001.1:c.98T>C"
+    },
+    {
+      "reference" : "MolecularDefinition/example-allele4",
+      "type" : "MolecularDefinition",
+      "display" : "Second Allele, HLA00001.1:c.121C>A"
+    },
+    {
+      "reference" : "MolecularDefinition/example-allele5",
+      "type" : "MolecularDefinition",
+      "display" : "Third Allele, HLA00001.1:c.123C>T"
+    },
+    {
+      "reference" : "MolecularDefinition/example-allele6",
+      "type" : "MolecularDefinition",
+      "display" : "Fourth Allele, HLA00001.1:c.126G>A"
+    },
+    {
+      "reference" : "MolecularDefinition/example-allele7",
+      "type" : "MolecularDefinition",
+      "display" : "Fifth Allele, HLA00001.1:c.144C>A"
+    }]
+  }
