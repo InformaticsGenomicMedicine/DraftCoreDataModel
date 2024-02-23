@@ -56,9 +56,9 @@ class SPDITranslate:
                 return hgvs_expression
             elif output_format == "parse":
                 return self.hp.parse_hgvs_variant(hgvs_expression)
-        except Exception:
+        except Exception as e:
             raise ValueError(
-                f"An error occurred while translating the SPDI expression '{expression}' to a right-shift HGVS expression."
+                f"An error occurred while translating the SPDI expression '{expression}' to a right-shift HGVS expression: {e}"
             )
 
     def from_spdi_to_vrs(

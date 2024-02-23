@@ -7,7 +7,9 @@ import re
 from src.spdi.spdi_utils import SPDITranslate
 from src.core_variant import CoreVariantClass
 from src.api.seqrepo_api import SeqRepoAPI
+from ga4gh.vrs.dataproxy import SequenceProxy
 from src.spdi.spdi_class import SPDI
+from bioutils.normalize import normalize, NormalizationMode
 
 import hgvs.parser
 import hgvs.dataproviders.uta
@@ -22,6 +24,7 @@ class CVCTranslator:
         self.dp = self.seqrepo_api.seqrepo_data_proxy 
         self.hdp = hgvs.dataproviders.uta.connect()
         self.vr = hgvs.validator.Validator(hdp=self.hdp)
+        self.seqrepo_api = SeqRepoAPI()
         # self.spdi = SPDI()
 
     def _detect_sequence_type(self, input_str):
@@ -53,7 +56,30 @@ class CVCTranslator:
             raise ValueError("Unknown sequence type")
 
         return sequence_type
-    
+
+    def _fullynorm(self, reference_id, start_pos, end_pos, alt_seq):
+        # Capture the full Sequence
+        sequence = SequenceProxy(self.dp, reference_id)
+        
+        # Perform Voca normalization using bioutils.normalize
+        try:
+            interval, new_allele = normalize(
+                sequence,
+                interval=(start_pos, end_pos),
+                alleles=(None, alt_seq),
+                bounds=(0, len(sequence)),
+                mode=NormalizationMode.EXPAND,
+            )
+
+            new_starting_pos = interval[0]
+            ref_seq = new_allele[0]
+            alt_seq = new_allele[1]
+
+        except ValueError as e:
+            return f"Normalization failed: {e}."
+
+        return new_starting_pos, ref_seq, alt_seq
+
     def spdi_to_cvc(self, expression):
         """Converts an SPDI expression to a CoreVariantClass object.
 
@@ -89,7 +115,6 @@ class CVCTranslator:
                 start=start_pos,
                 end=end_pos,
                 sequenceId=spdi.sequence
-                # kwargs= expression
             )
         except Exception as e:
             raise ValueError(
@@ -162,6 +187,8 @@ class CVCTranslator:
             raise ValueError(
                 f"HGVS variant type {parsed_variant.posedit.edit.type} is unsupported"
             )
+        if parsed_variant.posedit.edit.type != "identity":
+            start_pos, ref_seq, alt_seq = self._fullynorm(reference_id=parsed_variant.ac, start_pos=start_pos, end_pos=end_pos, alt_seq=alt_seq)
 
         # Create a CoreVariantClass object from the HGVS expression
         cvc_instance = CoreVariantClass(
@@ -172,7 +199,6 @@ class CVCTranslator:
             start=start_pos,
             end=end_pos,
             sequenceId=parsed_variant.ac,
-            # kwargs=expression
         )
 
         return cvc_instance
@@ -235,5 +261,4 @@ class CVCTranslator:
             start=start_pos,
             end=end_pos,
             sequenceId=ref_sequence_id,
-            # kwargs=expression
         )

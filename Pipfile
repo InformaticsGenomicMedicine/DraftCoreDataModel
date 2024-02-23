@@ -8,12 +8,12 @@ bioutils = "<1.0,>=0.4.0"
 click = "==8.1.7"
 configparser = ">=3.3.0"
 exceptiongroup = "==1.2.0"
-"ga4gh.vrs" = "==0.8.5"
 hgvs = "==1.5.4"
 importlib-resources = "==6.1.1"
 ipykernel = "==6.28.0"
 psycopg2-binary = "==2.9.9"
 pydantic = "==2.5.3"
+"ga4gh.vrs" = {extras = ["extras"], version = "==0.8.5"}
 
 [dev-packages]
 pytest = "==7.4.4"
