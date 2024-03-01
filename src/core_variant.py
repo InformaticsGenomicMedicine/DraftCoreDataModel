@@ -271,7 +271,7 @@ class CoreVariantClass:
         if self.seqType in ("DNA", "RNA"):
             if not (re.match(pat[self.seqType], val) or re.match(pat["DIGIT"], val)):
                 raise ValueError(
-                    f'Invalid {refAllele} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]} or {pat["digit"]}).'
+                    f'Invalid {refAllele} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]} or {pat["DIGIT"]}).'
                 )
             return val
         elif self.seqType == "PROTEIN":

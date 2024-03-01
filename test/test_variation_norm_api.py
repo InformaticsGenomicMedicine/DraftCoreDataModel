@@ -5,21 +5,24 @@ from src.api.variation_norm_api import VarNormRestApi
 #     Unchanged: https://www.ncbi.nlm.nih.gov/clinvar/variation/242687/?new_evidence=true
 #     Substitution: https://www.ncbi.nlm.nih.gov/clinvar/variation/839655/?new_evidence=true
 
+#NOTE: Variation Normalization API changed from sequence_id to sequenceReference.
+# Currently stop using VarNorm to translate hgvs to VRS, and will only be using vrs-python translator.py module.
+
 variation_vrs_test = (
     (
         "NC_000001.11:g.161629781=",
         {
-            "_id": "ga4gh:VA.g0DrpsYsVp9QTURGJj9FWqGc_yMUeimD",
+            "id": "ga4gh:VA.E1EjA8j8JDkOc0r6mQpsYfHtEBwZboyY",
             "type": "Allele",
             "location": {
-                "_id": "ga4gh:VSL.VFv5ccgTy-vP0N0EyCi8lSr1ktZUvtqJ",
+                "id": "ga4gh:SL.Xr3nHkM9o9FavUonnFqpDMVaeUHGcyH6",
                 "type": "SequenceLocation",
-                "sequence_id": "ga4gh:SQ.Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
-                "interval": {
-                    "type": "SequenceInterval",
-                    "start": {"type": "Number", "value": 161629780},
-                    "end": {"type": "Number", "value": 161629781},
+                "sequenceReference": {
+                    "type": "SequenceReference",
+                    "refgetAccession": "SQ.Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
                 },
+                "start": 161629780,
+                "end": 161629781,
             },
             "state": {"type": "LiteralSequenceExpression", "sequence": "T"},
         },
@@ -27,17 +30,17 @@ variation_vrs_test = (
     (
         "NC_000001.11:g.943043C>T",
         {
-            "_id": "ga4gh:VA.s8vzlmFv83fcoJnNovFkp4pnE48weUh4",
+            "id": "ga4gh:VA.KaNXdfINNTK0jyd4m6XRdhPLbzFQZQDV",
             "type": "Allele",
             "location": {
-                "_id": "ga4gh:VSL.2tX8CXXY1z3HcbrXdGGTbmuqmYgNks6G",
+                "id": "ga4gh:SL.vb5Khxuw3jCvdu_SZx1kWn8IuuO8DHc1",
                 "type": "SequenceLocation",
-                "sequence_id": "ga4gh:SQ.Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
-                "interval": {
-                    "type": "SequenceInterval",
-                    "start": {"type": "Number", "value": 943042},
-                    "end": {"type": "Number", "value": 943043},
+                "sequenceReference": {
+                    "type": "SequenceReference",
+                    "refgetAccession": "SQ.Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
                 },
+                "start": 943042,
+                "end": 943043,
             },
             "state": {"type": "LiteralSequenceExpression", "sequence": "T"},
         },

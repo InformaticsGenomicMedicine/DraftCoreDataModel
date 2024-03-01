@@ -1,147 +1,131 @@
 import pytest
 from src.spdi.spdi_utils import SPDITranslate
 
-
-spdi_to_vrs_example = (
-    (
-        "NC_000001.11:161629780:T:T",
-        {
-            "_id": "ga4gh:VA.g0DrpsYsVp9QTURGJj9FWqGc_yMUeimD",
+data = [
+    {
+        "DelitionExample1": "https://www.ncbi.nlm.nih.gov/clinvar/variation/2085710/",
+        "spdi": "NC_000001.11:1014263:CC:C",
+        "hgvs": "NC_000001.11:g.1014265del",
+        "vrs": {
+            "_id": "ga4gh:VA.BmF3zr2l6XLpLaK8GInM6Q3Emc3JyPD3",
             "type": "Allele",
             "location": {
-                "_id": "ga4gh:VSL.VFv5ccgTy-vP0N0EyCi8lSr1ktZUvtqJ",
+                "_id": "ga4gh:VSL.i6Of9s2jVDuJ4vwU6sCeG-jT7ygmlfx6",
                 "type": "SequenceLocation",
                 "sequence_id": "ga4gh:SQ.Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
                 "interval": {
                     "type": "SequenceInterval",
-                    "start": {"type": "Number", "value": 161629780},
-                    "end": {"type": "Number", "value": 161629781},
-                },
-            },
-            "state": {"type": "LiteralSequenceExpression", "sequence": "T"},
-        },
-    ),
-    (
-        "NC_000001.11:943042:C:T",
-        {
-            "_id": "ga4gh:VA.s8vzlmFv83fcoJnNovFkp4pnE48weUh4",
-            "type": "Allele",
-            "location": {
-                "_id": "ga4gh:VSL.2tX8CXXY1z3HcbrXdGGTbmuqmYgNks6G",
-                "type": "SequenceLocation",
-                "sequence_id": "ga4gh:SQ.Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
-                "interval": {
-                    "type": "SequenceInterval",
-                    "start": {"type": "Number", "value": 943042},
-                    "end": {"type": "Number", "value": 943043},
-                },
-            },
-            "state": {"type": "LiteralSequenceExpression", "sequence": "T"},
-        },
-    ),
-    (
-        "NC_000023.11:32386322:T:GA",
-        {
-            "_id": "ga4gh:VA.HH3RHjZymrie-09X8aR2SMf1ULMlee6u",
-            "type": "Allele",
-            "location": {
-                "_id": "ga4gh:VSL.tS45HvJapFexhxmbHe6SBn7dGuC46sni",
-                "type": "SequenceLocation",
-                "sequence_id": "ga4gh:SQ.w0WZEvgJF0zf_P4yyTzjjv9oW1z61HHP",
-                "interval": {
-                    "type": "SequenceInterval",
-                    "start": {"type": "Number", "value": 32386322},
-                    "end": {"type": "Number", "value": 32386323},
-                },
-            },
-            "state": {"type": "LiteralSequenceExpression", "sequence": "GA"},
-        },
-    ),
-    (
-        "NC_000013.11:32936731:C:C",
-        {
-            "_id": "ga4gh:VA.DkZLLMnwoH6zIncSRh2c05nzCNLdTqHl",
-            "type": "Allele",
-            "location": {
-                "_id": "ga4gh:VSL.iSZclbNW8T95cXDuNvLMvm6xJd2g4pTn",
-                "type": "SequenceLocation",
-                "sequence_id": "ga4gh:SQ._0wi-qoDrvram155UmcSC-zA5ZK4fpLT",
-                "interval": {
-                    "type": "SequenceInterval",
-                    "start": {"type": "Number", "value": 32936731},
-                    "end": {"type": "Number", "value": 32936732},
+                    "start": {"type": "Number", "value": 1014263},
+                    "end": {"type": "Number", "value": 1014265},
                 },
             },
             "state": {"type": "LiteralSequenceExpression", "sequence": "C"},
         },
-    ),
-    (
-        "NC_000013.11:19993837:GT:GTGT",
-        {
-            "_id": "ga4gh:VA.S3eUS2hlp6q4pSv4u2CbN0OPMusMUnHZ",
+    },
+    {
+        "InsertionExample1": "https://www.ncbi.nlm.nih.gov/clinvar/variation/1344775/",
+        "spdi": "NC_000001.11:113901365::ATA",
+        "hgvs": "NC_000001.11:g.113901365_113901366insATA",
+        "vrs": {
+            "_id": "ga4gh:VA.J9BMdktHGGjE843oD0T_bwUV6WxojkCW",
             "type": "Allele",
             "location": {
-                "_id": "ga4gh:VSL.nW80UuWsc9bgMncP24FLII6qx8aouNki",
+                "_id": "ga4gh:VSL.TMxdXtmi4ctcTRipHMD6py1Nv1kLMyJd",
                 "type": "SequenceLocation",
-                "sequence_id": "ga4gh:SQ._0wi-qoDrvram155UmcSC-zA5ZK4fpLT",
+                "sequence_id": "ga4gh:SQ.Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
                 "interval": {
                     "type": "SequenceInterval",
-                    "start": {"type": "Number", "value": 19993837},
-                    "end": {"type": "Number", "value": 19993839},
+                    "start": {"type": "Number", "value": 113901365},
+                    "end": {"type": "Number", "value": 113901365},
                 },
             },
-            "state": {"type": "LiteralSequenceExpression", "sequence": "GTGT"},
+            "state": {"type": "LiteralSequenceExpression", "sequence": "ATA"},
         },
-    ),
-    (
-        "NC_000017.11:83129587:TTGWCACATGATTG:TTG",
-        {
-            "_id": "ga4gh:VA.uMh32FdgdocWldFZL5Pi7RxOwvXJX_Md",
+    },
+    {
+        "SubstitutionExample1": "https://www.ncbi.nlm.nih.gov/clinvar/variation/835613/",
+        "spdi": "NC_000002.12:27453448:C:T",
+        "hgvs": "NC_000002.12:g.27453449C>T",
+        "vrs": {
+            "_id": "ga4gh:VA.fXvhngewkkyVwzEeSJRr5tro8Jcol6Q-",
             "type": "Allele",
             "location": {
-                "_id": "ga4gh:VSL.8eHx9-4dIsZIUD6Od9WU-a06qNJKi8ra",
+                "_id": "ga4gh:VSL.nLMbYalHO4OEI2axqkyTMCQxrH98UpDN",
                 "type": "SequenceLocation",
-                "sequence_id": "ga4gh:SQ.dLZ15tNO1Ur0IcGjwc3Sdi_0A6Yf4zm7",
+                "sequence_id": "ga4gh:SQ.pnAqCRBrTsUoBghSD1yp_jXWSmlbdh4g",
                 "interval": {
                     "type": "SequenceInterval",
-                    "start": {"type": "Number", "value": 83129587},
-                    "end": {"type": "Number", "value": 83129601},
+                    "start": {"type": "Number", "value": 27453448},
+                    "end": {"type": "Number", "value": 27453449},
                 },
             },
-            "state": {"type": "LiteralSequenceExpression", "sequence": "TTG"},
+            "state": {"type": "LiteralSequenceExpression", "sequence": "T"},
         },
-    ),
-    (
-        "NC_000003.12:16894810:W:",
-        {
-            "_id": "ga4gh:VA.LDwtaWm1yS--3mHT84AsBM2g3c9zElNN",
+    },
+    {
+        "InsertionDeletionExample1": "https://www.ncbi.nlm.nih.gov/clinvar/variation/931239/",
+        "spdi": "NC_000002.12:166043788:CA:GAT",
+        "hgvs": "NC_000002.12:g.166043789_166043790delinsGAT",
+        "vrs": {
+            "_id": "ga4gh:VA.I0biXWOvxxmy4jjxsMqQVgy0Q91CJY7x",
             "type": "Allele",
             "location": {
-                "_id": "ga4gh:VSL.-gPFR8xJpy5aWeQS6BzfMQOUe2LsJeb-",
+                "_id": "ga4gh:VSL.E3BkYwqHo3ETPtXyM_oAzzcpbb07zJ3W",
                 "type": "SequenceLocation",
-                "sequence_id": "ga4gh:SQ.Zu7h9AggXxhTaGVsy7h_EZSChSZGcmgX",
+                "sequence_id": "ga4gh:SQ.pnAqCRBrTsUoBghSD1yp_jXWSmlbdh4g",
                 "interval": {
                     "type": "SequenceInterval",
-                    "start": {"type": "Number", "value": 16894810},
-                    "end": {"type": "Number", "value": 16894811},
+                    "start": {"type": "Number", "value": 166043788},
+                    "end": {"type": "Number", "value": 166043790},
                 },
             },
-            "state": {"type": "LiteralSequenceExpression", "sequence": ""},
+            "state": {"type": "LiteralSequenceExpression", "sequence": "GAT"},
         },
-    ),
-)
-
-spdi_to_rightshfit_hgvs_example = (
-    ("NC_000001.11:161629780:T:T", "NC_000001.11:g.161629781="),
-    ("NC_000001.11:943042:C:T", "NC_000001.11:g.943043C>T"),
-    # Special Case
-    ("NC_000017.11:83129587:TTGWCACATGATTG:TTG", "NC_000017.11:g.83129591_83129601del"),
-    # Special Case
-    ("NC_000003.12:16894810:W:", "NC_000003.12:g.16894811del"),
-    ("NC_000013.11:32936731:C:C", "NC_000013.11:g.32936732="),
-    ("NC_000013.11:19993837:GT:GTGT", "NC_000013.11:g.19993838_19993839dup"),
-    ("NC_000023.11:32386322:T:GA", "NC_000023.11:g.32386323delinsGA"),
-)
+    },
+    {
+        "IdentityExample": "https://www.ncbi.nlm.nih.gov/snp/rs1805044#hgvs_tab",
+        "spdi": "NC_000004.12:88007815:G:G",
+        "hgvs": "NC_000004.12:g.88007816=",
+        "vrs": {
+            "_id": "ga4gh:VA.eT7IpRxd5CiyJEq8sE6AgobdwgY62NxG",
+            "type": "Allele",
+            "location": {
+                "_id": "ga4gh:VSL.Iud8aOpjNALanhgWtq1sU6aQE5uK4ywU",
+                "type": "SequenceLocation",
+                "sequence_id": "ga4gh:SQ.HxuclGHh0XCDuF8x6yQrpHUBL7ZntAHc",
+                "interval": {
+                    "type": "SequenceInterval",
+                    "start": {"type": "Number", "value": 88007815},
+                    "end": {"type": "Number", "value": 88007816},
+                },
+            },
+            "state": {"type": "LiteralSequenceExpression", "sequence": "G"},
+        },
+    },
+    {
+        "DuplicationExample": "https://www.ncbi.nlm.nih.gov/clinvar/variation/1297092/",
+        "spdi": "NC_000001.11:5880117:TGAGCTTCCA:TGAGCTTCCATGAGCTTCCA",
+        "hgvs": "NC_000001.11:g.5880118_5880127dup",
+        "vrs": {
+            "_id": "ga4gh:VA.OpO3jwlmnhvpmEs2v9orWvMIa7UPb1To",
+            "type": "Allele",
+            "location": {
+                "_id": "ga4gh:VSL.veKlh4sQPAIr1HNoqjmsm7qZa0FNfjI9",
+                "type": "SequenceLocation",
+                "sequence_id": "ga4gh:SQ.Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
+                "interval": {
+                    "type": "SequenceInterval",
+                    "start": {"type": "Number", "value": 5880117},
+                    "end": {"type": "Number", "value": 5880127},
+                },
+            },
+            "state": {
+                "type": "LiteralSequenceExpression",
+                "sequence": "TGAGCTTCCATGAGCTTCCA",
+            },
+        },
+    },
+]
 
 
 @pytest.fixture(scope="module")
@@ -149,13 +133,13 @@ def spdi_translate():
     return SPDITranslate()
 
 
-@pytest.mark.parametrize("variation,expected", spdi_to_vrs_example)
-def test_spdi_to_vrs(spdi_translate, variation, expected):
-    resp = spdi_translate.from_spdi_to_vrs(variation, output_format="dict")
-    assert resp == expected
+@pytest.mark.parametrize("example_data", data)
+def test_spdi_to_rightshift_hgvs(spdi_translate, example_data):
+    resp = spdi_translate.from_spdi_to_rightshift_hgvs(example_data["spdi"])
+    assert resp == example_data["hgvs"]
 
 
-@pytest.mark.parametrize("variation,expected", spdi_to_rightshfit_hgvs_example)
-def test_spdi_to_rightshift_hgvs(spdi_translate, variation, expected):
-    resp = spdi_translate.from_spdi_to_rightshift_hgvs(variation)
-    assert resp == expected
+@pytest.mark.parametrize("example_data", data)
+def test_spdi_to_vrs(spdi_translate, example_data):
+    resp = spdi_translate.from_spdi_to_vrs(example_data["spdi"], output_format="dict")
+    assert resp == example_data["vrs"]

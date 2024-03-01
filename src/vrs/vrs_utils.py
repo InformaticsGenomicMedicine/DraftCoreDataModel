@@ -35,7 +35,7 @@ class VrsTranslate:
             raise ValueError(
                 f"An error occurred while translating the VRS expression '{expression}' to a SPDI expression. {e}"
             )
-        
+    #NOTE: This is currently not working because the variation normalizer returned the status code: 422.
     def from_vrs_to_normalize_hgvs(self, expression: Union[dict, object]) -> str:
         """
         Translates a Variant Representation Specification (VRS) expression to a normalized HGVS expression.
@@ -60,7 +60,7 @@ class VrsTranslate:
             raise ValueError(
                 f"An error occurred while translating the VRS expression '{expression}' to a HGVS expression. {e}"
             )
-    #NOTE: THis is temporary because from_vrs_to_hgvs is creating a Variation normalizer returned the status code: 422.
+
     def from_vrs_to_hgvs(self, expression: Union[dict, object]) -> str:
         """
         Translates a Variant Representation Specification (VRS) expression to a normalized HGVS expression.
