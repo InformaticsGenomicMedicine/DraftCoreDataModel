@@ -7,6 +7,7 @@ import re
 from src.spdi.spdi_utils import SPDITranslate
 from src.core_variant import CoreVariantClass
 from src.api.seqrepo_api import SeqRepoAPI
+from src.api.ncbi_variation_services_api import VarServAPI
 from ga4gh.vrs.dataproxy import SequenceProxy
 from src.spdi.spdi_class import SPDI
 from bioutils.normalize import normalize, NormalizationMode
@@ -21,10 +22,12 @@ class CVCTranslator:
         self.trans_spdi = SPDITranslate()
         self.hp = hgvs.parser.Parser()
         self.seqrepo_api = SeqRepoAPI()
+        self.varserv_api = VarServAPI()
         self.dp = self.seqrepo_api.seqrepo_data_proxy 
         self.hdp = hgvs.dataproviders.uta.connect()
         self.vr = hgvs.validator.Validator(hdp=self.hdp)
         self.seqrepo_api = SeqRepoAPI()
+
         # self.spdi = SPDI()
 
     def _detect_sequence_type(self, input_str):
@@ -92,7 +95,10 @@ class CVCTranslator:
         Returns:
             object: An object representing the CoreVariantClass format.
         """
-        # extract the 4 attributes from the spdi expression to create a new spdi object with validation method
+        
+        # added the validation step here because vrs returns spdi objects where the deletion as a position integer. 
+        expression = self.varserv_api.validate_spdi(expression)
+
         s, p, d, i = expression.split(":")
         spdi = SPDI(sequence=s, position=p, deletion=d, insertion=i)
         
@@ -187,6 +193,7 @@ class CVCTranslator:
             raise ValueError(
                 f"HGVS variant type {parsed_variant.posedit.edit.type} is unsupported"
             )
+        
         if parsed_variant.posedit.edit.type != "identity":
             start_pos, ref_seq, alt_seq = self._fullynorm(reference_id=parsed_variant.ac, start_pos=start_pos, end_pos=end_pos, alt_seq=alt_seq)
 
