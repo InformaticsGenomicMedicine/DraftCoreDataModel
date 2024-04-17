@@ -15,6 +15,7 @@ psycopg2-binary = "==2.9.9"
 pydantic = "==2.5.3"
 "ga4gh.vrs" = {extras = ["extras"], version = "==0.8.5"}
 pandas = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pytest = "==7.4.4"
