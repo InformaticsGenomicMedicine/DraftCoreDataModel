@@ -37,6 +37,7 @@ If you're new to using Codespace, you may find the following resources helpful:
 - Then click "Stop Current Codespace".
 - Once this is done, you have successfully deactivated your Codespace. 
 
+<!--
 ---
 
 ## Access Notebooks (MyBinder)
@@ -47,7 +48,7 @@ If you're new to using Codespace, you may find the following resources helpful:
 <!--
 - Link for dev-sb branch: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/InformaticsGenomicMedicine/DraftCoreDataModel.git/dev-sb)
 -->
-
+<!--
 ## Notes:
 - MyBinder sessions may take a few minutes to load.
 - Sessions will be disabled if the user logs off or becomes inactive for an extended period.
@@ -58,11 +59,11 @@ If you're new to using Codespace, you may find the following resources helpful:
 Thank you for your patience and understanding! If you encounter any issues or have questions, feel free to reach out.
 
 ---
-
+<!--
 ## TODO: Future Implementation: Access Notebooks (VSCODE)
 
 
-<!--
+
 ### Access Notebooks (VSCODE)
 
 To get started with the project, follow these steps to clone the repository to your local machine:

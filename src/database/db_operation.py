@@ -1,5 +1,6 @@
 import sqlite3
 import pandas as pd
+import json
 
 class DbOperation:
     def __init__(self,db_file="goldstanddb.db"):
@@ -7,11 +8,21 @@ class DbOperation:
         
     def _get_connection(self):
         return sqlite3.connect(self.db_file)
+    
+    def _deserialize_value(self,value):
+        try:
+            return json.loads(value)
+        except json.JSONDecodeError:
+            return value
 
     def get_combined_in_df(self):
         with self._get_connection() as con:
             df = pd.read_sql_query(f"SELECT * FROM CombineData", con)
-            return df 
+        df['value'] = df['value'].apply(self._deserialize_value)
+        return df 
+
+    def extract_values(self,df,value_type):
+        return df[df['name']==value_type]['value']
 
     def update_variation(self,id,xref,description):
         with self._get_connection() as con:

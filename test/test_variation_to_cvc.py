@@ -1,5 +1,5 @@
 import pytest
-from src.core_variant_translate import CVCTranslator
+from src.variant_to_cvc_translate import CVCTranslator
 from src.core_variant import CoreVariantClass
 from ga4gh.vrs import models
 
