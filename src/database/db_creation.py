@@ -8,7 +8,7 @@ class CreateTables:
     def _get_connection(self):
         return sqlite3.connect(self.db_file)
 
-    def _create_tables(self, con):
+    def _create_tables(self):
         # Variation table schema
         variation_table = """
             CREATE TABLE IF NOT EXISTS Variation (
@@ -66,8 +66,7 @@ class CreateTables:
             return data
 
     def create_database(self):
-        with self._get_connection() as con:
-            self._create_tables(con)
+        self._create_tables()
 
     def add_variation(self, data):
         self._validate_input(data, ["xref", "description"])
@@ -129,18 +128,18 @@ class CreateTables:
             except sqlite3.Error as e:
                 raise RuntimeError(f"Error inserting expression data: {str(e)}")
             
-if __name__ == "__main__":
-    from db_creation import CreateTables
-    from goldstandard_db_data.profile_data import profile_data
-    from goldstandard_db_data.variation_data import variation_data
-    from goldstandard_db_data.expression_data import expression_data
+# if __name__ == "__main__":
+#     from db_creation import CreateTables
+#     from data.profile_table_data import profile_data
+#     from data.variation_table_data import variation_data
+#     from data.expression_table_data import expression_data
 
-    db = CreateTables("gsdb.db")
-    db.create_database()
+#     db = CreateTables("gsdb.db")
+#     db.create_database()
 
-    for var_data in variation_data:
-        db.add_variation(var_data)
-    for prof_data in profile_data:
-        db.add_profile(prof_data)
-    for expr_data in expression_data:
-        db.add_expression(expr_data)
+#     for var_data in variation_data:
+#         db.add_variation(var_data)
+#     for prof_data in profile_data:
+#         db.add_profile(prof_data)
+#     for expr_data in expression_data:
+#         db.add_expression(expr_data)
