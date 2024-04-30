@@ -4,12 +4,13 @@ from src.api.seqrepo_api import SeqRepoAPI
 from src.core_variant import CoreVariantClass
 from src.spdi import SPDI
 from ga4gh.core import ga4gh_identify
-from ga4gh.vrs import models, normalize as do_normalize
+from ga4gh.vrs import models, normalize as vrs_normalize
 import hgvs.validator
 import hgvs.parser
 import hgvs.validator
 import hgvs.dataproviders.uta
 import json
+
 
 # TODO: This was seperated from core_variant_translate.py to help debug and code review. Will be merged back once code is reviewed.
 
@@ -137,7 +138,7 @@ class ToTranslate:
             allele.location.sequence_id._value, "ga4gh")[0]
         allele.location.sequence_id = seq_id
         # Using the ga4gh normalize function to normalize the allele. (Coming form biocommons.normalize())
-        allele = do_normalize(allele, self.dp)
+        allele = vrs_normalize(allele, self.dp)
         # Setting the allele id to a  GA4GH digest-based id for the object, as a CURIE
         allele._id = ga4gh_identify(allele)
         # Setting the location id to a GA4GH digest-based id for the object, as a CURIE

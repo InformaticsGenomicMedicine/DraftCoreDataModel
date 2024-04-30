@@ -2,18 +2,18 @@ import pytest
 from src.spdi.spdi_class import SPDI
 
 spdi_tests = [
-    # Insertion Example
-    ("NC_000007.14", "55181230", "", "GGCT"),
-    # Substitution Example
-    ("NC_000019.10", "44908821", "C", "T"),
-    # Deletion Example
-    ("NC_000007.14", "55181219", "T", ""),
-    # Deletion Insertion Example
-    ("NC_000023.11", "32386322", "T", "GA"),
-    # Identity Example
-    ("NC_000013.11", "32936731", "C", "C"),
-    # Duplication Example
-    ("NC_000013.11", "19993837", "GT", "GTGT"),
+    # Deletion Example: https://www.ncbi.nlm.nih.gov/clinvar/variation/2085710/
+    ("NC_000001.11", "1014263", "2", "C"),
+    # Insertion Example: https://www.ncbi.nlm.nih.gov/clinvar/variation/1344775/
+    ("NC_000001.11", "113901365", "", "ATA"),
+    # Substitution Example: https://www.ncbi.nlm.nih.gov/clinvar/variation/835613/
+    ("NC_000002.12", "27453448", "C", "T"),
+    # Insertion Deletion Example: https://www.ncbi.nlm.nih.gov/clinvar/variation/931239/
+    ("NC_000002.12", "166043788", "CA", "GAT"),
+    # Identity Example: https://www.ncbi.nlm.nih.gov/snp/rs1805044#hgvs_tab
+    ("NC_000004.12", "88007815", "G", "G"),
+    # Duplication Example: https://www.ncbi.nlm.nih.gov/clinvar/variation/1297092/
+    ("NC_000001.11:5880117", "5880117", "TGAGCTTCCA", "TGAGCTTCCATGAGCTTCCA"),
 ]
 
 
@@ -48,3 +48,4 @@ def test_spdi_to_dictionary(sequence, position, deletion, insertion):
     }
     assert isinstance(dict_format, dict)
     assert dict_format == expected_dict
+
