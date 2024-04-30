@@ -48,11 +48,20 @@ class CreateTables:
             LEFT JOIN Variation AS v ON e.variation_id = v.id;
         """
 
+        test_table = """
+            CREATE VIEW IF NOT EXISTS TestData AS
+            SELECT p.name, p.version, v.description, v.xref, e.value 
+            FROM Expression as e  
+            LEFT JOIN Profile AS p ON e.profile_id = p.id 
+            LEFT JOIN Variation AS v ON e.variation_id = v.id;
+        """
+
         with self._get_connection() as con:
             con.execute(variation_table)
             con.execute(profile_table)
             con.execute(expression_table)
             con.execute(combined_table)
+            con.execute(test_table)
 
     def _validate_input(self, data, req_fields):
         for field in req_fields:
@@ -130,16 +139,16 @@ class CreateTables:
             
 # if __name__ == "__main__":
 #     from db_creation import CreateTables
-#     from data.profile_table_data import profile_data
-#     from data.variation_table_data import variation_data
-#     from data.expression_table_data import expression_data
+#     from src.database.data.profile_table_data import profile_data
+#     from src.database.data.variation_table_data import variation_data
+#     from src.database.data.expression_table_data import expression_data
 
 #     db = CreateTables("gsdb.db")
 #     db.create_database()
 
-#     for var_data in variation_data:
-#         db.add_variation(var_data)
-#     for prof_data in profile_data:
-#         db.add_profile(prof_data)
-#     for expr_data in expression_data:
-#         db.add_expression(expr_data)
+    # for var_data in variation_data:
+    #     db.add_variation(var_data)
+    # for prof_data in profile_data:
+    #     db.add_profile(prof_data)
+    # for expr_data in expression_data:
+    #     db.add_expression(expr_data)

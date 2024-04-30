@@ -20,6 +20,20 @@ class DbOperation:
             df = pd.read_sql_query(f"SELECT * FROM CombineData", con)
         df['value'] = df['value'].apply(self._deserialize_value)
         return df 
+    
+    def get_testdata_df(self):
+        with self._get_connection() as con: 
+            df = pd.read_sql_query(f"SELECT * FROM TestData",con)
+        df['value'] = df['value'].apply(self._deserialize_value)
+
+        #will create a DataFrame where each row has a unique combination of 'description' and 'xref', and the 'cvc', 'spdi', 'hgvs',
+        # and 'vrs' columns contain the corresponding 'value' for that combination.
+        pivot_df = df.pivot_table(index=['description', 'xref'], columns='name', values='value', aggfunc='first').reset_index()
+
+        # Convert the DataFrame to a list of dictionaries
+        result_list = pivot_df.to_dict('records')
+
+        return result_list
 
     def extract_values(self,df,value_type):
         return df[df['name']==value_type]['value']
