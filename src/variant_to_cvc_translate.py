@@ -23,7 +23,8 @@ class CVCTranslator:
         self.hp = hgvs.parser.Parser()
         self.seqrepo_api = SeqRepoAPI()
         self.varserv_api = VarServAPI()
-        self.dp = self.seqrepo_api.seqrepo_data_proxy 
+        # self.dp = self.seqrepo_api.seqrepo_data_proxy 
+        self.dp = self.seqrepo_api.seqrepo_dataproxy
         self.hdp = hgvs.dataproviders.uta.connect()
         self.vr = hgvs.validator.Validator(hdp=self.hdp)
         self.seqrepo_api = SeqRepoAPI()

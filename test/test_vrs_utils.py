@@ -1,9 +1,9 @@
 import pytest
 from src.vrs.vrs_utils import VrsTranslate
 from ga4gh.vrs import models
-from src.database.db_operation import DbOperation
+from database.db_operation import DbOperation
 
-data = DbOperation('test_gsdb.db').get_testdata_df()
+data = DbOperation('../database/test_gsdb.db').get_testdata_df()
 
 
 @pytest.fixture(scope="module")

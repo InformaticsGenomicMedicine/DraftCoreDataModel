@@ -18,7 +18,8 @@ class ToTranslate:
     """Preforming translations from CVC to SPDI, HGVS, and VRS."""
     def __init__(self):
         self.seqrepo_api = SeqRepoAPI()
-        self.dp = self.seqrepo_api.seqrepo_data_proxy 
+        # self.dp = self.seqrepo_api.seqrepo_data_proxy 
+        self.dp = self.seqrepo_api.seqrepo_dataproxy
         self.hp = hgvs.parser.Parser()
         self.hdp = hgvs.dataproviders.uta.connect()
         self.hn = hgvs.normalizer.Normalizer(self.hdp)

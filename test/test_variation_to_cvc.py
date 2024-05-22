@@ -2,9 +2,9 @@ import pytest
 from src.variant_to_cvc_translate import CVCTranslator
 from src.core_variant import CoreVariantClass
 from ga4gh.vrs import models
-from src.database.db_operation import DbOperation
+from database.db_operation import DbOperation
 
-data = DbOperation('test_gsdb.db').get_testdata_df()
+data = DbOperation('../database/test_gsdb.db').get_testdata_df()
 
 @pytest.fixture(scope="module")
 def cvc_trans():

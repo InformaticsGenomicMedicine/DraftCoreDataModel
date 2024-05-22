@@ -1,8 +1,8 @@
 import pytest
 from src.hgvsExtra.hgvs_utils import HGVSTranslate
-from src.database.db_operation import DbOperation
+from database.db_operation import DbOperation
 
-data = DbOperation('test_gsdb.db').get_testdata_df()
+data = DbOperation('/Users/M278428/Documents/rf_lab_projects/DraftCoreDataModel/database/test_gsdb.db').get_testdata_df()
 
 @pytest.fixture(scope="module")
 def hgvs_translate():

@@ -3,7 +3,7 @@ import pandas as pd
 import json
 
 class DbOperation:
-    def __init__(self,db_file="goldstanddb.db"):
+    def __init__(self,db_file="gsdb.db"):
         self.db_file = db_file
         
     def _get_connection(self):
