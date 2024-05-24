@@ -8,7 +8,7 @@ class VrsTranslate:
         """Initialize class with the API URL"""
 
         self.seqrepo_api = SeqRepoAPI()
-        self.dp = self.seqrepo_api.seqrepo_data_proxy 
+        self.dp = self.seqrepo_api.seqrepo_dataproxy 
         self.tlr = self.seqrepo_api.tlr
         self.var_norm_api = VarNormRestApi()
 

@@ -5,11 +5,10 @@ import hgvs.parser
 import json
 from typing import Union
 
-
 class SPDITranslate:
     def __init__(self) -> None:
         self.seqrepo_api = SeqRepoAPI()
-        self.dp = self.seqrepo_api.seqrepo_data_proxy 
+        self.dp = self.seqrepo_api.seqrepo_dataproxy 
         self.tlr = self.seqrepo_api.tlr
         self.var_serv_api = VarServAPI()
         self.hp = hgvs.parser.Parser()

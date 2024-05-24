@@ -10,7 +10,7 @@ class VocaNormalizeSpdi:
 
     def __init__(self):
         self.seqrepo_api = SeqRepoAPI()
-        self.dp = self.seqrepo_api.seqrepo_data_proxy
+        self.dp = self.seqrepo_api.seqrepo_dataproxy
 
     def spdi_voca_normalize(self, expression: Union[str, SPDI]) -> str:
         """Normalize SPDI expressions using the Voca normalization method.
