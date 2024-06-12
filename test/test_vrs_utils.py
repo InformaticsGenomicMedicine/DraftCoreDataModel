@@ -19,6 +19,6 @@ def test_from_vrs_to_normalize_hgvs(vrs_translate, example_data):
 
 @pytest.mark.parametrize("example_data", data)
 def test_from_vrs_to_spdi(vrs_translate, example_data):
-    resp = vrs_translate.from_vrs_to_spdi(models.Allele(**example_data["vrs"]))
+    resp = vrs_translate.from_vrs_to_spdi(models.Allele(**example_data["vrs"]),validate=True)
     assert resp == example_data["spdi"]
 

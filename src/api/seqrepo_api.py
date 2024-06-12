@@ -1,12 +1,11 @@
 # from ga4gh.vrs.dataproxy import SeqRepoRESTDataProxy
 from ga4gh.vrs.extras.translator import Translator
-import configparser
 from ga4gh.vrs.dataproxy import create_dataproxy
 
 
 class SeqRepoAPI:
     DEFAULT_LOCAL_URL = "seqrepo+file:///usr/local/share/seqrepo/2021-01-29/"
-    HOST_URL = "https://services.genomicmedlab.org/seqrepo"
+    HOST_URL = "seqrepo+https://services.genomicmedlab.org/seqrepo"
 
     def __init__(self, seqrepo_data_proxy_url: str = None) -> None:
         """Initialize the SeqRepoAPI instance with the specified SeqRepo REST service URL.
