@@ -137,18 +137,18 @@ class CreateTables:
             except sqlite3.Error as e:
                 raise RuntimeError(f"Error inserting expression data: {str(e)}")
             
-# if __name__ == "__main__":
-#     from db_creation import CreateTables
-#     from src.database.data.profile_table_data import profile_data
-#     from src.database.data.variation_table_data import variation_data
-#     from src.database.data.expression_table_data import expression_data
+if __name__ == "__main__":
+    from db_creation import CreateTables
+    from database.data.profile_table_data import profile_data
+    from database.data.variation_table_data import variation_data
+    from database.data.expression_table_data import expression_data
 
-#     db = CreateTables("gsdb.db")
-#     db.create_database()
+    db = CreateTables("new_db.db")
+    db.create_database()
 
-    # for var_data in variation_data:
-    #     db.add_variation(var_data)
-    # for prof_data in profile_data:
-    #     db.add_profile(prof_data)
-    # for expr_data in expression_data:
-    #     db.add_expression(expr_data)
+    for var_data in variation_data:
+        db.add_variation(var_data)
+    for prof_data in profile_data:
+        db.add_profile(prof_data)
+    for expr_data in expression_data:
+        db.add_expression(expr_data)
