@@ -43,46 +43,55 @@ variation_data = [
         "xref": "https://www.ncbi.nlm.nih.gov/clinvar/variation/1297092/",
         "description": "Duplication",
     },
+    # VRS-python transltor examples below
     {
         "xref": "https://github.com/ga4gh/vrs-python/blob/old-main/tests/extras/test_translator.py",
-        "description": "Single Nucleotide Variant"
+        "description": "Single Nucleotide Variant",
     },
     {
         "xref": "https://www.ncbi.nlm.nih.gov/clinvar/variation/1373966/?new_evidence=true",
-        "description": "Deletion"
+        "description": "Deletion",
     },
     {
         "xref": "https://www.ncbi.nlm.nih.gov/clinvar/variation/1687427/?new_evidence=true",
-        "description": "Insertion"
+        "description": "Insertion",
     },
     {
         "xref": "https://www.ncbi.nlm.nih.gov/clinvar/variation/1264314/?new_evidence=true",
-        "description": "duplication"
+        "description": "duplication",
     }
     # HGVS EXAMPLES FROM VRS-PYTHON TRANSLATOR
     ,
-    {   "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L163",
-        "description": "Identity"
+    {
+        "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L163",
+        "description": "Identity",
     },
-    {   "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L181",
-        "description": "Substitution"
+    {
+        "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L181",
+        "description": "Substitution",
     },
-    {   "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L199",
-        "description": "Deletion"
+    {
+        "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L199",
+        "description": "Deletion",
     },
-    {   "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L217",
-        "description": "Insertion"
+    {
+        "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L217",
+        "description": "Insertion",
     },
-    {   "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L235",
-        "description": "Duplication"
+    {
+        "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L235",
+        "description": "Duplication",
     },
-    {   "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L253",
-        "description": "Duplication"
+    {
+        "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L253",
+        "description": "Duplication",
     },
-    {   "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L271",
-        "description": "Substitution"
+    {
+        "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L271",
+        "description": "Substitution",
     },
-    {   "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L289",
-        "description": "Substitution"
-    }
+    {
+        "xref": "https://github.com/ga4gh/vrs-python/blob/fd759f9bd79c3d5fbd61b2343daec85744a3aa74/tests/extras/test_translator.py#L289",
+        "description": "Substitution",
+    },
 ]
