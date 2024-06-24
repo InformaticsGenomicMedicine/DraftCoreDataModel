@@ -4,7 +4,7 @@ from src.core_variant import CoreVariantClass
 from ga4gh.vrs import models
 from database.db_operation import DbOperation
 
-data = DbOperation('../database/test_gsdb.db').get_testdata_df()
+data = DbOperation('../database/new_test_db.db').get_testdata_df()
 
 @pytest.fixture(scope="module")
 def cvc_trans():
@@ -30,3 +30,4 @@ def test_vrs_to_cvc(cvc_trans, example_data):
     cvc_expected = CoreVariantClass(**example_data['cvc'])
     resp = cvc_trans.cvc_to_vrs(cvc_expected, output_format="obj")
     assert str(resp) == str(vrs)
+

@@ -143,7 +143,7 @@ if __name__ == "__main__":
     from database.data.variation_table_data import variation_data
     from database.data.expression_table_data import expression_data
 
-    db = CreateTables("new_db.db")
+    db = CreateTables("new_test_db.db")
     db.create_database()
 
     for var_data in variation_data:
