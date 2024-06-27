@@ -2,7 +2,7 @@ import pytest
 from src.hgvsExtra.hgvs_utils import HGVSTranslate
 from database.db_operation import DbOperation
 
-data = DbOperation('../database/new_test_db.db').get_testdata_df()
+data = DbOperation('../database/gsdb_v2.db').get_testdata_df()
 
 @pytest.fixture(scope="module")
 def hgvs_translate():

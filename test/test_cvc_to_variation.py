@@ -4,7 +4,7 @@ from src.core_variant import CoreVariantClass
 from ga4gh.vrs import models
 from database.db_operation import DbOperation
 
-data = DbOperation('../database/new_test_db.db').get_testdata_df()
+data = DbOperation('../database/gsdb_v2.db').get_testdata_df()
 
 @pytest.fixture(scope="module")
 def cvc_trans():

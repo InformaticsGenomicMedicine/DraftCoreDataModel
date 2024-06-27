@@ -38,11 +38,11 @@ class CreateTables:
             FOREIGN KEY (profile_id) REFERENCES Profile(id)
             )
         """
-        # Combing the talbes and this is what the user will use to look and brows the data.
+        # Combing the tables and this is what the user will use to look and brows the data.
         # reduce complexity
         combined_table = """
             CREATE VIEW IF NOT EXISTS CombineData AS
-            SELECT p.name, p.version, v.xref, e.value 
+            SELECT p.name, p.version, v.description, v.xref, e.value 
             FROM Expression as e  
             LEFT JOIN Profile AS p ON e.profile_id = p.id 
             LEFT JOIN Variation AS v ON e.variation_id = v.id;
@@ -50,7 +50,7 @@ class CreateTables:
 
         test_table = """
             CREATE VIEW IF NOT EXISTS TestData AS
-            SELECT p.name, p.version, v.description, v.xref, e.value 
+            SELECT p.name, p.version, v.xref, e.value 
             FROM Expression as e  
             LEFT JOIN Profile AS p ON e.profile_id = p.id 
             LEFT JOIN Variation AS v ON e.variation_id = v.id;
@@ -137,18 +137,18 @@ class CreateTables:
             except sqlite3.Error as e:
                 raise RuntimeError(f"Error inserting expression data: {str(e)}")
             
-if __name__ == "__main__":
-    from db_creation import CreateTables
-    from database.data.profile_table_data import profile_data
-    from database.data.variation_table_data import variation_data
-    from database.data.expression_table_data import expression_data
+# if __name__ == "__main__":
+#     from db_creation import CreateTables
+#     from database.data.profile_table_data import profile_data
+#     from database.data.variation_table_data import variation_data
+#     from database.data.expression_table_data import expression_data
 
-    db = CreateTables("new_test_db.db")
-    db.create_database()
+#     db = CreateTables("gsdb_v2.db")
+#     db.create_database()
 
-    for var_data in variation_data:
-        db.add_variation(var_data)
-    for prof_data in profile_data:
-        db.add_profile(prof_data)
-    for expr_data in expression_data:
-        db.add_expression(expr_data)
+#     for var_data in variation_data:
+#         db.add_variation(var_data)
+#     for prof_data in profile_data:
+#         db.add_profile(prof_data)
+#     for expr_data in expression_data:
+#         db.add_expression(expr_data)

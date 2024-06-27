@@ -3,7 +3,7 @@ import pandas as pd
 import json
 
 class DbOperation:
-    def __init__(self,db_file="gsdb.db"):
+    def __init__(self,db_file="filename.db"):
         self.db_file = db_file
         
     def _get_connection(self):
@@ -28,7 +28,7 @@ class DbOperation:
 
         #will create a DataFrame where each row has a unique combination of 'description' and 'xref', and the 'cvc', 'spdi', 'hgvs',
         # and 'vrs' columns contain the corresponding 'value' for that combination.
-        pivot_df = df.pivot_table(index=['description', 'xref'], columns='name', values='value', aggfunc='first').reset_index()
+        pivot_df = df.pivot_table(index=['xref'], columns='name', values='value', aggfunc='first').reset_index()
 
         # Convert the DataFrame to a list of dictionaries
         result_list = pivot_df.to_dict('records')
