@@ -2,13 +2,27 @@ import sqlite3
 import json
 
 class CreateTables:
-    def __init__(self, db_file="goldstanddb.db"):
+    def __init__(self, db_file="database_name.db"):
         self.db_file = db_file
 
     def _get_connection(self):
+        """ Establish a connection to the the database. 
+
+        Returns:
+            sqlite3.Connection: A connection object to the SQLite database.
+        """
         return sqlite3.connect(self.db_file)
 
     def _create_tables(self):
+        """ Creates database tables and views required for storing variation, profile, and expression data.
+            The method ensures tables and views are created only if they do not already exist in the database. 
+
+                - Variation table: Stores variations with fields for id, xref, and description.  
+                - Profile table: Stores profiles with fields for id, name, version, and description.
+                - Expression table: Stores expressions with fields for id, variation_id, profile_id, description, and value.
+                - CombineData view: A view that combines data from the Expression (value), Profile (name, version), and Variation (description, xref) tables. 
+                - TestData View: A view that combines data from the Expression (value), Profile (name, version), and Variation (xref) tables. 
+        """        
         # Variation table schema
         variation_table = """
             CREATE TABLE IF NOT EXISTS Variation (
@@ -64,20 +78,47 @@ class CreateTables:
             con.execute(test_table)
 
     def _validate_input(self, data, req_fields):
+        """ Validate if required fields are present in the data dictionary. 
+
+        Args:
+            data (dict): The input data dictionary to validate. 
+            req_fields (list): A list of strings representing required field names. 
+
+        Raises:
+            ValueError: Raised if any required field is missing in the data dictionary.
+        """
         for field in req_fields:
             if field not in data:
                 raise ValueError(f"Missing required field: {field}")
 
     def _serialize_value(self, data):
+        """ Serializes the input data into json format if it is a dictionary.
+
+        Args:
+            data (dict): The data to serialize. 
+
+        Returns:
+            str: Returns the serialized Json string if `data` is a dictionary, otherwise returns the input data unchanged. 
+        """
         if isinstance(data, dict):
             return json.dumps(data)
         else:
             return data
 
     def create_database(self):
+        """ Creates tables and views in the database. Method internally calls `_create_tables` to initialize database tables and views. 
+        """
         self._create_tables()
 
     def add_variation(self, data):
+        """ Adds a new variation entry to the Variation table in the database.
+
+        Args:
+            data (dict): A dictionary containing `xref` and `description` fields.
+
+        Raises:
+            RuntimeError: If there is an error inserting variation data into the database.
+        """
         self._validate_input(data, ["xref", "description"])
         with self._get_connection() as con:
             try:
@@ -89,6 +130,14 @@ class CreateTables:
                 raise RuntimeError(f"Error inserting variation data: {str(e)}")
 
     def add_profile(self, data):
+        """ Adds a new profile entry to the Profile table in the database.
+
+        Args:
+            data (dict): A dictionary containing `name`, `version`, and `description` fields.
+
+        Raises:
+            RuntimeError: if there is an error inserting profile data into the database.
+        """
         self._validate_input(data, ["name", "version", "description"])
         with self._get_connection() as con:
             try:
@@ -100,6 +149,15 @@ class CreateTables:
                 raise RuntimeError(f"Error inserting profile data: {str(e)}")
 
     def add_expression(self, data):
+        """ Adds a new expression entry to the Expression table in the database. 
+
+        Args:
+            data (dict): A dictionary containing `variation_id`, `profile_id`, `description`, and `value` fields.
+
+        Raises:
+            ValueError: If the provided variation_id or profile_id does not exist in their respective tables.
+            RuntimeError: If there is an error inserting expression data into the database.
+        """
         self._validate_input(
             data, ["variation_id", "profile_id", "description", "value"]
         )
