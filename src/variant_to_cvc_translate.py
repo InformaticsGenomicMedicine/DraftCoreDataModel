@@ -16,7 +16,7 @@ import hgvs.parser
 import hgvs.dataproviders.uta
 import hgvs.validator
 
-class CVCTranslator:
+class CVCTranslatorTo:
     """Variation (HGVS,SPDI,VRS) to CoreVariantClass Translator"""
     def __init__(self):
         self.trans_spdi = SPDITranslate()

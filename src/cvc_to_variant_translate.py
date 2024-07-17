@@ -14,7 +14,7 @@ import json
 
 # TODO: This was seperated from core_variant_translate.py to help debug and code review. Will be merged back once code is reviewed.
 
-class CVCTranslator:
+class CVCTranslatorFrom:
     """Preforming translations from CVC to SPDI, HGVS, and VRS."""
     def __init__(self):
         self.seqrepo_api = SeqRepoAPI()

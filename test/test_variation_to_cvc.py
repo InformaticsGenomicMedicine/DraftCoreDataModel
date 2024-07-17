@@ -1,5 +1,5 @@
 import pytest
-from src.variant_to_cvc_translate import CVCTranslator
+from src.variant_to_cvc_translate import CVCTranslatorTo
 from src.core_variant import CoreVariantClass
 from ga4gh.vrs import models
 from database.db_operation import DbOperation
@@ -8,7 +8,7 @@ data = DbOperation('../database/gsdb_v2.db').get_testdata_df()
 
 @pytest.fixture(scope="module")
 def cvc_trans():
-    return CVCTranslator()
+    return CVCTranslatorTo()
 
 @pytest.mark.parametrize("example_data", data)
 def test_spdi_to_cvc(cvc_trans, example_data):
