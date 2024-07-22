@@ -5,6 +5,8 @@ import hgvs.parser
 import json
 from typing import Union
 
+from src.exceptions import SPDITranslationError
+
 class SPDITranslate:
     def __init__(self) -> None:
         self.seqrepo_api = SeqRepoAPI()
@@ -56,7 +58,7 @@ class SPDITranslate:
             elif output_format == "parse":
                 return self.hp.parse_hgvs_variant(hgvs_expression)
         except Exception as e:
-            raise ValueError(
+            raise SPDITranslationError(
                 f"An error occurred while translating the SPDI expression '{expression}' to a right-shift HGVS expression: {e}"
             )
 
@@ -102,6 +104,6 @@ class SPDITranslate:
             elif output_format == "json":
                 return json.dumps(vrs_expression.as_dict())
         except Exception as e:
-            raise ValueError(
+            raise SPDITranslationError(
                 f"An error occurred while translating the SPDI expression '{spdi_expression}' to a VRS expression: {e}"
             )

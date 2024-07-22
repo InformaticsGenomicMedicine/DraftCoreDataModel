@@ -3,6 +3,7 @@ from src.api.seqrepo_api import SeqRepoAPI
 from src.api.ncbi_variation_services_api import VarServAPI
 from typing import Union
 
+from src.exceptions import VRSTranslationError
 
 class VrsTranslate:
     def __init__(self) -> None:
@@ -41,7 +42,7 @@ class VrsTranslate:
                 spdi_expr = self.var_serv_api.validate_spdi(spdi_expr)
             return spdi_expr
         except Exception as e:
-            raise ValueError(
+            raise VRSTranslationError(
                 f"An error occurred while translating the VRS expression '{expression}' to a SPDI expression. {e}"
             )
     #NOTE: This is currently not working because the variation normalizer returned the status code: 422.
@@ -66,7 +67,7 @@ class VrsTranslate:
             elif isinstance(expression, object):
                 return self.var_norm_api.to_hgvs(expression)[0]
         except Exception as e:
-            raise ValueError(
+            raise VRSTranslationError(
                 f"An error occurred while translating the VRS expression '{expression}' to a HGVS expression. {e}"
             )
 
@@ -93,6 +94,6 @@ class VrsTranslate:
             elif isinstance(expression, object):
                 return self.tlr.translate_to(expression, "hgvs")[0]
         except Exception as e:
-            raise ValueError(
+            raise VRSTranslationError(
                 f"An error occurred while translating the VRS expression '{expression}' to a HGVS expression. {e}"
             ) 

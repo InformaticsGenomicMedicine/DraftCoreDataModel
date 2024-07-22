@@ -1,4 +1,3 @@
-
-
-from .variant_to_cvc_translate import CVCTranslator
+from .variant_to_cvc_translate import CVCTranslatorTo
+from .cvc_to_variant_translate import CVCTranslatorFrom
 from .core_variant import CoreVariantClass

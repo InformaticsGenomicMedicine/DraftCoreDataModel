@@ -1,6 +1,22 @@
 import re
 import json
 
+from src.exceptions import (
+    InvalidInputConditionsError,
+    InvalidCoordinateSystemError,
+    InvalidSequenceTypeError,
+    InvalidReferenceAlleleError,
+    InvalidAlternativeAlleleError,
+    InvalidCoordinateTypeError,
+    InvalidCoordinateValueError,
+    StartCoordinateGreaterThanEndError,
+    InvalidAllelicStateError,
+    InvalidGeneSymbolError,
+    InvalidHGNCIdTypeError,
+    InvalidHGNCIdError,
+    InvalidChromosomeError,
+    InvalidGenomeBuildTypeError,
+    InvalidSequenceIdTypeError)
 
 class CoreVariantClass:
 
@@ -194,7 +210,7 @@ class CoreVariantClass:
             ValueError: If the input arguments do not meet the required conditions.
         """
         if not ((chrom and genomeBuild) or sequenceId):
-            raise ValueError(
+            raise InvalidInputConditionsError(
                 "Required to have both (chrom AND genomeBuild) or sequenceId"
             )
 
@@ -218,7 +234,7 @@ class CoreVariantClass:
             "1-based counting",
         )
         if value not in allowedOrigCoordSystem:
-            raise ValueError(
+            raise InvalidCoordinateSystemError(
                 f'Invalid origCoordSystem input: "{origCoordSystem}". Allowed types: {allowedOrigCoordSystem}.'
             )
         return value
@@ -238,7 +254,7 @@ class CoreVariantClass:
         value = seqType.upper().strip()
         allowedSeqType = ("DNA", "RNA", "PROTEIN")
         if value not in allowedSeqType:
-            raise ValueError(
+            raise InvalidSequenceTypeError(
                 f'Invalid seqType input: "{seqType}". Allowed types: {allowedSeqType} (Case Insensitive).'
             )
         return value
@@ -270,13 +286,13 @@ class CoreVariantClass:
             return ""
         if self.seqType in ("DNA", "RNA"):
             if not (re.match(pat[self.seqType], val) or re.match(pat["DIGIT"], val)):
-                raise ValueError(
+                raise InvalidReferenceAlleleError(
                     f'Invalid {refAllele} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]} or {pat["DIGIT"]}).'
                 )
             return val
         elif self.seqType == "PROTEIN":
             if not re.match(pat["PROTEIN"], val):
-                raise ValueError(
+                raise InvalidReferenceAlleleError(
                     f'Invalid {refAllele} input: "{val}". Value need to match regular expression patter: ({pat["PROTEIN"]}).'
                 )
             return val
@@ -307,13 +323,13 @@ class CoreVariantClass:
             return ""
         if self.seqType in ("DNA", "RNA"):
             if not re.match(pat[self.seqType], val):
-                raise ValueError(
+                raise InvalidAlternativeAlleleError(
                     f'Invalid {altAllele} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]}).'
                 )
             return val
         elif self.seqType == "PROTEIN":
             if not re.match(pat["PROTEIN"], val):
-                raise ValueError(
+                raise InvalidAlternativeAlleleError(
                     f'Invalid {altAllele} input: "{val}". Value need to match regular expression patter:({pat[self.seqType]}).'
                 )
             return val
@@ -333,24 +349,24 @@ class CoreVariantClass:
             int: The validated coordinate value input.
         """
         if not isinstance(value, int):
-            raise ValueError(
+            raise InvalidCoordinateTypeError(
                 f'Invalid {attributeName} input: "{value}": is not an integer.'
             )
         if value < 0:
-            raise ValueError(
+            raise InvalidCoordinateValueError(
                 f'Invalid {attributeName} input: "{value}": is not greater then or equal to 0.'
             )
         return value
 
     def _validate_start_coord_end_coord(self):
-        """Validate the start and end coordinate input. Method checks if the start coordinate is grater than the
+        """Validate the start and end coordinate input. Method checks if the start coordinate is greater than the
         end coordinate.
 
         Raises:
             ValueError: If the start coordinate is greater than the end coordinate.
         """
         if self.start > self.end:
-            raise ValueError(
+            raise StartCoordinateGreaterThanEndError(
                 f"The start coordinate value: {self.start} can not be greater than or equal to the end coordinate value {self.end}."
             )
 
@@ -372,7 +388,7 @@ class CoreVariantClass:
         value = allelicState.lower().strip()
         allowed_allelicState = ("heterozygous", "homozygous")
         if value not in allowed_allelicState:
-            raise ValueError(
+            raise InvalidAllelicStateError(
                 f'Invalid allelicState input: "{allelicState}". Allowed types: {allowed_allelicState} (Case Insensitive).'
             )
         return value
@@ -396,7 +412,7 @@ class CoreVariantClass:
         pat = r"^[a-zA-Z0-9]*$"
         value = geneSymbol.strip()
         if not re.match(pat, value):
-            raise ValueError(
+            raise InvalidGeneSymbolError(
                 f'Invalid geneSymbol input: "{geneSymbol}". Allowed type: alphanumeric characters only.'
             )
         return value
@@ -418,10 +434,10 @@ class CoreVariantClass:
         if hgncId is None:
             return hgncId
 
-        if not isinstance(hgncId, int):
+        if not InvalidHGNCIdTypeError(hgncId, int):
             raise ValueError(f'Invalid hgncId input: "{hgncId}": is not an integer.')
         if hgncId < 1:
-            raise ValueError(
+            raise InvalidHGNCIdError(
                 f'Invalid hgncId input: "{hgncId}": is not greater then or equal to 1.'
             )
         return hgncId
@@ -478,13 +494,13 @@ class CoreVariantClass:
         match = re.match(pat, value, re.IGNORECASE)
 
         if not match:
-            raise ValueError(
+            raise InvalidChromosomeError(
                 f'Invalid chrom input: "{chrom}". It does not match the expected format.'
             )
 
         chromValue = match.group(2)
         if chromValue not in allowedChrom:
-            raise ValueError(
+            raise InvalidChromosomeError(
                 f'Invalid chrom input:"{chrom}". Allowed types: {allowedChrom}'
             )
         return chromValue
@@ -505,7 +521,7 @@ class CoreVariantClass:
             return genomeBuild
         value = genomeBuild.strip()
         if not isinstance(value, str):
-            raise ValueError(
+            raise InvalidGenomeBuildTypeError(
                 f'Invalid genomeBuild input: "{genomeBuild}". Allowed types: None or string'
             )
         return value
@@ -525,7 +541,7 @@ class CoreVariantClass:
         if sequenceId is None:
             return sequenceId
         if not isinstance(sequenceId, str):
-            raise ValueError(
+            raise InvalidSequenceIdTypeError(
                 f'Invalid sequenceId input: "{sequenceId}". Allowed types: None or string'
             )
         return sequenceId
