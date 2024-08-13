@@ -1,3 +1,8 @@
+#Database
+class InjectionError(Exception):
+    """Exception raised for error in the database injection process."""
+    pass
+
 # API Class
 
 class SeqRepoDataProxyCreationError(Exception):

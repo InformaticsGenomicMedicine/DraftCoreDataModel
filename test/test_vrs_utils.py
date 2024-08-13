@@ -3,7 +3,7 @@ from src.vrs.vrs_utils import VrsTranslate
 from ga4gh.vrs import models
 from database.db_operation import DbOperation
 
-data = DbOperation('../database/gsdb_v2.db').get_testdata_df()
+data = DbOperation('../database/gsdb_v3.db').get_testdata_df()
 
 
 @pytest.fixture(scope="module")

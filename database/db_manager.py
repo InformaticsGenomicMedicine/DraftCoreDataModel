@@ -1,7 +1,8 @@
 import sqlite3
 import json
+from src.exceptions import InjectionError
 
-class CreateTables:
+class DatabaseManager:
     def __init__(self, db_file="database_name.db"):
         self.db_file = db_file
 
@@ -67,7 +68,8 @@ class CreateTables:
             SELECT p.name, p.version, v.xref, e.value 
             FROM Expression as e  
             LEFT JOIN Profile AS p ON e.profile_id = p.id 
-            LEFT JOIN Variation AS v ON e.variation_id = v.id;
+            LEFT JOIN Variation AS v ON e.variation_id = v.id
+            LIMIT 24;
         """
 
         with self._get_connection() as con:
@@ -195,18 +197,58 @@ class CreateTables:
             except sqlite3.Error as e:
                 raise RuntimeError(f"Error inserting expression data: {str(e)}")
             
-# if __name__ == "__main__":
-#     from db_creation import CreateTables
-#     from database.data.profile_table_data import profile_data
-#     from database.data.variation_table_data import variation_data
-#     from database.data.expression_table_data import expression_data
+    def inject_data(self,variation_data,profile_data,expression_data):
+        """Inject variation, profile, and expression data into the goldstandard database.  
 
-#     db = CreateTables("gsdb_v2.db")
-#     db.create_database()
+        Args:
+            variation_data (list): A dictionary containing `xref` and `description` fields.
+            profile_data (list): A list containing `name`, `version`, and `description` fields.
+            expression_data (list): A list containing `variation_id`, `profile_id`, `description`, and `value` fields.
 
-#     for var_data in variation_data:
-#         db.add_variation(var_data)
-#     for prof_data in profile_data:
-#         db.add_profile(prof_data)
-#     for expr_data in expression_data:
-#         db.add_expression(expr_data)
+        Raises:
+            InjectionError: Raised if data injection is not valid
+        """
+        try:
+            with self._get_connection() as con:
+                con.execute('BEGIN TRANSACTION;')
+
+                for var_data in variation_data:
+                    self.add_variation(var_data)
+                for prof_data in profile_data:
+                    self.add_profile(prof_data)
+                for expr_data in expression_data:
+                    self.add_expression(expr_data)
+
+                con.commit()
+
+        except Exception as e:
+            con.rollback()
+
+            raise InjectionError("Failed to inject data into the database.") from e
+            
+if __name__ == "__main__":
+
+    # from database.data.old_data.profile_mini import profile_data
+    # from database.data.old_data.variation_mini import variation_data
+    # from database.data.old_data.expression_mini import expression_data
+
+    from database.db_manager import DatabaseManager
+
+    from database.data.profile_table_data import profile_data
+    from database.data.variation_table_data import variation_data
+    from database.data.expression_table_data import expression_data
+
+    #Recreate database
+    db = DatabaseManager("gsdb_v3.db")
+    db.create_database()
+
+    for var_data in variation_data:
+        db.add_variation(var_data)
+    for prof_data in profile_data:
+        db.add_profile(prof_data)
+    for expr_data in expression_data:
+        db.add_expression(expr_data)
+
+    # inject data 
+    # db = DatabaseManager("db_mini.db")
+    # db.inject_data(variation_data=variation_data,profile_data=profile_data,expression_data=expression_data)

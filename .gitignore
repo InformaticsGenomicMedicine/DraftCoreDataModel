@@ -162,3 +162,5 @@ cython_debug/
 
 # old jupyter notebooks
 notebooks/old_notebooks/
+# old data
+database/data/old_data
