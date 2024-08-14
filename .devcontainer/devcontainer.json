@@ -22,7 +22,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pipenv install --dev && pipenv lock --requirements > requirements.txt && pipenv shell",
+	"postCreateCommand": "pipenv install --dev && pipenv lock -r > requirements.txt && pipenv shell",
 
 	// Configure tool-specific properties.
 	"customizations": {
