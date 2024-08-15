@@ -1,10 +1,11 @@
 # DraftCoreDataModel
 
-Welcome to the DraftCoreDataModel repository! This repository contains an early version of the CoreDataModel.
+Welcome to the DraftCoreDataModel repository. This repository contains an alpha version of the CoreVariantClass and GoldStandardDatabase. The CoreVariantClass is an internal core class developed to facilitate seamless bidirectional translations between various standards, including FHIR, VRS, SPDI, and HGVS. This repository also includes bidirectional translations between VRS and SPDI, HGVS and VRS, and SPDI and HGVS. These translations are achieved using external packages and APIs acknowledged bellow. The GoldStandardDatabase (GSDB) is a human-curated database designed to provide reliable and accurate data for various applications. This repository is in the early stages of development and may undergo occasional changes as progress is made.
+
 
 ## Interacting with Notebooks
 
-To interact with the notebooks without installing or cloning the repository, you can utilize either Codespace or MyBinder. Instructions on how to use these tools are provided below.
+To interact with the notebooks without installing or cloning the repository, you can utilize Codespaces. Instructions on how to use Codespaces tools are provided below.
 
 If you're new to using Codespace, you may find the following resources helpful:
 - [GitHub Codespaces Documentation](https://docs.github.com/en/codespaces/overview)
@@ -36,6 +37,38 @@ If you're new to using Codespace, you may find the following resources helpful:
 - On the bottom left corner of your browser, click on "CodeSpaces:".
 - Then click "Stop Current Codespace".
 - Once this is done, you have successfully deactivated your Codespace. 
+
+## Running pytest scripts inside of Codespace
+
+To run pytest scripts within a Codespace environment the following steps need to be followed:
+
+### 1. Activate the pipenv virtual environment:
+
+To execute the test scripts, it is essential to ensure that you are operating within the virtual environment configured by Pipenv.
+
+```shell
+# Activate pipenv virtual environment
+pipenv shell
+```
+### 2. Run the pytest command:
+
+Once the virutal environment is activated, navigate to the test directory via the terminal. You can then execute pytest by specifying the particular files you intend to test.
+
+```shell
+# Execute the specified test file 
+pytest file_name.py
+```
+
+
+## Acknowledgments
+This project utilizes several external packages and APIs. The following packages were used:
+
+- **[vrs-python](https://github.com/ga4gh/vrs-python)**: 
+- **[biocommons.seqrepo](https://github.com/biocommons/biocommons.seqrepo)**:
+- **[biocommons.uta](https://github.com/biocommons/uta)**: 
+- **[hgvs](https://github.com/biocommons/hgvs)**: 
+- **[NCBI Variation Services](https://api.ncbi.nlm.nih.gov/variation/v0/)**:
+- **[HL7 FHIR](https://build.fhir.org/branches/cg-im-moldef_work_in_progress_2/moleculardefinition.html)**: 
 
 <!--
 ---

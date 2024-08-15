@@ -20,8 +20,7 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
     // Generating a requirements.txt file was failing. 
-	//"postCreateCommand": "pipenv install --dev && pipenv lock -r > requirements.txt && pipenv shell",
-    //"postCreateCommand": "pipenv install --dev && pipenv shell",
+	//"postCreateCommand": "pipenv install --dev && pipenv lock -r > requirements.txt && pipenv shell", //"postCreateCommand": "pipenv install --dev && pipenv shell",
     "postCreateCommand": "pipenv install --dev && . $(pipenv --venv)/bin/activate",
 	// Configure tool-specific properties.
 	"customizations": {
