@@ -5,38 +5,44 @@ Welcome to the DraftCoreDataModel repository. This repository contains an alpha 
 
 ## Interacting with Notebooks
 
-To interact with the notebooks without installing or cloning the repository, you can utilize Codespaces. Instructions on how to use Codespaces tools are provided below.
+To interact with the DraftCoreDataModel, there's no need to install or clone the repository. Instead, you can use GitHub Codespaces to access and work with the Jupyter Notebooks directly. If you plan to make changes, please fork the repository and submit your suggestions or modifications via an issue and a pull request. Personal accounts receive 120 free hours of Codespaces usage, while Pro accounts receive 180 hours. Be aware that Codespaces has a default timeout period of 30 minutes. For more information about Codespaces, refer to the links provided below. If you're already familiar with Codespaces and Jupyter Notebooks, you can proceed with the instructions below.
 
-If you're new to using Codespace, you may find the following resources helpful:
-- [GitHub Codespaces Documentation](https://docs.github.com/en/codespaces/overview)
+If you're new to using **Codespaces**, the following resources may be helpful:
+- [Codespaces Overview](https://docs.github.com/en/codespaces/overview)
+- [Codespaces Getting Started Documentation](https://docs.github.com/en/codespaces/getting-started/quickstart)
 
-## Access Notebooks (Codespace)
+## Access Jupyter Notebooks in Github Codespace. 
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=issue-dev-sb&repo=670718709&skip_quickstart=true&machine=standardLinux32gb&geo=UsEast)
 
 ## 1. Starting Codespace
-- Start off by clicking the Codespaces badge above to get started.
-- A prompt to build a code space will pop up with certain specifications.
-- Click on Create Codespace.
-- NOTE: This will take a few minutes to build your virtual machine.
+- Begin by clicking the **Codespaces** badge above to get started.
+- A prompt to build a Codespace will appear with certain specifications.
+- Click on **Create Codespace**.
+- **Note:** It may take a few minutes to build your virtual machine.
 
-## 2. Selecting Kernel:
-- Navigate to notebooks and select a notebook you wish to run.
-- Locate the "Select Kernel" option on the top right-hand side of the interface.
-- Click on "Select Kernel".
+## 2. Selecting a Kernel
+- Navigate to the notebooks and select the one you wish to run.
+- Locate the **Select Kernel** option on the top right-hand side of the interface.
+- Click on **Select Kernel**.
 
-## 3. Choosing Python Environment:
-- After clicking "Select Kernel", choose "Python Environment...".
-- From the dropdown menu, select the Pipenv Environment labeled: `DraftCoreDataModel-`.
+## 3. Choosing a Python Environment
+- After clicking **Select Kernel**, choose **Python Environment...**.
+- From the dropdown menu, select the Pipenv environment labeled `DraftCoreDataModel-`.
 
-## 4. Running Notebooks:
-- Once the appropriate kernel is selected, you can proceed to run the cells inside of the Jupyter notebooks.
-
+## 4. Running Notebooks
+- Once the appropriate kernel is selected, you can proceed to run the cells within the Jupyter notebooks.
 
 ## 5. Deactivating Codespace
-- On the bottom left corner of your browser, click on "CodeSpaces:".
-- Then click "Stop Current Codespace".
-- Once this is done, you have successfully deactivated your Codespace. 
+- In the bottom left corner of your browser, click on **Codespaces**.
+- Select **Stop Current Codespace** (this process may take a few minutes).
+- Once completed, your Codespace will be successfully deactivated.
+
+## 6. Reactivating Codespace
+- Navigate back to the GitHub repository.
+- Click the green **Code** button.
+- Select the **Codespaces** tab.
+- Under the "On other branches" section, click the meatball menu (three vertical dots) and choose **Open in Browser**.
 
 ## Running pytest scripts inside of Codespace
 
