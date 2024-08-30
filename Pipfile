@@ -18,7 +18,7 @@ pandas = "*"
 python-dotenv = "*"
 requests = "*"
 fhir-core = "==0.1.0b8"
-fhir = {resources = "==7.1.0"}
+fhir-resources = {git = "https://github.com/SalemBajjali/fhir.resources.git", ref = "sb_dev"}
 
 [dev-packages]
 pytest = "==7.4.4"
