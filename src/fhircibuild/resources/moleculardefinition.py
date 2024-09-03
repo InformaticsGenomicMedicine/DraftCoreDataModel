@@ -1,22 +1,19 @@
 from pydantic import Field 
 import typing
 from fhir.resources import backboneelement, domainresource, fhirtypes # type: ignore
-import resources.fhirtypeextra as fhirtypeextra
+import src.fhircibuild.resources.fhirtypeextra as fhirtypeextra
 from fhir_core.types import CodeType,StringType,BooleanType,IntegerType
 
 
 
 class MolecularDefinition(domainresource.DomainResource):
     """Disclaimer: Any field name ends with ``__ext`` doesn't part of
-    Resource StructureDefinition, instead used to enable Extensibility feature
+    Resource MolecularDefinition, instead used to enable Extensibility feature
     for FHIR Primitive Data Types.
 
-    Representation of a molecular sequence.
+    Representation of a Molecular Definition.
     """
     __resource_type__ = "MolecularDefinition"
-
-    class Config:
-        arbitrary_types_allowed = True
 
     identifier: typing.List[fhirtypes.IdentifierType] = Field(  # type: ignore
         None,
@@ -103,9 +100,6 @@ class MolecularDefinitionLocation(backboneelement.BackboneElement):
 
     __resource_type__ = "MolecularDefinitionLocation"
 
-    class Config:
-        arbitrary_types_allowed = True
-
     sequenceLocation: fhirtypeextra.MolecularDefinitionLocationSequenceLocationType = Field(  # type: ignore
         None,
         alias="sequenceLocation",
@@ -144,8 +138,6 @@ class MolecularDefinitionLocationSequenceLocation(backboneelement.BackboneElemen
 
     __resource_type__ = "MolecularDefinitionLocationSequenceLocation"
 
-    class Config:
-        arbitrary_types_allowed = True
         
     sequenceContext: fhirtypes.ReferenceType= Field(  # type: ignore
         ...,
@@ -200,9 +192,6 @@ class MolecularDefinitionLocationSequenceLocation(backboneelement.BackboneElemen
 class MolecularDefinitionLocationSequenceLocationCoordinateInterval(backboneelement.BackboneElement):
 
     __resource_type__ = "MolecularDefinitionLocationSequenceLocationCoordinateInterval"
-
-    class Config:
-        arbitrary_types_allowed = True
 
     numberingSystem: fhirtypes.CodeableConceptType = Field(  # type: ignore
         None,
@@ -282,59 +271,36 @@ class MolecularDefinitionLocationSequenceLocationCoordinateInterval(backboneelem
             "endQuantity",
             "endRange",
         ]
-    # @root_validator(pre=True, allow_reuse=True)
-    # def validate_one_of_many_4432(
-    #     cls, values: typing.Dict[str, typing.Any]
-    # ) -> typing.Dict[str, typing.Any]:
-    #     """https://www.hl7.org/fhir/formats.html#choice
-    #     A few elements have a choice of more than one data type for their content.
-    #     All such elements have a name that takes the form nnn[x].
-    #     The "nnn" part of the name is constant, and the "[x]" is replaced with
-    #     the title-cased name of the type that is actually used.
-    #     The table view shows each of these names explicitly.
+    
+    def get_one_of_many_fields(self) -> typing.Dict[str, typing.List[str]]:
+        """https://www.hl7.org/fhir/formats.html#choice
+        A few elements have a choice of more than one data type for their content.
+        All such elements have a name that takes the form nnn[x].
+        The "nnn" part of the name is constant, and the "[x]" is replaced with
+        the title-cased name of the type that is actually used.
+        The table view shows each of these names explicitly.
 
-    #     Elements that have a choice of data type cannot repeat - they must have a
-    #     maximum cardinality of 1. When constructing an instance of an element with a
-    #     choice of types, the authoring system must create a single element with a
-    #     data type chosen from among the list of permitted data types.
-    #     """
-    #     one_of_many_fields = {
-    #         "start": [
-    #             "startQuantity",
-    #             "startRange",
-    #         ],
-    #         "end": [
-    #             "endQuantity",
-    #             "endRange"
-    #         ]
-    #     }
-    #     for prefix, fields in one_of_many_fields.items():
-    #         assert cls.__fields__[fields[0]].field_info.extra["one_of_many"] == prefix
-    #         required = (
-    #             cls.__fields__[fields[0]].field_info.extra["one_of_many_required"]
-    #             is True
-    #         )
-    #         found = False
-    #         for field in fields:
-    #             if field in values and values[field] is not None:
-    #                 if found is True:
-    #                     raise ValueError(
-    #                         "Any of one field value is expected from "
-    #                         f"this list {fields}, but got multiple!"
-    #                     )
-    #                 else:
-    #                     found = True
-    #         if required is True and found is False:
-    #             raise ValueError(f"Expect any of field value from this list {fields}.")
-
-    #     return values
+        Elements that have a choice of data type cannot repeat - they must have a
+        maximum cardinality of 1. When constructing an instance of an element with a
+        choice of types, the authoring system must create a single element with a
+        data type chosen from among the list of permitted data types.
+        """
+        one_of_many_fields = {
+            "start": [
+                "startQuantity",
+                "startRange",
+            ],
+            "end": [
+                "endQuantity",
+                "endRange"
+            ]
+        }
+        return one_of_many_fields
     
 class MolecularDefinitionLocationFeatureLocation(backboneelement.BackboneElement):
 
     __resource_type__ = "MolecularDefinitionLocationFeatureLocation"
 
-    class Config:
-        arbitrary_types_allowed = True
 
     geneId: fhirtypes.CodeableConceptType =  Field(  #type: ignore
         None,
@@ -363,8 +329,6 @@ class MolecularDefinitionRepresentation(backboneelement.BackboneElement):
 
     __resource_type__ = "MolecularDefinitionRepresentation"
 
-    class Config:
-        arbitrary_types_allowed = True
     
     focus: fhirtypes.CodeableConceptType = Field(  # type: ignore
         None,
@@ -470,8 +434,6 @@ class MolecularDefinitionRepresentationLiteral(backboneelement.BackboneElement):
 
     __resource_type__ = "MolecularDefinitionRepresentationLiteral"
 
-    class Config:
-        arbitrary_types_allowed = True
 
     encoding: fhirtypes.CodeableConceptType = Field(  #type: ignore
         None,
@@ -493,7 +455,6 @@ class MolecularDefinitionRepresentationLiteral(backboneelement.BackboneElement):
         },
     )
 
-
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
@@ -512,8 +473,6 @@ class MolecularDefinitionRepresentationExtracted(backboneelement.BackboneElement
 
     __resource_type__ = "MolecularDefinitionRepresentationExtracted"
 
-    class Config:
-        arbitrary_types_allowed = True
 
     startingMolecule: fhirtypes.ReferenceType = Field(  #type: ignore
         ...,
@@ -590,9 +549,6 @@ class MolecularDefinitionRepresentationRepeated(backboneelement.BackboneElement)
 
     __resource_type__ = "MolecularDefinitionRepresentationRepeated"
 
-    class Config:
-        arbitrary_types_allowed = True
-
     sequenceMotif: typing.List[fhirtypes.ReferenceType] = Field(  #type: ignore
         ...,
         alias="sequenceMotif    ",
@@ -633,8 +589,6 @@ class MolecularDefinitionRepresentationConcatenated(backboneelement.BackboneElem
 
     __resource_type__ = "MolecularDefinitionRepresentationConcatenated"
 
-    class Config:
-        arbitrary_types_allowed = True
     
     sequenceElement: typing.List[fhirtypeextra.MolecularDefinitionRepresentationConcatenatedSequenceElementType] = Field(  #type: ignore
         None,
@@ -663,8 +617,6 @@ class MolecularDefinitionRepresentationConcatenatedSequenceElement(backboneeleme
 
     __resource_type__ = "MolecularDefinitionRepresentationConcatenatedSequenceElement"
 
-    class Config:
-        arbitrary_types_allowed = True
 
     sequence: fhirtypes.ReferenceType = Field(  #type: ignore
         ...,
@@ -706,9 +658,6 @@ class MolecularDefinitionRepresentationRelative(backboneelement.BackboneElement)
 
     __resource_type__ = "MolecularDefinitionRepresentationRelative"
 
-    class Config:
-        arbitrary_types_allowed = True
-    
     startingMolecule: fhirtypes.ReferenceType = Field(  #type: ignore
         ...,
         alias="startingMolecule",
@@ -749,8 +698,6 @@ class MolecularDefinitionRepresentationRelativeEdit(backboneelement.BackboneElem
 
     __resource_type__ = "MolecularDefinitionRepresentationRelativeEdit"
 
-    class Config:
-        arbitrary_types_allowed = True
         
     editOrder: IntegerType = Field(  #type: ignore
         None,
