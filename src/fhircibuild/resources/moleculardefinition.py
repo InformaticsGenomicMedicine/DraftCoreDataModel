@@ -1,6 +1,6 @@
-from pydantic import Field 
 import typing
-from fhir.resources import backboneelement, domainresource, fhirtypes # type: ignore
+from pydantic import Field 
+from fhir.resources import backboneelement, domainresource, fhirtypes 
 import src.fhircibuild.resources.fhirtypeextra as fhirtypeextra
 from fhir_core.types import CodeType,StringType,BooleanType,IntegerType
 
@@ -8,18 +8,21 @@ from fhir_core.types import CodeType,StringType,BooleanType,IntegerType
 
 class MolecularDefinition(domainresource.DomainResource):
     """Disclaimer: Any field name ends with ``__ext`` doesn't part of
-    Resource MolecularDefinition, instead used to enable Extensibility feature
+    Resource StructureDefinition, instead used to enable Extensibility feature
     for FHIR Primitive Data Types.
 
-    Representation of a Molecular Definition.
+    Representation of a molecular definition.
     """
+
     __resource_type__ = "MolecularDefinition"
 
     identifier: typing.List[fhirtypes.IdentifierType] = Field(  # type: ignore
         None,
         alias="identifier",
-        title="Unique ID for this particular sequence",
-        description="A unique identifier for this particular sequence instance.",
+        title="Unique ID for this particular resource",
+        description="A unique identifier for this particular resource instance.",
+        # The json_schema_extra dictionary includes an element_property flag set to False,
+        # # indicating that this field is likely not part of the core FHIR element's structure and exists more for additional metadata.
         json_schema_extra={
             "element_property": True,
         },
@@ -29,7 +32,7 @@ class MolecularDefinition(domainresource.DomainResource):
         None,
         alias="type",
         title="aa | dna | rna",
-        description="Amino Acid Sequence/ DNA Sequence / RNA Sequence.",
+        description="The type of the Molecular Definition (Amino Acid, DNA, RNA).",
         json_schema_extra={
             "element_property": True,
             # note: Enum values can be used in validation,
@@ -51,10 +54,10 @@ class MolecularDefinition(domainresource.DomainResource):
         },
     )
 
-    memberState: fhirtypes.ReferenceType = Field(  # type: ignore
+    memberState: typing.List[fhirtypes.ReferenceType] = Field(  # type: ignore
         None,
         alias="memberState",
-        title="A member or part of this molecule.",
+        title="Member",
         description="A member or part of this molecule.",
         json_schema_extra={
             "element_property": True,
@@ -66,7 +69,7 @@ class MolecularDefinition(domainresource.DomainResource):
     representation: typing.List[fhirtypeextra.MolecularDefinitionRepresentationType] = Field(  # type: ignore
         None,
         alias="representation",
-        title="...",
+        title="Representation",
         description="The representation of this molecular definition, e.g., as a literal or repeated elements.",
         json_schema_extra={
             "element_property": True,
@@ -76,7 +79,7 @@ class MolecularDefinition(domainresource.DomainResource):
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequencePlus`` according specification,
+        ``MolecularDefinition`` according specification,
         with preserving original sequence order.
         """
         return [
@@ -96,15 +99,20 @@ class MolecularDefinition(domainresource.DomainResource):
         ]
 
 class MolecularDefinitionLocation(backboneelement.BackboneElement):
+    """Disclaimer: Any field name ends with ``__ext`` doesn't part of
+    Resource StructureDefinition, instead used to enable Extensibility feature
+    for FHIR Primitive Data Types.
 
+    The molecular location of this molecule.
+    """
 
     __resource_type__ = "MolecularDefinitionLocation"
 
     sequenceLocation: fhirtypeextra.MolecularDefinitionLocationSequenceLocationType = Field(  # type: ignore
         None,
         alias="sequenceLocation",
-        title="...",
-        description=None,
+        title="Location of this molecule in context of a sequence",
+        description="The Location of this molecule in context of a sequence.",
         json_schema_extra={
             "element_property": True,
         },
@@ -113,8 +121,8 @@ class MolecularDefinitionLocation(backboneelement.BackboneElement):
     featureLocation: typing.List[fhirtypeextra.MolecularDefinitionLocationFeatureLocationType] = Field(  # type: ignore
         None,
         alias="featureLocation",
-        title="...",
-        description=None,
+        title="Location in context of a feature",
+        description="The location of this molecule in context of a feature.",
         json_schema_extra={
             "element_property": True,
         },
@@ -123,7 +131,7 @@ class MolecularDefinitionLocation(backboneelement.BackboneElement):
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequenceRelativePlus`` according specification,
+        ``MolecularDefinitionLocation`` according specification,
         with preserving original sequence order.
         """
         return [
@@ -135,27 +143,32 @@ class MolecularDefinitionLocation(backboneelement.BackboneElement):
         ]
 
 class MolecularDefinitionLocationSequenceLocation(backboneelement.BackboneElement):
+    """Disclaimer: Any field name ends with ``__ext`` doesn't part of
+    Resource StructureDefinition, instead used to enable Extensibility feature
+    for FHIR Primitive Data Types.
+
+    The Location of this molecule in context of a sequence.
+    """
 
     __resource_type__ = "MolecularDefinitionLocationSequenceLocation"
 
-        
-    sequenceContext: fhirtypes.ReferenceType= Field(  # type: ignore
+    sequenceContext: fhirtypes.ReferenceType = Field(  # type: ignore
         ...,
         alias="sequenceContext",
-        title="...",
-        description=None,
+        title="Reference sequence",
+        description="The reference Sequence that contains this location.",
         json_schema_extra={
             "element_property": True,
             # note: Listed Resource Type(s) should be allowed as Reference.
-            "enum_reference_types": ["Resource"],
+            "enum_reference_types": ["MolecularDefinition"],
         },
     )
 
     coordinateInterval: typing.List[fhirtypeextra.MolecularDefinitionLocationSequenceLocationCoordinateIntervalType] = Field( # type: ignore
         None,
         alias="coordinateInterval",
-        title="...",
-        description=None,
+        title="Coordinate Interval for this location",
+        description="The coordinate interval for this location.",
         json_schema_extra={
             "element_property": True,
         },
@@ -164,8 +177,8 @@ class MolecularDefinitionLocationSequenceLocation(backboneelement.BackboneElemen
     strand: fhirtypes.CodeableConceptType = Field(  # type: ignore
         None,
         alias="strand",
-        title="...",
-        description=None,
+        title="Forward or Reverse",
+        description="The identification of the strand direction, i.e, forward vs reverse strand.",
         json_schema_extra={
             "element_property": True,
             # note: Enum values can be used in validation,
@@ -177,7 +190,7 @@ class MolecularDefinitionLocationSequenceLocation(backboneelement.BackboneElemen
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequenceLiteralPlus`` according specification,
+        ``MolecularDefinitionLocationSequenceLocation`` according specification,
         with preserving original sequence order.
         """
         return [
@@ -190,14 +203,20 @@ class MolecularDefinitionLocationSequenceLocation(backboneelement.BackboneElemen
         ]
 
 class MolecularDefinitionLocationSequenceLocationCoordinateInterval(backboneelement.BackboneElement):
+    """Disclaimer: Any field name ends with ``__ext`` doesn't part of
+    Resource StructureDefinition, instead used to enable Extensibility feature
+    for FHIR Primitive Data Types.
+
+    The coordinate interval for this location.
+    """
 
     __resource_type__ = "MolecularDefinitionLocationSequenceLocationCoordinateInterval"
 
     numberingSystem: fhirtypes.CodeableConceptType = Field(  # type: ignore
         None,
         alias= "numberingSystem",
-        title="...",
-        description=None,
+        title="Coordinate System",
+        description="The coordinate system of this interval.",
         json_schema_extra={
             "element_property": True,
         },
@@ -206,8 +225,8 @@ class MolecularDefinitionLocationSequenceLocationCoordinateInterval(backboneelem
     startQuantity: fhirtypes.QuantityType = Field(  # type: ignore
         None,
         alias="startQuantity",
-        title="...",
-        description=None,
+        title="Start",
+        description="The start of this interval.",
         json_schema_extra={
             "element_property": True,
             # Choice of Data Types. i.e sequence[x]
@@ -219,8 +238,8 @@ class MolecularDefinitionLocationSequenceLocationCoordinateInterval(backboneelem
     startRange: fhirtypes.RangeType = Field(  # type: ignore
         None,
         alias="startRange",
-        title="...",
-        description=None,
+        title="Start",
+        description="The start of this interval.",
         json_schema_extra={
             "element_property": True,
             # Choice of Data Types. i.e sequence[x]
@@ -232,8 +251,8 @@ class MolecularDefinitionLocationSequenceLocationCoordinateInterval(backboneelem
     endQuantity: fhirtypes.QuantityType = Field(  # type: ignore
         None,
         alias="endQuantity",
-        title="...",
-        description=None,
+        title="End",
+        description="The end of this interval.",
         json_schema_extra={
             "element_property": True,
             # Choice of Data Types. i.e sequence[x]
@@ -245,8 +264,8 @@ class MolecularDefinitionLocationSequenceLocationCoordinateInterval(backboneelem
     endRange: fhirtypes.RangeType = Field(  # type: ignore
         None,
         alias="endRange",
-        title="...",
-        description=None,
+        title="End",
+        description="The end of this interval.",
         json_schema_extra={
             "element_property": True,
             # Choice of Data Types. i.e sequence[x]
@@ -255,10 +274,11 @@ class MolecularDefinitionLocationSequenceLocationCoordinateInterval(backboneelem
         },
         
     )
+
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequenceLiteralPlus`` according specification,
+        ``MolecularDefinitionLocationSequenceLocationCoordinateInterval`` according specification,
         with preserving original sequence order.
         """
         return [
@@ -298,15 +318,20 @@ class MolecularDefinitionLocationSequenceLocationCoordinateInterval(backboneelem
         return one_of_many_fields
     
 class MolecularDefinitionLocationFeatureLocation(backboneelement.BackboneElement):
+    """Disclaimer: Any field name ends with ``__ext`` doesn't part of
+    Resource StructureDefinition, instead used to enable Extensibility feature
+    for FHIR Primitive Data Types.
+
+    The location of this molecule in context of a feature.
+    """
 
     __resource_type__ = "MolecularDefinitionLocationFeatureLocation"
-
 
     geneId: fhirtypes.CodeableConceptType =  Field(  #type: ignore
         None,
         alias="geneId",
-        title="...",
-        description=(None),
+        title="Gene Id",
+        description=("The gene Id where this molecule occurs."),
         json_schema_extra={
             "element_property": True,
         },
@@ -315,7 +340,7 @@ class MolecularDefinitionLocationFeatureLocation(backboneelement.BackboneElement
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequenceLiteralPlus`` according specification,
+        ``MolecularDefinitionLocationFeatureLocation`` according specification,
         with preserving original sequence order.
         """
         return [
@@ -326,85 +351,90 @@ class MolecularDefinitionLocationFeatureLocation(backboneelement.BackboneElement
         ]
 
 class MolecularDefinitionRepresentation(backboneelement.BackboneElement):
+    """Disclaimer: Any field name ends with ``__ext`` doesn't part of
+    Resource StructureDefinition, instead used to enable Extensibility feature
+    for FHIR Primitive Data Types.
+
+    The representation of this molecular definition, e.g., as a literal or repeated elements.
+    """
 
     __resource_type__ = "MolecularDefinitionRepresentation"
 
-    
     focus: fhirtypes.CodeableConceptType = Field(  # type: ignore
         None,
         alias="focus",
-        title="...",
-        description=(None),
+        title="The focus of the representation",
+        description=("A representation focus, e.g., reference or alternative state."),
         json_schema_extra={
             "element_property": True,
         },
     )
 
-    code: fhirtypes.CodeableConceptType = Field(  # type: ignore
+    code: typing.List[fhirtypes.CodeableConceptType] = Field(  # type: ignore
         None,
         alias="code",
-        title="...",
-        description=(None),
+        title="A code of the representation",
+        description=('A representation code.'),
         json_schema_extra={
             "element_property": True,
         },
     )
-    # getting rid of list:typing.List[]
+
     literal: fhirtypeextra.MolecularDefinitionRepresentationLiteralType= Field(  # type: ignore
         None,
         alias="literal",
-        title="...",
-        description=None,
+        title="A literal representation",
+        description=('A literal representation.'),
         json_schema_extra={
             "element_property": True,
         },
     )
-    # getting rid of list:typing.List[]
+
     resolvable: fhirtypes.AttachmentType= Field(  # type: ignore
         None,
         alias="resolvable",
-        title="...",
-        description=(None),
+        title="A resolvable representation of a molecule that optionally contains formatting in addition to the specification of the primary sequence itself",
+        description=("A resolvable representation of a molecule that optionally contains formatting in addition to the specification of the primary sequence itself. The sequence may be provided inline as an attached document or through a resolvable URI."),
         json_schema_extra={
             "element_property": True,
         },
     )
-    # getting rid of list:typing.List[]
+
     extracted: fhirtypeextra.MolecularDefinitionRepresentationExtractedType = Field(  # type: ignore
         None,
         alias="extracted",
-        title="...",
-        description=None,
+        title="A Molecular Sequence that is represented as an extracted portion of a different Molecular Sequence",
+        description=('A Molecular Sequence that is represented as an extracted portion of a different Molecular Sequence.'),
         json_schema_extra={
             "element_property": True,
         },
     )
-    # getting rid of list:typing.List[]
+
     repeated: fhirtypeextra.MolecularDefinitionRepresentationRepeatedType = Field(  # type: ignore
         None,
         alias="repeated",
-        title="...",
-        description=None,
+        title="A Molecular Sequence that is represented as a repeated sequence motif",
+        description=("A Molecular Sequence that is represented as a repeated sequence motif."),
         json_schema_extra={
             "element_property": True,
         },
     )
-    # getting rid of list:typing.List[]
+
     concatenated: fhirtypeextra.MolecularDefinitionRepresentationConcatenatedType = Field(  # type: ignore
         None,
         alias="concatenated",
-        title="...",
-        description=None,
+        title="A Molecular Sequence that is represented as an ordered concatenation of two or more Molecular Sequences",
+        description=("A Molecular Sequence that is represented as an ordered concatenation of two or more Molecular Sequences."),
         json_schema_extra={
             "element_property": True,
         },
     )
-    # getting rid of list:typing.List[]
+
     relative: fhirtypeextra.MolecularDefinitionRepresentationRelativeType = Field(  # type: ignore
         None,
         alias="relative",
-        title="...",
-        description=None,
+        title="A Molecular Definition that is represented as an ordered series of edits on a specified starting sequence",
+        description=("A Molecular Definition that is represented as an ordered series of edits on a specified starting sequence."),
         json_schema_extra={
             "element_property": True,
         },
@@ -413,7 +443,7 @@ class MolecularDefinitionRepresentation(backboneelement.BackboneElement):
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequenceLiteralPlus`` according specification,
+        ``MolecularDefinitionRepresentation`` according specification,
         with preserving original sequence order.
         """
         return [
@@ -431,15 +461,20 @@ class MolecularDefinitionRepresentation(backboneelement.BackboneElement):
         ]
 
 class MolecularDefinitionRepresentationLiteral(backboneelement.BackboneElement):
+    """Disclaimer: Any field name ends with ``__ext`` doesn't part of
+    Resource StructureDefinition, instead used to enable Extensibility feature
+    for FHIR Primitive Data Types.
+
+    A literal representation.
+    """
 
     __resource_type__ = "MolecularDefinitionRepresentationLiteral"
-
 
     encoding: fhirtypes.CodeableConceptType = Field(  #type: ignore
         None,
         alias="encoding",
-        title="...",
-        description=(None),
+        title="The encoding used for the expression of the primary sequence",
+        description=("The encoding used for the expression of the primary sequence. This defines the characters that may be used in the primary sequence and it permits the explicit inclusion/exclusion of IUPAC ambiguity codes."),
         json_schema_extra={
             "element_property": True,
         },
@@ -448,8 +483,8 @@ class MolecularDefinitionRepresentationLiteral(backboneelement.BackboneElement):
     value: StringType = Field(  #type: ignore
         ...,
         alias="value",
-        title="...",
-        description=(None),
+        title="The primary (linear) sequence, expressed as a literal string",
+        description=("The primary (linear) sequence, expressed as a literal string."),
         json_schema_extra={
             "element_property": True,
         },
@@ -458,7 +493,7 @@ class MolecularDefinitionRepresentationLiteral(backboneelement.BackboneElement):
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequenceLiteralPlus`` according specification,
+        ``MolecularDefinitionRepresentationLiteral`` according specification,
         with preserving original sequence order.
         """
         return [
@@ -470,15 +505,20 @@ class MolecularDefinitionRepresentationLiteral(backboneelement.BackboneElement):
         ]
 
 class MolecularDefinitionRepresentationExtracted(backboneelement.BackboneElement):
+    """Disclaimer: Any field name ends with ``__ext`` doesn't part of
+    Resource StructureDefinition, instead used to enable Extensibility feature
+    for FHIR Primitive Data Types.
+
+    A Molecular Sequence that is represented as an extracted portion of a different Molecular Sequence.
+    """
 
     __resource_type__ = "MolecularDefinitionRepresentationExtracted"
-
 
     startingMolecule: fhirtypes.ReferenceType = Field(  #type: ignore
         ...,
         alias="startingMolecule",
-        title="...",
-        description=(None),
+        title="The Molecular Sequence that serves as the parent sequence, from which the intended sequence will be extracted",
+        description=("The Molecular Sequence that serves as the parent sequence, from which the intended sequence will be extracted."),
         json_schema_extra={
             "element_property": True,
             # note: Listed Resource Type(s) should be allowed as Reference.
@@ -489,8 +529,8 @@ class MolecularDefinitionRepresentationExtracted(backboneelement.BackboneElement
     start: IntegerType = Field(  #type: ignore
         ...,
         alias="start",
-        title="...",
-        description=(None),
+        title="The start coordinate (on the parent sequence) of the interval that defines the subsequence to be extracted",
+        description=("The start coordinate (on the parent sequence) of the interval that defines the subsequence to be extracted."),
         json_schema_extra={
             "element_property": True
         }
@@ -500,8 +540,8 @@ class MolecularDefinitionRepresentationExtracted(backboneelement.BackboneElement
     end: IntegerType = Field(  #type: ignore
         ...,
         alias="end",
-        title="...",
-        description=(None),
+        title="The end coordinate (on the parent sequence) of the interval that defines the subsequence to be extracted",
+        description=("The end coordinate (on the parent sequence) of the interval that defines the subsequence to be extracted."),
         json_schema_extra={
             "element_property": True
         }
@@ -510,8 +550,8 @@ class MolecularDefinitionRepresentationExtracted(backboneelement.BackboneElement
     coordinateSystem: fhirtypes.CodeableConceptType = Field(  #type: ignore
         ...,
         alias="coordinateSystem",
-        title="...",
-        description=(None),
+        title="The coordinate system used to define the interval that defines the subsequence to be extracted. Coordinate systems are usually 0- or 1-based",
+        description=("The coordinate system used to define the interval that defines the subsequence to be extracted. Coordinate systems are usually 0- or 1-based."),
         json_schema_extra={
             "element_property": True
         }
@@ -520,18 +560,17 @@ class MolecularDefinitionRepresentationExtracted(backboneelement.BackboneElement
     reverseComplement: BooleanType = Field(  #type: ignore
         None,
         alias="reverseComplement",
-        title="...",
-        description=(None),
+        title="A flag that indicates whether the extracted sequence should be reverse complemented",
+        description=("A flag that indicates whether the extracted sequence should be reverse complemented."),
         json_schema_extra={
             "element_property": True
         }
     )
 
-
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequenceLiteralPlus`` according specification,
+        ``MolecularDefinitionRepresentationExtracted`` according specification,
         with preserving original sequence order.
         """
         return [
@@ -546,14 +585,20 @@ class MolecularDefinitionRepresentationExtracted(backboneelement.BackboneElement
         ]
 
 class MolecularDefinitionRepresentationRepeated(backboneelement.BackboneElement):
+    """Disclaimer: Any field name ends with ``__ext`` doesn't part of
+    Resource StructureDefinition, instead used to enable Extensibility feature
+    for FHIR Primitive Data Types.
+
+    A Molecular Sequence that is represented as a repeated sequence motif.
+    """
 
     __resource_type__ = "MolecularDefinitionRepresentationRepeated"
 
-    sequenceMotif: typing.List[fhirtypes.ReferenceType] = Field(  #type: ignore
+    sequenceMotif: fhirtypes.ReferenceType = Field(  #type: ignore
         ...,
-        alias="sequenceMotif    ",
-        title="...",
-        description=(None),
+        alias="sequenceMotif",
+        title="The sequence that defines the repeated motif",
+        description=("The sequence that defines the repeated motif."),
         json_schema_extra={
             "element_property": True,
             # note: Listed Resource Type(s) should be allowed as Reference.
@@ -564,8 +609,8 @@ class MolecularDefinitionRepresentationRepeated(backboneelement.BackboneElement)
     copyCount: IntegerType = Field(  #type: ignore
         ...,
         alias="copyCount",
-        title="...",
-        description=(None),
+        title="The number of repeats (copies) of the sequence motif",
+        description=("The number of repeats (copies) of the sequence motif."),
         json_schema_extra={
             "element_property": True,
         }
@@ -574,7 +619,7 @@ class MolecularDefinitionRepresentationRepeated(backboneelement.BackboneElement)
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequenceLiteralPlus`` according specification,
+        ``MolecularDefinitionRepresentationRepeated`` according specification,
         with preserving original sequence order.
         """
         return [
@@ -586,15 +631,20 @@ class MolecularDefinitionRepresentationRepeated(backboneelement.BackboneElement)
         ]
 
 class MolecularDefinitionRepresentationConcatenated(backboneelement.BackboneElement):
+    """Disclaimer: Any field name ends with ``__ext`` doesn't part of
+    Resource StructureDefinition, instead used to enable Extensibility feature
+    for FHIR Primitive Data Types.
+
+    A Molecular Sequence that is represented as an ordered concatenation of two or more Molecular Sequences.
+    """
 
     __resource_type__ = "MolecularDefinitionRepresentationConcatenated"
 
-    
     sequenceElement: typing.List[fhirtypeextra.MolecularDefinitionRepresentationConcatenatedSequenceElementType] = Field(  #type: ignore
         None,
         alias="sequenceElement",
-        title="...",
-        description=None,
+        title="One element of a concatenated Molecular Sequence",
+        description=("One element of a concatenated Molecular Sequence."),
         json_schema_extra={
             "element_property": True,
         },
@@ -603,7 +653,7 @@ class MolecularDefinitionRepresentationConcatenated(backboneelement.BackboneElem
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequenceLiteralPlus`` according specification,
+        ``MolecularDefinitionRepresentationConcatenated`` according specification,
         with preserving original sequence order.
         """
         return [
@@ -614,15 +664,20 @@ class MolecularDefinitionRepresentationConcatenated(backboneelement.BackboneElem
         ]
 
 class MolecularDefinitionRepresentationConcatenatedSequenceElement(backboneelement.BackboneElement):
+    """Disclaimer: Any field name ends with ``__ext`` doesn't part of
+    Resource StructureDefinition, instead used to enable Extensibility feature
+    for FHIR Primitive Data Types.
+
+    One element of a concatenated Molecular Sequence.
+    """
 
     __resource_type__ = "MolecularDefinitionRepresentationConcatenatedSequenceElement"
-
 
     sequence: fhirtypes.ReferenceType = Field(  #type: ignore
         ...,
         alias="sequence",
-        title="...",
-        description=None,
+        title="The Molecular Sequence corresponding to this element",
+        description=("The Molecular Sequence corresponding to this element."),
         json_schema_extra={
             "element_property": True,
             # note: Listed Resource Type(s) should be allowed as Reference.
@@ -633,8 +688,8 @@ class MolecularDefinitionRepresentationConcatenatedSequenceElement(backboneeleme
     ordinalIndex: IntegerType = Field(  #type: ignore
         ...,
         alias="ordinalIndex",
-        title="...",
-        description=None,
+        title="The ordinal position of this sequence element within the concatenated Molecular Sequence",
+        description=("The ordinal position of this sequence element within the concatenated Molecular Sequence."),
         json_schema_extra={
             "element_property": True,
         },
@@ -643,7 +698,7 @@ class MolecularDefinitionRepresentationConcatenatedSequenceElement(backboneeleme
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequenceLiteralPlus`` according specification,
+        ``MolecularDefinitionRepresentationConcatenatedSequenceElement`` according specification,
         with preserving original sequence order.
         """
         return [
@@ -655,14 +710,20 @@ class MolecularDefinitionRepresentationConcatenatedSequenceElement(backboneeleme
         ]
 
 class MolecularDefinitionRepresentationRelative(backboneelement.BackboneElement):
+    """Disclaimer: Any field name ends with ``__ext`` doesn't part of
+    Resource StructureDefinition, instead used to enable Extensibility feature
+    for FHIR Primitive Data Types.
+    
+    A Molecular Definition that is represented as an ordered series of edits on a specified starting sequence.
+    """
 
     __resource_type__ = "MolecularDefinitionRepresentationRelative"
 
     startingMolecule: fhirtypes.ReferenceType = Field(  #type: ignore
         ...,
         alias="startingMolecule",
-        title="...",
-        description=None,
+        title="The Molecular Sequence that serves as the starting sequence, on which edits will be applied",
+        description=("The Molecular Sequence that serves as the starting sequence, on which edits will be applied."),
         json_schema_extra={
             "element_property": True,
             # note: Listed Resource Type(s) should be allowed as Reference.
@@ -673,8 +734,8 @@ class MolecularDefinitionRepresentationRelative(backboneelement.BackboneElement)
     edit: typing.List[fhirtypeextra.MolecularDefinitionRepresentationRelativeEditType] = Field(  #type: ignore
         None,
         alias="edit",
-        title="...",
-        description=None,
+        title="An edit (change) made to a sequence",
+        description=("An edit (change) made to a sequence."),
         json_schema_extra={
             "element_property": True,
         },
@@ -683,7 +744,7 @@ class MolecularDefinitionRepresentationRelative(backboneelement.BackboneElement)
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequenceLiteralPlus`` according specification,
+        ``MolecularDefinitionRepresentationRelative`` according specification,
         with preserving original sequence order.
         """
         return [
@@ -695,15 +756,20 @@ class MolecularDefinitionRepresentationRelative(backboneelement.BackboneElement)
         ]
 
 class MolecularDefinitionRepresentationRelativeEdit(backboneelement.BackboneElement):
+    """Disclaimer: Any field name ends with ``__ext`` doesn't part of
+    Resource StructureDefinition, instead used to enable Extensibility feature
+    for FHIR Primitive Data Types.
+    
+    An edit (change) made to a sequence.
+    """
 
     __resource_type__ = "MolecularDefinitionRepresentationRelativeEdit"
 
-        
     editOrder: IntegerType = Field(  #type: ignore
         None,
         alias="editOrder",
-        title="...",
-        description=None,
+        title="The order of this edit, relative to other edits on the starting sequence",
+        description=("The order of this edit, relative to other edits on the starting sequence."),
         json_schema_extra={
             "element_property": True,
         },
@@ -712,8 +778,8 @@ class MolecularDefinitionRepresentationRelativeEdit(backboneelement.BackboneElem
     coordinateSystem: fhirtypes.CodeableConceptType = Field(  #type: ignore
         ...,
         alias="coordinateSystem",
-        title="...",
-        description=None,
+        title="The coordinate system used to define the edited intervals on the starting sequence. Coordinate systems are usually 0- or 1-based",
+        description=("The coordinate system used to define the edited intervals on the starting sequence. Coordinate systems are usually 0- or 1-based."),
         json_schema_extra={
             "element_property": True,
         },
@@ -722,8 +788,8 @@ class MolecularDefinitionRepresentationRelativeEdit(backboneelement.BackboneElem
     start: IntegerType = Field(  #type: ignore
         ...,
         alias="start",
-        title="...",
-        description=None,
+        title="The start coordinate of the interval that will be edited",
+        description=("The start coordinate of the interval that will be edited."),
         json_schema_extra={
             "element_property": True,
         },
@@ -732,8 +798,8 @@ class MolecularDefinitionRepresentationRelativeEdit(backboneelement.BackboneElem
     end: IntegerType = Field(  #type: ignore
         ...,
         alias="end",
-        title="...",
-        description=None,
+        title="The end coordinate of the interval that will be edited",
+        description=("The end coordinate of the interval that will be edited."),
        json_schema_extra={
             "element_property": True,
         },
@@ -742,8 +808,8 @@ class MolecularDefinitionRepresentationRelativeEdit(backboneelement.BackboneElem
     replacementMolecule: fhirtypes.ReferenceType = Field(  #type: ignore
         ...,
         alias="replacementMolecule",
-        title="...",
-        description=None,
+        title="The sequence that defines the replacement sequence used in the edit operation",
+        description=("The sequence that defines the replacement sequence used in the edit operation."),
         json_schema_extra={
             "element_property": True,
             # note: Listed Resource Type(s) should be allowed as Reference.
@@ -766,7 +832,7 @@ class MolecularDefinitionRepresentationRelativeEdit(backboneelement.BackboneElem
     @classmethod
     def elements_sequence(cls):
         """returning all elements names from
-        ``MolecularSequenceLiteralPlus`` according specification,
+        ``MolecularDefinitionRepresentationRelativeEdit`` according specification,
         with preserving original sequence order.
         """
         return [
