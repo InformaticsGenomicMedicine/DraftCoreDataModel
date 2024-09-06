@@ -1,0 +1,24 @@
+{
+    "resourceType": "MolecularDefinition",
+    "id": "example-sequence-a-aa-iupac",
+    "meta": {
+        "profile": ["http://hl7.org/fhir/StructureDefinition/sequence"]
+    },
+    "type": "aa",
+    "representation": [
+        {
+            "literal": {
+                "value": "A",
+                "encoding": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/moleculardefinition-encoding",
+                            "code": "iupac-protein",
+                            "display": "International Union of Pure and Applied Chemistry-Amino Acid Codes"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
