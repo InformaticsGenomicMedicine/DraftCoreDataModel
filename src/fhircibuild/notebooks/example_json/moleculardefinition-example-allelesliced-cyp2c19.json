@@ -1,0 +1,52 @@
+{
+  "resourceType" : "MolecularDefinition",
+  "id" : "example-allelesliced-cyp2c19-literal-only",
+  "meta" : {
+    "profile" : ["http://hl7.org/fhir/StructureDefinition/allelesliced"]
+  },
+  "type" : "dna",
+  "location" : [{
+    "sequenceLocation" : {
+      "sequenceContext" : {
+        "reference" : "MolecularDefinition/example-sequence-nm0007694-url",
+        "type" : "MolecularDefinition",
+        "display" : "Starting Sequence Resource: (CYP2C19), mRNA, NM_000769.4"
+      },
+      "coordinateInterval" : {
+        "numberingSystem" : {
+          "coding" : [{
+            "system" : "http://loinc.org",
+            "code" : "LA30100-4",
+            "display" : "0-based interval counting"
+          }],
+          "text" : "0-based interval counting"
+        },
+        "startQuantity" : {
+          "value" : 1015
+        },
+        "endQuantity" : {
+          "value" : 1016
+        }
+      }
+    }
+  }],
+  "representation" : [{
+    "focus" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/moleculardefinition-focus",
+        "code" : "allele-state",
+        "display" : "Allele State"
+      }]
+    },
+    "code" : {
+      "coding" : [{
+        "system" : "https://www.pharmvar.org",
+        "code" : "*1",
+        "display" : "*1"
+      }]
+    },
+    "literal" : {
+      "value" : "G"
+    }
+  }]
+}
