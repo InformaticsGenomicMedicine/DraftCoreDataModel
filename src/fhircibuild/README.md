@@ -4,7 +4,7 @@ This project implements a sample FHIR resource called **MolecularDefinition**, d
 
 While this version of the MolecularDefinition resource covers most aspects outlined in the [**MolecularDefinition resource** from the FHIR CI-Build](https://build.fhir.org/branches/cg-im-moldef_work_in_progress_2/moleculardefinition.html), the `cytobandLocation` attribute is not yet included and will be added in a future update. This implementation allows you to create and manipulate MolecularDefinition FHIR resources in Python and aligns with the evolving FHIR specification.
 
-**Disclaimer**: The MolecularDefinition resource is currently under development in the FHIR CI-Build and may change as the specification evolves. Similarly, this Python implementation is subject to change as the FHIR resource and project requirements continue to evolve. This project provides a demonstration of the current version.
+**Disclaimer**: The MolecularDefinition resource and its Python implementation are subject to change as development progresses. This project showcases the current version.
 
 ## Project Goals
 
