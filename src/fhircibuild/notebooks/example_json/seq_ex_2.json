@@ -13,7 +13,7 @@
                     "coding": [
                         {
                             "system": "http://hl7.org/fhir/moleculardefinition-encoding",
-                            "code": "iupac-dna",
+                            "code": "iupac-nucleotide",
                             "display": "International Union of Pure and Applied Chemistry-DNA Nucleotide Codes"
                         }
                     ]
