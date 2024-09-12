@@ -6,13 +6,13 @@
   },
   "type" : "dna",
   "representation" : [{
-    "code" : {
+    "code" : [{
       "coding" : [{
         "system" : "ga4gh",
         "code" : "SQ.gtjJTHGFtrKufRfK5SQeYexDFRjwB05X",
         "display" : "ga4gh:SQ.gtjJTHGFtrKufRfK5SQeYexDFRjwB05X"
       }]
-    },
+    }],
     "resolvable" : {
       "reference" : "DocumentReference/example-genomicFile-nm0007694"
     }
