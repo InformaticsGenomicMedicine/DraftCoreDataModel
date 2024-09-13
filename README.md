@@ -56,7 +56,15 @@ To execute the test scripts, it is essential to ensure that you are operating wi
 # Activate pipenv virtual environment
 pipenv shell
 ```
-### 2. Run the pytest command:
+### 2. Navigate to the test directory:
+
+Change your directory to the test folder where your test files are located.
+
+```shell
+cd test
+```
+
+### 3. Run the pytest command:
 
 Once the virutal environment is activated, navigate to the test directory via the terminal. You can then execute pytest by specifying the particular files you intend to test.
 
@@ -69,12 +77,12 @@ pytest file_name.py
 ## Acknowledgments
 This project utilizes several external packages and APIs. The following packages were used:
 
-- **[vrs-python](https://github.com/ga4gh/vrs-python)**: 
-- **[biocommons.seqrepo](https://github.com/biocommons/biocommons.seqrepo)**:
-- **[biocommons.uta](https://github.com/biocommons/uta)**: 
-- **[hgvs](https://github.com/biocommons/hgvs)**: 
-- **[NCBI Variation Services](https://api.ncbi.nlm.nih.gov/variation/v0/)**:
-- **[HL7 FHIR](https://build.fhir.org/branches/cg-im-moldef_work_in_progress_2/moleculardefinition.html)**: 
+- **[vrs-python](https://github.com/ga4gh/vrs-python)**
+- **[biocommons.seqrepo](https://github.com/biocommons/biocommons.seqrepo)**
+- **[biocommons.uta](https://github.com/biocommons/uta)**
+- **[hgvs](https://github.com/biocommons/hgvs)**
+- **[NCBI Variation Services](https://api.ncbi.nlm.nih.gov/variation/v0/)**
+- **[HL7 FHIR](https://build.fhir.org/branches/cg-im-moldef_work_in_progress_2/moleculardefinition.html)**
 
 <!--
 ---

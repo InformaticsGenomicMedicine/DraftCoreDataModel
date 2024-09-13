@@ -164,3 +164,5 @@ cython_debug/
 notebooks/old_notebooks/
 # old data
 database/data/old_data
+# updates of module 
+src/fhircibuild/resources/MolDefSchemaUpdate.md

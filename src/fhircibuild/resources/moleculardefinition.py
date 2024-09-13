@@ -164,7 +164,7 @@ class MolecularDefinitionLocationSequenceLocation(backboneelement.BackboneElemen
         },
     )
 
-    coordinateInterval: typing.List[fhirtypeextra.MolecularDefinitionLocationSequenceLocationCoordinateIntervalType] = Field( # type: ignore
+    coordinateInterval: fhirtypeextra.MolecularDefinitionLocationSequenceLocationCoordinateIntervalType = Field( # type: ignore
         None,
         alias="coordinateInterval",
         title="Coordinate Interval for this location",
@@ -390,7 +390,7 @@ class MolecularDefinitionRepresentation(backboneelement.BackboneElement):
         },
     )
 
-    resolvable: fhirtypes.AttachmentType= Field(  # type: ignore
+    resolvable: fhirtypes.ReferenceType= Field(  # type: ignore
         None,
         alias="resolvable",
         title="A resolvable representation of a molecule that optionally contains formatting in addition to the specification of the primary sequence itself",

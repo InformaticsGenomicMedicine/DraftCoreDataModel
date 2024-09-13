@@ -38,13 +38,13 @@
         "display" : "Allele State"
       }]
     },
-    "code" : {
+    "code" : [{
       "coding" : [{
         "system" : "https://www.pharmvar.org",
         "code" : "*1",
         "display" : "*1"
       }]
-    },
+    }] ,
     "literal" : {
       "value" : "G"
     }
