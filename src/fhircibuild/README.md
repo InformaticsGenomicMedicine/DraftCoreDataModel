@@ -26,11 +26,11 @@ Currently, in the `src/fhircibuild/notebooks` directory, you will find JSON exam
 
 HL7 FHIR Molecular Definition to GA4GH Variation Representation Specification (VRS) Mapping
 
-The [FHIR_MolDef-VRS_1.3_Mappings.xlsx](src/fhircibuild/FHIR_MolDef-VRS_1.3_Mappings.xlsx) file illustrates the mapping between MolecularDefinition and VRS version 1.3. The following section explains what the different colors represent: 
+The **FHIR_MolDef-VRS_1.3_Mappings.xlsx** file illustrates the mapping between MolecularDefinition and VRS 1.3. The following section explains what the different colors represent: 
 
-- **Green**: indicates that a mapping exists, but it does not imply a one-to-one relationship. A single element from VRS may be represented by multiple elements in FHIR due to FHIR’s structured approach and data types. 
-- **Red**: indicates that there is no corresponding match yet. 
-- **Yellow**: indicates that the mapping is not complete or fully accurate.
+- **Green Highlight**: indicates that a mapping exists, but it does not imply a one-to-one relationship. A single element from VRS may be represented by multiple elements in FHIR due to FHIR’s structured approach and data types. 
+- **Red Highlight**: indicates that there is no corresponding match yet. 
+- **Yellow Highlight**: indicates that the mapping is not complete or fully accurate.
 
 **_Please note:_**  The mapping is a work in progress and may be subject to changes, corrections, and updates.
 
