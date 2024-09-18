@@ -26,13 +26,13 @@ Currently, in the `src/fhircibuild/notebooks` directory, you will find JSON exam
 
 HL7 FHIR Molecular Definition to GA4GH Variation Representation Specification (VRS) Mapping
 
-The FHIR_MolDef-VRS_1.3_Mappings.xlsx file illustrates the mapping between MolecularDefinition and VRS version 1.3. The following section explains what the different colors represent: 
+The [FHIR_MolDef-VRS_1.3_Mappings.xlsx](src/fhircibuild/FHIR_MolDef-VRS_1.3_Mappings.xlsx) file illustrates the mapping between MolecularDefinition and VRS version 1.3. The following section explains what the different colors represent: 
 
-- Green indicates that a mapping exists, but it does not imply a one-to-one relationship. A single element from VRS may be represented by multiple elements in FHIR due to FHIR’s structured approach and data types. 
-- Red indicates that there is no corresponding match yet. 
-- Yellow indicates that the mapping is not complete or fully accurate.
+- **Green**: indicates that a mapping exists, but it does not imply a one-to-one relationship. A single element from VRS may be represented by multiple elements in FHIR due to FHIR’s structured approach and data types. 
+- **Red**: indicates that there is no corresponding match yet. 
+- **Yellow**: indicates that the mapping is not complete or fully accurate.
 
-Please note that the mapping is a work in progress and may be subject to changes, corrections, and updates.
+**_Please note:_**  that the mapping is a work in progress and may be subject to changes, corrections, and updates.
 
 While initial translational mappings between VRS and FHIR have been established, a comprehensive Python implementation of the translation framework is still a work in progress. The existing notebooks and examples highlight the foundational work and offer insights into the ongoing development efforts for these translations. Future work will focus on developing additional examples and notebooks, as well as completing the bidirectional translations between HL7 FHIR and GA4GH VRS.
 
