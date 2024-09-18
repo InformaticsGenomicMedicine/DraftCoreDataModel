@@ -32,7 +32,7 @@ The [FHIR_MolDef-VRS_1.3_Mappings.xlsx](src/fhircibuild/FHIR_MolDef-VRS_1.3_Mapp
 - **Red**: indicates that there is no corresponding match yet. 
 - **Yellow**: indicates that the mapping is not complete or fully accurate.
 
-**_Please note:_**  that the mapping is a work in progress and may be subject to changes, corrections, and updates.
+**_Please note:_**  The mapping is a work in progress and may be subject to changes, corrections, and updates.
 
 While initial translational mappings between VRS and FHIR have been established, a comprehensive Python implementation of the translation framework is still a work in progress. The existing notebooks and examples highlight the foundational work and offer insights into the ongoing development efforts for these translations. Future work will focus on developing additional examples and notebooks, as well as completing the bidirectional translations between HL7 FHIR and GA4GH VRS.
 
